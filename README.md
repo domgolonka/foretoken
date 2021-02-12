@@ -13,10 +13,17 @@ the moment is:
     - VPN
     - Spam
     - Proxy
+    - Tor
 
 This tool saves those threats on multiple different databases and uses REST API to outdata
 
 # Usage
+
+## Migrate
+
+**BEFORE YOU RUN THIS**, You need to migrate the database:
+
+`make migrate`
 
 ## How to run
 

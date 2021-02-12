@@ -25,6 +25,10 @@ build:
 	@echo "Building $(GOFILES) to ./bin"
 	go build -o bin/$(GONAME) cmd/main.go
 
+## installs all the dependencies
+migrate:
+	go run cmd/main.go migrate
+
 ## get all the dependencies
 get:
 	@GOBIN=$(GOBIN) go get cmd/main.go

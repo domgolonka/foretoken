@@ -63,8 +63,6 @@ func (c *TxtDomains) Load(body []byte) ([]string, []string, error) {
 		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
 	haleysOrgSMTP := Feed{"the-haleys.org", "http://charles.the-haleys.org/smtp_dico_attack_with_timestamps.php?days=7",
 		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	bambenekconsultingCom := Feed{"bambenekconsulting.com", "http://osint.bambenekconsulting.com/feeds/c2-ipmasterlist-high.txt",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
 	blocklistDe := Feed{"blocklist.de", "http://lists.blocklist.de/lists/all.txt", 10,
 		[]FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
 	botscout := Feed{"botscout", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/botscout_1d.ipset",
@@ -97,7 +95,7 @@ func (c *TxtDomains) Load(body []byte) ([]string, []string, error) {
 	feodotracker := Feed{"feodotracker", "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
 		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
 	var activeFeeds = []Feed{teamCymruOrg, stopforumspamCom, greensnowCo, binarydefenseCom, haleysOrgSSH,
-		haleysOrgWp, haleysOrgSMTP, spamhaus, firehol, alienvaultCom, badipsCom, bambenekconsultingCom, blocklistDe, botscout,
+		haleysOrgWp, haleysOrgSMTP, spamhaus, firehol, alienvaultCom, badipsCom, blocklistDe, botscout,
 		bruteforceblocker, cinsscoreCom, cruzit, dshieldOrg, emergingthreatsNet, feodotracker, malwaredomainlist,
 		myip, sslbl,
 		rutgersEdu, sblamCom, talosintelligenceCom,

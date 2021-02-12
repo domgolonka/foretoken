@@ -151,4 +151,4 @@ Lots of features are being worked on.
 
 I would like a discussion going on the potential expansion of the tool.
 
-I would like this tool to detect all modern threats with machine learn.
+I would like this tool to detect all modern threats.

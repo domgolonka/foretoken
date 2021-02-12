@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	applicationJson           = "application/json"
-	applicationFormUrlEncoded = "application/x-www-form-urlencoded"
+	applicationJSON           = "application/json"
+	applicationFormURLEncoded = "application/x-www-form-urlencoded"
 
 	UnsupportedMediaType = ErrorCode(1)
 	MalformedInput       = ErrorCode(2)
@@ -38,13 +38,13 @@ func (e Error) Error() string {
 func Payload(r *http.Request, value interface{}) error {
 	contentType := strings.ToLower(getContentType(r.Header))
 	if contentType == "" {
-		contentType = applicationFormUrlEncoded
+		contentType = applicationFormURLEncoded
 	}
 
 	switch {
-	case strings.Contains(contentType, applicationJson):
-		return parseJson(r.Body, value)
-	case strings.Contains(contentType, applicationFormUrlEncoded):
+	case strings.Contains(contentType, applicationJSON):
+		return parseJSON(r.Body, value)
+	case strings.Contains(contentType, applicationFormURLEncoded):
 		return parseForm(value, r)
 	}
 
@@ -60,7 +60,7 @@ func parseForm(value interface{}, r *http.Request) error {
 	return decoder.Decode(value, r.Form)
 }
 
-func parseJson(r io.ReadCloser, parsed interface{}) error {
+func parseJSON(r io.ReadCloser, parsed interface{}) error {
 	err := json.NewDecoder(r).Decode(parsed)
 	defer r.Close()
 

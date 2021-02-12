@@ -12,7 +12,7 @@ type TorStore struct {
 	sqlx.Ext
 }
 
-func (db *TorStore) FindByUrl(url string) (*models.Tor, error) {
+func (db *TorStore) FindByURL(url string) (*models.Tor, error) {
 	tor := models.Tor{}
 	err := sqlx.Get(db, &tor, "SELECT * FROM tor WHERE url = ?", url)
 	if err == sql.ErrNoRows {

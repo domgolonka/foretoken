@@ -35,7 +35,6 @@ func (p *Disposable) AddProvider(provider Provider) {
 }
 func (p *Disposable) load() {
 	for _, provider := range p.providers {
-
 		hosts, err := provider.List()
 
 		if err != nil {
@@ -50,10 +49,7 @@ func (p *Disposable) load() {
 }
 func (p *Disposable) createOrIgnore(dis string) bool {
 	_, err := p.store.Create(dis)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *Disposable) run() {
@@ -61,10 +57,9 @@ func (p *Disposable) run() {
 }
 
 func (p *Disposable) Get() (*[]string, error) {
-
 	return p.store.FindAll()
-
 }
+
 func NewDisposable(store data.DisposableStore, logger logrus.FieldLogger) *Disposable {
 	once.Do(func() {
 		instance = &Disposable{

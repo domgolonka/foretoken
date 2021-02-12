@@ -12,7 +12,7 @@ type DisposableStore struct {
 	sqlx.Ext
 }
 
-func (db *DisposableStore) FindByUrl(url string) (*models.DisposableEmail, error) {
+func (db *DisposableStore) FindByURL(url string) (*models.DisposableEmail, error) {
 	disposable := models.DisposableEmail{}
 	err := sqlx.Get(db, &disposable, "SELECT * FROM disposable WHERE url = ?", url)
 	if err == sql.ErrNoRows {

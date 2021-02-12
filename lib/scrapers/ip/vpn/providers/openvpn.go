@@ -3,30 +3,27 @@ package providers
 import (
 	"archive/zip"
 	"bytes"
-	"errors"
 	"io"
 	"io/ioutil"
 	"log"
-	"net"
 	"net/http"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/sirupsen/logrus"
 )
 
-var OpenVPNUrls = []Urls{
-	{Url: "https://www.ipvanish.com/software/configs/configs.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://torguard.net/downloads/OpenVPN-UDP.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://torguard.net/downloads/OpenVPN-TCP.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{Url: "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", Typec: "OpenVPN", Format: OPENVPN},
+var OpenVPNURLs = []URLs{
+	{URL: "https://www.ipvanish.com/software/configs/configs.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://torguard.net/downloads/OpenVPN-UDP.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://torguard.net/downloads/OpenVPN-TCP.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", Typec: "OpenVPN", Format: OPENVPN},
 }
 
 type OpenVpn struct {
@@ -43,13 +40,12 @@ func (*OpenVpn) Name() string {
 	return "openvpn"
 }
 
-func (c *OpenVpn) Download(src Urls) ([]string, error) {
+func (c *OpenVpn) Download(src URLs) ([]string, error) {
 	hosts := []string{}
-	c.logger.Debug("starting Download for " + src.Url)
+	c.logger.Debug("starting Download for " + src.URL)
 
 	if src.Format == OPENVPN {
-
-		res, err := http.Get(src.Url)
+		res, err := http.Get(src.URL)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -67,7 +63,6 @@ func (c *OpenVpn) Download(src Urls) ([]string, error) {
 		}
 
 		for _, f := range r.File {
-
 			if filepath.Ext(f.Name) == ".ovpn" && !strings.HasPrefix(f.Name, "__MACOSX") {
 				var buf bytes.Buffer
 
@@ -78,7 +73,7 @@ func (c *OpenVpn) Download(src Urls) ([]string, error) {
 
 				reRemote := regexp.MustCompile(`remote (\S+)`)
 
-				_, err = io.Copy(&buf, rc)
+				_, err = io.Copy(&buf, rc) //nolint
 				if err != nil {
 					return nil, err
 				}
@@ -88,11 +83,8 @@ func (c *OpenVpn) Download(src Urls) ([]string, error) {
 				var domainName = domainTmp[1]
 
 				hosts = append(hosts, domainName)
-
 			}
-
 		}
-
 	}
 
 	return hosts, nil
@@ -102,9 +94,8 @@ func (c *OpenVpn) Download(src Urls) ([]string, error) {
 func (c *OpenVpn) List() ([]string, error) {
 	hosts := []string{}
 
-	for i := 0; i < len(OpenVPNUrls); i++ {
-
-		host, err := c.Download(OpenVPNUrls[i])
+	for i := 0; i < len(OpenVPNURLs); i++ {
+		host, err := c.Download(OpenVPNURLs[i])
 		if err != nil {
 			return hosts, err
 		}
@@ -115,69 +106,69 @@ func (c *OpenVpn) List() ([]string, error) {
 }
 
 // Parses a 'remote' option into a struct
-func getRemote(line string) (remote, error) {
-	rmt := remote{}
+//func getRemote(line string) (remote, error) {
+//	rmt := remote{}
+//
+//	fields := strings.Fields(line)
+//	if len(fields) < 2 {
+//		return rmt, errors.New("unknown remote option")
+//	}
+//	isIP, err := regexp.MatchString(IPRegex, fields[1])
+//	if err != nil {
+//		return rmt, err
+//	}
+//
+//	var ips []net.IP
+//	// Lookup ip address if remote is not an IP
+//	if !isIP {
+//		rmt.hostname = fields[1]
+//		ip4, err := net.LookupIP(fields[1])
+//		if err != nil {
+//			return rmt, err
+//		}
+//
+//		for _, ip := range ip4 {
+//			if ip.To4() != nil {
+//				ips = append(ips, ip)
+//			}
+//		}
+//	} else {
+//		ips = append(ips, net.ParseIP(fields[1]))
+//	}
+//	if len(ips) == 0 {
+//		return remote{}, errors.New("can't resolve domain name")
+//	}
+//
+//	for _, ip := range ips {
+//		rmt.ips = append(rmt.ips, ip.String())
+//	}
+//
+//	// port is provided in remote option
+//	if len(fields) >= 3 {
+//		port, err := strconv.ParseUint(fields[2], 10, 32)
+//		if err != nil {
+//			return remote{}, err
+//		}
+//		rmt.port = uint(port)
+//	}
+//
+//	// proto is provided in remote option
+//	if len(fields) >= 4 {
+//		rmt.proto = getProto(fields[3])
+//		if rmt.proto == "" {
+//			return remote{}, errors.New("unknown protocol")
+//		}
+//	}
+//	return rmt, nil
+//}
 
-	fields := strings.Fields(line)
-	if len(fields) < 2 {
-		return rmt, errors.New("unknown remote option")
-	}
-	isIP, err := regexp.MatchString(IPRegex, fields[1])
-	if err != nil {
-		return rmt, err
-	}
-
-	var ips []net.IP
-	// Lookup ip address if remote is not an IP
-	if !isIP {
-		rmt.hostname = fields[1]
-		ip4, err := net.LookupIP(fields[1])
-		if err != nil {
-			return rmt, err
-		}
-
-		for _, ip := range ip4 {
-			if ip.To4() != nil {
-				ips = append(ips, ip)
-			}
-		}
-	} else {
-		ips = append(ips, net.ParseIP(fields[1]))
-	}
-	if len(ips) == 0 {
-		return remote{}, errors.New("can't resolve domain name")
-	}
-
-	for _, ip := range ips {
-		rmt.ips = append(rmt.ips, ip.String())
-	}
-
-	// port is provided in remote option
-	if len(fields) >= 3 {
-		port, err := strconv.ParseUint(fields[2], 10, 32)
-		if err != nil {
-			return remote{}, err
-		}
-		rmt.port = uint(port)
-	}
-
-	// proto is provided in remote option
-	if len(fields) >= 4 {
-		rmt.proto = getProto(fields[3])
-		if rmt.proto == "" {
-			return remote{}, errors.New("unknown protocol")
-		}
-	}
-	return rmt, nil
-}
-
-func getProto(p string) Proto {
-	switch p {
-	case "udp":
-		return udp
-	case "tcp":
-		return tcp
-	default:
-		return ""
-	}
-}
+//func getProto(p string) Proto {
+//	switch p {
+//	case "udp":
+//		return udp
+//	case "tcp":
+//		return tcp
+//	default:
+//		return ""
+//	}
+//}

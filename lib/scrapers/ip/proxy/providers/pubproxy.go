@@ -58,7 +58,7 @@ func (x *PubProxy) MakeRequest() ([]byte, error) {
 
 func (x *PubProxy) Load() ([]string, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0, 0)
+		x.proxyList = make([]string, 0)
 	}
 
 	if len(x.proxyList) != 0 {
@@ -72,7 +72,7 @@ func (x *PubProxy) Load() ([]string, error) {
 
 	x.proxyList = strings.Split(string(body), "\n")
 	if len(x.proxyList) != 20 {
-		x.proxyList = make([]string, 0, 0)
+		x.proxyList = make([]string, 0)
 	} else {
 		x.lastUpdate = time.Now()
 	}

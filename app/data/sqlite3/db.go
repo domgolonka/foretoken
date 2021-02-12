@@ -19,7 +19,6 @@ func NewDB(env string) (*sqlx.DB, error) {
 	if !strings.Contains(env, ".") {
 		env = "./" + env + ".db"
 	}
-	fmt.Printf(env)
 
 	return sqlx.Connect("sqlite3", fmt.Sprintf("%v?cache=shared&_busy_timeout=200", env))
 }

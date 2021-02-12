@@ -30,10 +30,9 @@ func (*TxtDomains) Name() string {
 }
 
 func (c *TxtDomains) Load(body []byte) ([]string, error) {
-
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.hosts = make([]string, 0, 0)
+		c.hosts = make([]string, 0)
 	}
 
 	if len(c.hosts) != 0 {

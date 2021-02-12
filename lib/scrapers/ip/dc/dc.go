@@ -36,7 +36,6 @@ func (p *DC) AddProvider(provider Provider) {
 }
 func (p *DC) load() {
 	for _, provider := range p.providers {
-
 		hosts, err := provider.List()
 
 		if err != nil {
@@ -51,10 +50,7 @@ func (p *DC) load() {
 }
 func (p *DC) createOrIgnore(dc string) bool {
 	_, err := p.store.Create(dc)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *DC) run() {
@@ -62,7 +58,6 @@ func (p *DC) run() {
 }
 
 func (p *DC) Get() (*[]string, error) {
-
 	return p.store.FindAll()
 
 }

@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/domgolonka/threatscraper/lib/parse"
-
 	"github.com/domgolonka/threatscraper/app/services"
+	"github.com/domgolonka/threatscraper/lib/parse"
+	"github.com/sirupsen/logrus"
 )
 
 type ServiceData struct {
@@ -25,12 +25,15 @@ type RequestError struct {
 func WriteData(w http.ResponseWriter, httpCode int, str *[]string) {
 	stringByte := strings.Join(*str, "\x0A") // x20 = space and x00 = null
 
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(stringByte))
+	w.WriteHeader(httpCode)
+	_, err := w.Write([]byte(stringByte))
+	if err != nil {
+		WriteErrors(w, err)
+	}
 }
 
 func WriteErrors(w http.ResponseWriter, err error) {
-	switch err.(type) {
+	switch err.(type) { //nolint
 	case services.FieldErrors:
 		WriteJSON(w, http.StatusUnprocessableEntity, ServiceErrors{Errors: err.(services.FieldErrors)})
 	case parse.Error:
@@ -50,7 +53,7 @@ func writeParseErrors(w http.ResponseWriter, err parse.Error) {
 }
 
 func WriteNotFound(w http.ResponseWriter, resource string) {
-	WriteJSON(w, http.StatusNotFound, ServiceErrors{Errors: services.FieldErrors{{resource, services.ErrNotFound}}})
+	WriteJSON(w, http.StatusNotFound, ServiceErrors{Errors: services.FieldErrors{{resource, services.ErrNotFound}}}) //nolint
 }
 
 func WriteJSON(w http.ResponseWriter, httpCode int, d interface{}) {
@@ -61,5 +64,8 @@ func WriteJSON(w http.ResponseWriter, httpCode int, d interface{}) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(httpCode)
-	w.Write(j)
+	_, err = w.Write(j)
+	if err != nil {
+		logrus.Error(err)
+	}
 }

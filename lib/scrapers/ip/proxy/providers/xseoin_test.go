@@ -98,6 +98,9 @@ func BenchmarkXseoInDecodePort(b *testing.B) {
 
 func BenchmarkXseoInLoad(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		xs.Load(body)
+		_, err := xs.Load(body)
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }

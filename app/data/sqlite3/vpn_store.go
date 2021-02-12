@@ -12,7 +12,7 @@ type VpnStore struct {
 	sqlx.Ext
 }
 
-func (db *VpnStore) FindByUrl(url string) (*models.Vpn, error) {
+func (db *VpnStore) FindByURL(url string) (*models.Vpn, error) {
 	vpn := models.Vpn{}
 	err := sqlx.Get(db, &vpn, "SELECT * FROM vpn WHERE url = ?", url)
 	if err == sql.ErrNoRows {

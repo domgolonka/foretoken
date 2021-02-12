@@ -36,7 +36,6 @@ func (p *VPN) AddProvider(provider Provider) {
 }
 func (p *VPN) load() {
 	for _, provider := range p.providers {
-
 		hosts, err := provider.List()
 
 		if err != nil {
@@ -51,10 +50,7 @@ func (p *VPN) load() {
 }
 func (p *VPN) createOrIgnore(vpn string) bool {
 	_, err := p.store.Create(vpn)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *VPN) run() {
@@ -62,7 +58,6 @@ func (p *VPN) run() {
 }
 
 func (p *VPN) Get() (*[]string, error) {
-
 	return p.store.FindAll()
 
 }

@@ -34,10 +34,9 @@ func (*TxtDomains) Name() string {
 }
 
 func (c *TxtDomains) Load(body []byte) ([]string, error) {
-
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(43200) {
-		c.hosts = make([]string, 0, 0)
+		c.hosts = make([]string, 0)
 	}
 
 	if len(c.hosts) != 0 {
@@ -87,22 +86,6 @@ func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
 	}
 
 	return body.Bytes(), err
-}
-
-func skip(b []byte, n int) ([]byte, bool) {
-	for ; n > 0; n-- {
-		if len(b) == 0 {
-			return nil, false
-		}
-		x := bytes.IndexByte(b, '\n')
-		if x < 0 {
-			x = len(b)
-		} else {
-			x++
-		}
-		b = b[x:]
-	}
-	return b, true
 }
 
 func (c *TxtDomains) List() ([]string, error) {

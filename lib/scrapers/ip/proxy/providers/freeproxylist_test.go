@@ -47,6 +47,9 @@ func TestFreeProxyListLoad(t *testing.T) {
 
 func BenchmarkFreeProxyListLoad(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		fp.Load(fpBody)
+		_, err := fp.Load(fpBody)
+		if err != nil {
+			b.Fatalf("Load is fail %s", err.Error())
+		}
 	}
 }

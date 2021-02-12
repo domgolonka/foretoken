@@ -25,7 +25,7 @@ func NewProxyStore(db sqlx.Ext) (ProxyStore, error) {
 }
 
 type VpnStore interface {
-	FindByUrl(url string) (*models.Vpn, error)
+	FindByURL(url string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
 	FindAll() (*[]string, error)
 	Create(url string) (*models.Vpn, error)
@@ -42,7 +42,7 @@ func NewVpnStore(db sqlx.Ext) (VpnStore, error) {
 }
 
 type DisposableStore interface {
-	FindByUrl(url string) (*models.DisposableEmail, error)
+	FindByURL(url string) (*models.DisposableEmail, error)
 	Find(id int) (*models.DisposableEmail, error)
 	FindAll() (*[]string, error)
 	Create(url string) (*models.DisposableEmail, error)
@@ -59,7 +59,7 @@ func NewDisposableStore(db sqlx.Ext) (DisposableStore, error) {
 }
 
 type SpamStore interface {
-	FindByUrl(url string) (*models.Spam, error)
+	FindByURL(url string) (*models.Spam, error)
 	Find(id int) (*models.Spam, error)
 	FindAll() (*[]string, error)
 	Create(url string, sub bool) (*models.Spam, error)

@@ -29,29 +29,27 @@ func (*TorIps) Name() string {
 }
 
 func (c *TorIps) Load(body []byte) ([]string, error) {
-
 	var torlist []string
-
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.torlist = make([]string, 0, 0)
+		c.torlist = make([]string, 0)
 	}
 
-	body, err := c.MakeRequest()
+	allbody, err := c.MakeRequest()
 	if err != nil {
 		return nil, err
 	}
 
 	reExitNode := regexp.MustCompile(`ExitAddress (\d+\.\d+\.\d+\.\d+)`)
-	for _, node := range reExitNode.FindAllStringSubmatch(string(body), -1) {
+	for _, node := range reExitNode.FindAllStringSubmatch(string(allbody), -1) {
 		torlist = append(torlist, node[1])
 	}
 
 	c.lastUpdate = time.Now()
 	c.torlist = torlist
 	return torlist, nil
-
 }
+
 func (c *TorIps) MakeRequest() ([]byte, error) {
 	var client = NewClient()
 	client.Transport.(*http.Transport).Proxy = http.ProxyFromEnvironment

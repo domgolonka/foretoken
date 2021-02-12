@@ -17,7 +17,7 @@ func NewDB(cfg config.Config) (*sqlx.DB, error) {
 	case "postgres":
 		return postgresql.NewDB(cfg)
 	default:
-		return nil, fmt.Errorf("Unsupported database: %s", cfg.DatabaseName)
+		return nil, fmt.Errorf("unsupported database: %s", cfg.DatabaseName)
 	}
 }
 
@@ -30,7 +30,10 @@ func MigrateDB(cfg config.Config) error {
 		}
 		defer db.Close()
 
-		sqlite3.MigrateDB(db)
+		err = sqlite3.MigrateDB(db)
+		if err != nil {
+			return err
+		}
 		return nil
 	case "postgres":
 		db, err := postgresql.NewDB(cfg)
@@ -39,9 +42,12 @@ func MigrateDB(cfg config.Config) error {
 		}
 		defer db.Close()
 
-		postgresql.MigrateDB(db)
+		err = postgresql.MigrateDB(db)
+		if err != nil {
+			return err
+		}
 	default:
-		return fmt.Errorf("Unsupported database")
+		return fmt.Errorf("unsupported database")
 	}
 	return nil
 }

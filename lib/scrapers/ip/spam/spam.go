@@ -36,7 +36,6 @@ func (p *Spam) AddProvider(provider Provider) {
 }
 func (p *Spam) load() {
 	for _, provider := range p.providers {
-
 		iplist, subnetlist, err := provider.List()
 
 		if err != nil {
@@ -55,10 +54,7 @@ func (p *Spam) load() {
 }
 func (p *Spam) createOrIgnore(dis string, sub bool) bool {
 	_, err := p.store.Create(dis, sub)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *Spam) run() {
@@ -66,7 +62,6 @@ func (p *Spam) run() {
 }
 
 func (p *Spam) Get() []string {
-
 	return p.hosts
 
 }

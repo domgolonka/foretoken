@@ -32,7 +32,6 @@ func (*ProxyList) Name() string {
 }
 
 func (x *ProxyList) MakeRequest(page int) ([]byte, error) {
-
 	req, err := http.NewRequest("GET", fmt.Sprintf("http://proxy-list.org/english/index.php?p=%d", page), nil)
 	if err != nil {
 		return nil, err
@@ -66,7 +65,7 @@ func (x *ProxyList) MakeRequest(page int) ([]byte, error) {
 
 func (x *ProxyList) Load() ([]string, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0, 0)
+		x.proxyList = make([]string, 0)
 	}
 
 	if len(x.proxyList) != 0 {

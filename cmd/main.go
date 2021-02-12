@@ -23,9 +23,8 @@ func main() {
 	var cfg config.Config
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {
-		fmt.Println(err)
-		fmt.Println("\nsee: https://github.com/github.com/domgolonka/threatscraper/blob/master/docs/config.md")
-		return
+		logrus.Info("\nsee: https://github.com/domgolonka/threatscraper/blob/master/docs/config.md")
+		logrus.Fatal(err)
 	}
 
 	if len(os.Args) == 1 {
@@ -39,14 +38,13 @@ func main() {
 	} else if cmd == "migrate" {
 		migrate(cfg)
 	} else {
-		os.Stderr.WriteString(fmt.Sprintf("unexpected invocation\n"))
+		os.Stderr.WriteString("unexpected invocation\n")
 		usage()
 		os.Exit(2)
 	}
 }
 
 func serve(cfg config.Config) {
-	fmt.Println(fmt.Sprintf("~*~ Defend.Export v%s ~*~", VERSION))
 
 	// Default logger
 	logger := logrus.New()
@@ -56,9 +54,11 @@ func serve(cfg config.Config) {
 	}
 	logger.Out = os.Stdout
 
+	logger.Infof(fmt.Sprintf("~*~ ThreatScraper v%s ~*~", VERSION))
+
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {
-		fmt.Println(err)
+		logger.Fatal(err)
 		return
 	}
 
@@ -66,18 +66,18 @@ func serve(cfg config.Config) {
 }
 
 func migrate(cfg config.Config) {
-	fmt.Println("Running migrations.")
+	logrus.Info("Running migrations.")
 	err := data.MigrateDB(cfg)
 	if err != nil {
-		fmt.Println(err)
+		logrus.Error(err)
 	} else {
-		fmt.Println("Migrations complete.")
+		logrus.Info("Migrations complete.")
 	}
 }
 
 func usage() {
 	exe := path.Base(os.Args[0])
-	fmt.Println(fmt.Sprintf(`
+	logrus.Info(fmt.Sprintf(`
 Usage:
 %s server  - run the server (default)
 %s migrate - run migrations

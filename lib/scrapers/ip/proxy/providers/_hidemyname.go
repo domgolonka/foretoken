@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/jbowtie/gokogiri"
+	scraper "github.com/soluchok/go-cloudflare-scraper"
 )
 
 type HidemyName struct {
@@ -65,7 +66,7 @@ func (x *HidemyName) MakeRequest() ([]byte, error) {
 
 func (x *HidemyName) Load(body []byte) ([]string, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0, 0)
+		x.proxyList = make([]string, 0)
 	}
 
 	if len(x.proxyList) != 0 {

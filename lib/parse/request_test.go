@@ -13,7 +13,6 @@ import (
 // TestParsingOnServer will do integration tests of a handler, running on a test Server, that uses Parse method
 // to try and parse JSON as well as Form value inputs
 func TestParsingOnServer(t *testing.T) {
-
 	t.Run("should return error for unsupported content type", func(t *testing.T) {
 		var requestBody struct{ Username string }
 		var err error
@@ -62,7 +61,7 @@ func TestParsingOnServer(t *testing.T) {
 			err = Payload(r, &requestBody)
 		}))
 		defer ts.Close()
-		postJson(ts, "{\"username\":\"aUsername\"}")
+		postJSON(ts, "{\"username\":\"aUsername\"}")
 
 		assert.Equal(t, requestBody.Username, "aUsername")
 		assert.Nil(t, err)
@@ -78,7 +77,7 @@ func TestParsingOnServer(t *testing.T) {
 			err = Payload(r, &requestBody)
 		}))
 		defer ts.Close()
-		postJson(ts, "{\"username\":\"aUsername\", \"unknown\":\"Unknown to the server\"}")
+		postJSON(ts, "{\"username\":\"aUsername\", \"unknown\":\"Unknown to the server\"}")
 
 		assert.Equal(t, requestBody.Username, "aUsername")
 		assert.Nil(t, err)
@@ -91,7 +90,7 @@ func TestParsingOnServer(t *testing.T) {
 			err = Payload(r, &requestBody)
 		}))
 		defer ts.Close()
-		postJson(ts, "{\"missingVariableContent\":}")
+		postJSON(ts, "{\"missingVariableContent\":}")
 
 		assert.Equal(t, err.(Error).Code, MalformedInput)
 	})
@@ -109,7 +108,7 @@ func TestParsingOnServer(t *testing.T) {
 	})
 }
 
-func postJson(ts *httptest.Server, json string) {
+func postJSON(ts *httptest.Server, json string) {
 	_, _ = http.Post(ts.URL, "application/json", strings.NewReader(json))
 }
 

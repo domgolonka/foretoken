@@ -1,6 +1,5 @@
 export
 
-GOPATH=$(shell pwd)/vendor:$(shell pwd)
 GOBIN=$(shell pwd)/bin
 GOFILES=cmd/main.go
 GONAME=$(shell basename "$(PWD)")
@@ -28,7 +27,7 @@ build:
 
 ## get all the dependencies
 get:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get cmd/main.go
+	@GOBIN=$(GOBIN) go get cmd/main.go
 ## installs all the dependencies
 install:
 	go install $(GOFILES)
@@ -59,7 +58,7 @@ check: format-check ## Linting and static analysis
 	@if test ! -e ./bin/golangci-lint; then \
 		curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh; \
 	fi
-	@./bin/golangci-lint run --timeout 180s -E gosec -E stylecheck -E golint -E goimports -E whitespace
+	@./bin/golangci-lint run --timeout 180s -E gosec -E stylecheck -E golint -E goimports
 
 start:
 	@echo "Starting bin/$(GONAME)"
@@ -74,6 +73,6 @@ clear:
 
 clean:
 	@echo "Cleaning"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go clean
+	@GOBIN=$(GOBIN) go clean
 
 .PHONY: build get install run watch start stop restart clean

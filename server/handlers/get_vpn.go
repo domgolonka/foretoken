@@ -18,6 +18,9 @@ func GetVPN(app *app.App) http.HandlerFunc {
 		stringByte := strings.Join(*items, "\x0A") // x20 = space and x00 = null
 
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(stringByte))
+		_, err = w.Write([]byte(stringByte))
+		if err != nil {
+			WriteErrors(w, err)
+		}
 	}
 }

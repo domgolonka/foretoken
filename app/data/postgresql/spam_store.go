@@ -12,7 +12,7 @@ type SpamStore struct {
 	sqlx.Ext
 }
 
-func (db *SpamStore) FindByUrl(url string) (*models.Spam, error) {
+func (db *SpamStore) FindByURL(url string) (*models.Spam, error) {
 	spam := models.Spam{}
 	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE url = ?", url)
 	if err == sql.ErrNoRows {

@@ -30,7 +30,7 @@ type FeedAnalyzer struct {
 
 type Feed struct {
 	Name          string
-	Url           string
+	URL           string
 	Timeout       time.Duration
 	FeedAnalyzers []FeedAnalyzer
 }
@@ -39,7 +39,7 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 	var netClient = &http.Client{
 		Timeout: time.Second * feed.Timeout,
 	}
-	response, err := netClient.Get(feed.Url)
+	response, err := netClient.Get(feed.URL)
 
 	if err != nil {
 		return nil, nil, err
@@ -53,11 +53,11 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 	for scanner.Scan() {
 		buf.WriteString(scanner.Text())
 	}
-	var http_result = buf.String()
+	var httpResult = buf.String()
 
-	result_ips := make(map[string]IPAnalysis)
-	result_subnets := make(map[string]SUBNETAnalysis)
-	for _, element := range strings.Split(http_result, "\n") {
+	resultIps := make(map[string]IPAnalysis)
+	resultSubnets := make(map[string]SUBNETAnalysis)
+	for _, element := range strings.Split(httpResult, "\n") {
 		line := strings.Trim(element, " ")
 
 		match := false
@@ -66,17 +66,17 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 			var findings = regex.FindStringSubmatch(line)
 			if !match {
 				if len(findings) == 2 {
-					result_ips[findings[1]] = IPAnalysis{findings[1], fa.Score, []string{feed.Name}}
+					resultIps[findings[1]] = IPAnalysis{findings[1], fa.Score, []string{feed.Name}}
 					match = true
 				} else if len(findings) == 3 {
 					subnet := findings[1] + "/" + findings[2]
-					prefix_length, _ := strconv.Atoi(findings[2])
-					result_subnets[subnet] = SUBNETAnalysis{subnet, byte(prefix_length),
+					prefixLength, _ := strconv.Atoi(findings[2])
+					resultSubnets[subnet] = SUBNETAnalysis{subnet, byte(prefixLength),
 						fa.Score, []string{feed.Name}}
 					match = true
 				}
 			}
 		}
 	}
-	return result_ips, result_subnets, nil
+	return resultIps, resultSubnets, nil
 }

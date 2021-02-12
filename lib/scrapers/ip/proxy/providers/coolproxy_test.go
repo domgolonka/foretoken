@@ -517,6 +517,9 @@ func TestCoolProxy_Load(t *testing.T) {
 
 func BenchmarkCoolProxy_Load(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		c.Load(raw)
+		_, err := c.Load(raw)
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }

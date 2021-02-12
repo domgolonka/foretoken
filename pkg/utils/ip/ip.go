@@ -6,7 +6,6 @@ import (
 )
 
 func ParseIps(body []byte) ([]string, error) {
-
 	splitup := strings.Split(string(body), "\n")
 	ipv4 := make([]string, 0, len(splitup))
 	for i := 0; i < len(splitup); i++ {

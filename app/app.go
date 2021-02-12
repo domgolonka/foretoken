@@ -41,7 +41,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	reporter := ops.Log
 	if cfg.ErrorReporter.Default == "airbreak" {
 		reporter = ops.Airbrake
-	} else if cfg.ErrorReporter.Default == "airbreak" {
+	} else if cfg.ErrorReporter.Default == "sentry" {
 		reporter = ops.Sentry
 	}
 	errorReporter, err := ops.NewErrorReporter(cfg.ErrorReporter.AirbrakeCredentials, reporter, logger)

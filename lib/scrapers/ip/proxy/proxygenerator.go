@@ -21,7 +21,7 @@ var (
 
 type Verify func(proxy string) bool
 
-type ProxyGenerator struct {
+type ProxyGenerator struct { //nolint
 	lastValidProxy string
 	cache          *cache.Cache
 	logger         logrus.FieldLogger
@@ -48,7 +48,7 @@ func (p *ProxyGenerator) AddProvider(provider Provider) {
 }
 
 func shuffle(vals []string) {
-	r := rand.New(rand.NewSource(time.Now().Unix()))
+	r := rand.New(rand.NewSource(time.Now().Unix())) //nolint
 	for len(vals) > 0 {
 		n := len(vals)
 		randIndex := r.Intn(n)
@@ -59,10 +59,7 @@ func shuffle(vals []string) {
 
 func (p *ProxyGenerator) createOrIgnore(dis string, ptype string) bool {
 	_, err := p.store.Create(dis, ptype)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *ProxyGenerator) load() {
@@ -112,7 +109,7 @@ func (p *ProxyGenerator) Count() int {
 }
 func (p *ProxyGenerator) Get() []string {
 	var items []string
-	for k, _ := range p.cache.Items() {
+	for k := range p.cache.Items() {
 		items = append(items, k)
 	}
 	return items

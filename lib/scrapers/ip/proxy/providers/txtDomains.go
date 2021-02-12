@@ -33,14 +33,14 @@ func (*TxtDomains) Name() string {
 	return "github.com/TheSpeedX/PROXY-List"
 }
 
-func (x *TxtDomains) SetProxy(proxy string) {
-	x.proxy = proxy
+func (c *TxtDomains) SetProxy(proxy string) {
+	c.proxy = proxy
 }
 
 func (c *TxtDomains) Load(body []byte) ([]string, error) {
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.proxyList = make([]string, 0, 0)
+		c.proxyList = make([]string, 0)
 	}
 
 	if len(c.proxyList) != 0 {

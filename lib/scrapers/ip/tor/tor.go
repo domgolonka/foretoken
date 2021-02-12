@@ -9,9 +9,6 @@ import (
 	"sync"
 )
 
-// this list might be outdated
-const torExitNodes = "https://check.torproject.org/exit-addresses"
-
 var (
 	instance *Tor
 	once     sync.Once
@@ -39,7 +36,6 @@ func (p *Tor) AddProvider(provider Provider) {
 }
 func (p *Tor) load() {
 	for _, provider := range p.providers {
-
 		hosts, err := provider.List()
 
 		if err != nil {
@@ -54,10 +50,7 @@ func (p *Tor) load() {
 }
 func (p *Tor) createOrIgnore(tor string) bool {
 	_, err := p.store.Create(tor)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (p *Tor) run() {
@@ -65,7 +58,6 @@ func (p *Tor) run() {
 }
 
 func (p *Tor) Get() (*[]string, error) {
-
 	return p.store.FindAll()
 
 }

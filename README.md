@@ -38,7 +38,7 @@ The REST API to the example app is described below.
 
 `GET /public/health`
 
-    curl -i -H 'Accept: application/json' http://localhost:666/public/health
+    curl -i -H 'Accept: application/json' http://localhost:8080/public/health
 
 ### Response
 
@@ -55,7 +55,7 @@ The REST API to the example app is described below.
 
 `GET /public/proxy`
 
-    curl -i -H 'Accept: application/json' http://localhost:666/public/proxy
+    curl -i -H 'Accept: application/json' http://localhost:8080/public/proxy
 
 ### Response
 
@@ -71,7 +71,9 @@ The REST API to the example app is described below.
 
 ## Work in progress
 
-I am currently working on many different features.
+Lots of features are being worked on.
 
 ## Roadmap
 I would like a discussion going on the potential expansion of the tool.
+
+I would like this tool to detect all modern threats with machine learn.

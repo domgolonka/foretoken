@@ -13,6 +13,7 @@ require (
 	github.com/jbowtie/gokogiri v0.0.0-20190301021639-37f655d3078f
 	github.com/jinzhu/configor v1.2.1
 	github.com/jmoiron/sqlx v1.3.1
+	github.com/leesper/go_rng v0.0.0-20190531154944-a612b043e353 // indirect
 	github.com/lib/pq v1.9.0
 	github.com/mattn/go-sqlite3 v1.14.6
 	github.com/patrickmn/go-cache v2.1.0+incompatible
@@ -21,4 +22,5 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/test-go/testify v1.1.4
+	gonum.org/v1/gonum v0.8.2 // indirect
 )

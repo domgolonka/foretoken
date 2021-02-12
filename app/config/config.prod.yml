@@ -1,8 +1,8 @@
 appname: "Threatscaper"
 appversion: "1.0"
-rooturl: "http://localhost:666"
-publicport: 669
-serverport: 666
+rooturl: "http://localhost:8080"
+publicport: 8080
+serverport: 8081
 env: "prod"
 disposablefile: "app/data/raw/disposable_email.txt"
 debug: true

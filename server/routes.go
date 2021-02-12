@@ -22,6 +22,9 @@ func PublicRoutes(app *app.App) []*route.HandledRoute {
 		route.Get("/ip/vpn").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetVPN(app)),
+		route.Get("/ip/tor").
+			SecuredWith(route.Unsecured()).
+			Handle(handlers.GetTor(app)),
 		route.Get("/ip/dc-names").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetDcNames(app)),

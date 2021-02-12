@@ -6,6 +6,7 @@ import (
 	"github.com/domgolonka/threatscraper/lib/scrapers/email/disposable"
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/proxy"
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/spam"
+	"github.com/domgolonka/threatscraper/lib/scrapers/ip/tor"
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/vpn"
 	"github.com/domgolonka/threatscraper/ops"
 	"github.com/pkg/errors"
@@ -27,10 +28,12 @@ type App struct {
 	VpnStore            data.VpnStore
 	DisableStore        data.DisposableStore
 	SpamStore           data.SpamStore
+	TorStore            data.TorStore
 	ProxyGenerator      *proxy.ProxyGenerator
 	VPNGenerator        *vpn.VPN
 	DisposableGenerator *disposable.Disposable
 	SpamGenerator       *spam.Spam
+	TorGenerator        *tor.Tor
 }
 
 func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
@@ -66,11 +69,16 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "NewSpamStore")
 	}
+	torStore, err := data.NewTorStore(db)
+	if err != nil {
+		return nil, errors.Wrap(err, "NewSpamStore")
+	}
 
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
 	vpngen := vpn.NewVPN(vpnStore, logger)
 	disgen := disposable.NewDisposable(disposableStore, logger)
 	spamgen := spam.NewSpam(spamStore, logger)
+	torgen := tor.NewTor(torStore, logger)
 
 	return &App{
 		// Provide access to root DB - useful when extending AccountStore functionality
@@ -81,9 +89,11 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		VpnStore:            vpnStore,
 		DisableStore:        disposableStore,
 		SpamStore:           spamStore,
+		TorStore:            torStore,
 		ProxyGenerator:      proxygen,
 		VPNGenerator:        vpngen,
 		DisposableGenerator: disgen,
 		SpamGenerator:       spamgen,
+		TorGenerator:        torgen,
 	}, nil
 }

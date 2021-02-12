@@ -48,7 +48,7 @@ func (db *TorStore) Create(ip string) (*models.Tor, error) {
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT INTO tor (url, type, created_at, updated_at) VALUES (:url, :type, :created_at, :updated_at)",
+		"INSERT INTO tor (ip, created_at, updated_at) VALUES (:ip, :created_at, :updated_at)",
 		tor,
 	)
 	if err != nil {

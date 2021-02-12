@@ -42,7 +42,6 @@ func (p *Tor) load() {
 			p.logger.Errorln(err)
 		}
 		p.logger.Println(provider.Name(), len(hosts))
-		//p.hosts <- hosts
 		for i := 0; i < len(hosts); i++ {
 			p.createOrIgnore(hosts[i])
 		}

@@ -1,0 +1,23 @@
+appname: "Threatscaper"
+appversion: "1.0"
+rooturl: "http://localhost:666"
+publicport: 669
+serverport: 666
+env: "dev"
+disposablefile: "app/data/raw/disposable_email.txt"
+debug: true
+databasename: "sqlite3"
+errorreporter:
+  default: ""
+  airbrakecredentials: ""
+proxy:
+  cachedurationminutes: 120
+  workers: 40
+database:
+  host: "db.sqlite3"
+  port: 0
+  username: ""
+  password: ""
+  dbname: ""
+  timezone: "America/Vancouver"
+  ssl: true

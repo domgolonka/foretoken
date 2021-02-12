@@ -2,7 +2,7 @@ export
 
 GOPATH=$(shell pwd)/vendor:$(shell pwd)
 GOBIN=$(shell pwd)/bin
-GOFILES=cmd/$(wildcard *.go)
+GOFILES=cmd/main.go
 GONAME=$(shell basename "$(PWD)")
 PID=/tmp/go-$(GONAME).pid
 
@@ -28,13 +28,13 @@ build:
 
 ## get all the dependencies
 get:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get .
+	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get cmd/main.go
 ## installs all the dependencies
 install:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go install $(GOFILES)
+	go install $(GOFILES)
 ## runs the build
 run:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go run $(GOFILES)
+	go run $(GOFILES)
 ## This is for development. Restarts after every save
 watch:
 	@$(MAKE) restart &

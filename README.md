@@ -26,7 +26,7 @@ To run it on your local computer:
 
 ## Changing ports and configs
 
-Everything is in the Config file app/config. You can add your own environment variables here.
+All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
 # Apis
 

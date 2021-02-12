@@ -3,7 +3,7 @@ package services
 import (
 	"io/ioutil"
 
-	"github.com/domgolonka/threatscraper/app/config"
+	"github.com/domgolonka/threatscraper/config"
 	"github.com/pkg/errors"
 )
 

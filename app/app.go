@@ -3,8 +3,8 @@ package app
 import (
 	"time"
 
-	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/domgolonka/threatscraper/app/data"
+	"github.com/domgolonka/threatscraper/config"
 	"github.com/domgolonka/threatscraper/lib/scrapers/email/disposable"
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/proxy"
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/spam"

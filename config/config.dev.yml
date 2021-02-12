@@ -1,12 +1,12 @@
 appname: "ThreatScraper"
-appversion: "0.0.2"
+appversion: "0.0.5"
 rooturl: "localhost:8080"
 publicport: 8080
 serverport: 8081
-env: "stag"
+env: "dev"
 disposablefile: "app/data/raw/disposable_email.txt"
 debug: true
-databasename: "postgresql"
+databasename: "sqlite3"
 errorreporter:
   default: ""
   airbrakecredentials: ""
@@ -14,10 +14,10 @@ proxy:
   cachedurationminutes: 120
   workers: 40
 database:
-  host: "sqlite3://db.sqlite3"
+  host: "db.sqlite3"
   port: 0
-  username: "postgres"
-  password: "postgres"
-  dbname: "postgres"
+  username: ""
+  password: ""
+  dbname: ""
   timezone: "America/Vancouver"
   ssl: true

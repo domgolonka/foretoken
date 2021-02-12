@@ -6,8 +6,8 @@ import (
 	"path"
 
 	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/domgolonka/threatscraper/app/data"
+	"github.com/domgolonka/threatscraper/config"
 	"github.com/domgolonka/threatscraper/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
@@ -19,7 +19,7 @@ var VERSION string
 func main() {
 	var cmd string
 	var appPath, _ = os.Getwd()
-	configFilePath := appPath + "/app/config/config.dev.yml"
+	configFilePath := appPath + "/config/config.dev.yml"
 	var cfg config.Config
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {

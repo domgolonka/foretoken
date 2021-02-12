@@ -13,7 +13,7 @@ func GetProxy(app *app.App) http.HandlerFunc {
 		if err != nil {
 			app.Reporter.ReportError(err)
 		}
-		WriteData(w, http.StatusOK, items)
+		WriteJSON(w, http.StatusOK, items)
 
 	}
 }

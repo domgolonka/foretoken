@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/domgolonka/threatscraper/lib/parse"
 	"net/http"
+	"strings"
 
 	"github.com/domgolonka/threatscraper/app/services"
 )
@@ -20,8 +21,11 @@ type RequestError struct {
 	Error string `json:"error"`
 }
 
-func WriteData(w http.ResponseWriter, httpCode int, d interface{}) {
-	WriteJSON(w, httpCode, ServiceData{Result: d})
+func WriteData(w http.ResponseWriter, httpCode int, str *[]string) {
+	stringByte := strings.Join(*str, "\x0A") // x20 = space and x00 = null
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(stringByte))
 }
 
 func WriteErrors(w http.ResponseWriter, err error) {

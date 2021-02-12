@@ -2,11 +2,12 @@ package providers
 
 import (
 	"bytes"
-	"github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"regexp"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type TorIps struct {

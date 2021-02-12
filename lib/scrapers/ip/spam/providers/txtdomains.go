@@ -2,9 +2,10 @@ package providers
 
 import (
 	"bytes"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type TxtDomains struct {

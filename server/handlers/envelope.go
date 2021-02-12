@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/domgolonka/threatscraper/lib/parse"
 	"net/http"
 	"strings"
+
+	"github.com/domgolonka/threatscraper/lib/parse"
 
 	"github.com/domgolonka/threatscraper/app/services"
 )

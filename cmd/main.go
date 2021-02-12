@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path"
+
 	"github.com/domgolonka/threatscraper/app"
 	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/domgolonka/threatscraper/app/data"
 	"github.com/domgolonka/threatscraper/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
-	"os"
-	"path"
 )
 
 // VERSION is a value injected at build time with ldflags

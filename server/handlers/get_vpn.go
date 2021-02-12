@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/services"
 	"net/http"
 	"strings"
+
+	"github.com/domgolonka/threatscraper/app"
+	"github.com/domgolonka/threatscraper/app/services"
 )
 
 func GetVPN(app *app.App) http.HandlerFunc {

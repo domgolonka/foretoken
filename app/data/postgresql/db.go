@@ -3,6 +3,7 @@ package postgresql
 import (
 	"database/sql"
 	"fmt"
+
 	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/jmoiron/sqlx"
 

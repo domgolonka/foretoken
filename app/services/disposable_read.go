@@ -1,9 +1,10 @@
 package services
 
 import (
+	"io/ioutil"
+
 	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/pkg/errors"
-	"io/ioutil"
 )
 
 func DisposableRead(cfg *config.Config) ([]byte, error) {

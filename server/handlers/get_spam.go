@@ -1,9 +1,10 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/domgolonka/threatscraper/app"
 	"github.com/domgolonka/threatscraper/app/services"
-	"net/http"
 )
 
 func GetSpam(app *app.App) http.HandlerFunc {

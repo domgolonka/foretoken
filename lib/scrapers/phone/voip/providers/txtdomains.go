@@ -2,10 +2,11 @@ package providers
 
 import (
 	"bytes"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 var domains = []string{"https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt",

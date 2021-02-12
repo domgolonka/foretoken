@@ -1,12 +1,13 @@
 package parse
 
 import (
-	"github.com/test-go/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	"github.com/test-go/testify/assert"
 )
 
 // TestParsingOnServer will do integration tests of a handler, running on a test Server, that uses Parse method

@@ -1,11 +1,12 @@
 package proxy
 
 import (
-	"github.com/domgolonka/threatscraper/app/data"
 	"math/rand"
 	"reflect"
 	"sync"
 	"time"
+
+	"github.com/domgolonka/threatscraper/app/data"
 
 	"github.com/domgolonka/threatscraper/lib/scrapers/ip/proxy/providers"
 	"github.com/patrickmn/go-cache"

@@ -3,10 +3,11 @@ package parse
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/schema"
 	"io"
 	"net/http"
 	"strings"
+
+	"github.com/gorilla/schema"
 )
 
 const (

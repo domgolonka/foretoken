@@ -3,10 +3,11 @@ package providers
 import (
 	"bytes"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 var ervsfreevps = []string{"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",

@@ -3,10 +3,11 @@ package providers
 import (
 	"bytes"
 	"fmt"
-	"github.com/domgolonka/threatscraper/pkg/utils/ip"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/domgolonka/threatscraper/pkg/utils/ip"
 )
 
 type TxtDomains struct {

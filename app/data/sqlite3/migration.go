@@ -67,7 +67,6 @@ func createSpam(db *sqlx.DB) error {
 	return err
 }
 
-
 func createProxy(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS proxy (

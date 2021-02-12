@@ -22,5 +22,6 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/test-go/testify v1.1.4
+	golang.org/x/tools v0.1.0 // indirect
 	gonum.org/v1/gonum v0.8.2 // indirect
 )

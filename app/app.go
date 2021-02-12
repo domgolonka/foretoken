@@ -1,6 +1,8 @@
 package app
 
 import (
+	"time"
+
 	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/domgolonka/threatscraper/app/data"
 	"github.com/domgolonka/threatscraper/lib/scrapers/email/disposable"
@@ -11,7 +13,6 @@ import (
 	"github.com/domgolonka/threatscraper/ops"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"time"
 )
 
 type App struct {

@@ -2,6 +2,7 @@ package data
 
 import (
 	"fmt"
+
 	"github.com/domgolonka/threatscraper/app/config"
 	"github.com/domgolonka/threatscraper/app/data/postgresql"
 	"github.com/domgolonka/threatscraper/app/data/sqlite3"

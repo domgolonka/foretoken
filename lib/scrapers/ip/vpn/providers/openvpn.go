@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"bytes"
 	"errors"
-	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,6 +13,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 var OpenVPNUrls = []Urls{

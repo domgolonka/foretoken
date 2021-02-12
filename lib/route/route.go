@@ -6,8 +6,9 @@
 package route
 
 import (
-	"github.com/domgolonka/threatscraper/app"
 	"net/http"
+
+	"github.com/domgolonka/threatscraper/app"
 
 	"github.com/gorilla/mux"
 )

@@ -61,12 +61,6 @@ func serve(cfg config.Config) {
 		return
 	}
 
-	fmt.Println(fmt.Sprintf("THREAT_SCRAPER_URL: %s", cfg.Rooturl))
-	fmt.Println(fmt.Sprintf("PORT: %d", cfg.ServerPort))
-	if newApp.Config.PublicPort != 0 {
-		fmt.Println(fmt.Sprintf("PUBLIC_PORT: %d", newApp.Config.PublicPort))
-	}
-
 	server.Server(newApp)
 }
 

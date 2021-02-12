@@ -27,6 +27,6 @@ func PublicRouter(app *app.App) http.Handler {
 
 func wrapRouter(r *mux.Router, app *app.App) http.Handler {
 	stack := handlers.CombinedLoggingHandler(os.Stdout, r)
-
+	app.Logger.Infof("I M HERE")
 	return ops.PanicHandler(app.Reporter, stack)
 }

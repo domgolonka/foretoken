@@ -4,7 +4,12 @@ import (
 	"github.com/domgolonka/threatscraper/app"
 )
 
-func DisposableGetAll(app *app.App) (*[]string, error) {
+func DisposableGetCacheAll(app *app.App) (*[]string, error) {
 	return app.DisposableGenerator.Get()
+
+}
+
+func DisposableGetDBAll(app *app.App) (*[]string, error) {
+	return app.DisableStore.FindAll()
 
 }

@@ -4,7 +4,12 @@ import (
 	"github.com/domgolonka/threatscraper/app"
 )
 
-func VpnGetAll(app *app.App) (*[]string, error) {
+func VpnGetCacheAll(app *app.App) (*[]string, error) {
 	return app.VPNGenerator.Get()
+
+}
+
+func VpnGetDBAll(app *app.App) (*[]string, error) {
+	return app.VpnStore.FindAll()
 
 }

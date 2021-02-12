@@ -10,7 +10,7 @@ import (
 func GetVPN(app *app.App) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		items, err := services.VpnGetAll(app)
+		items, err := services.VpnGetDBAll(app)
 		if err != nil {
 			WriteErrors(w, err)
 		}

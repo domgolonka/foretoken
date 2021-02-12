@@ -10,7 +10,7 @@ import (
 func GetDisposal(app *app.App) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		items, err := services.DisposableGetAll(app)
+		items, err := services.DisposableGetDBAll(app)
 		if err != nil {
 			WriteErrors(w, err)
 		}

@@ -4,7 +4,11 @@ import (
 	"github.com/domgolonka/threatscraper/app"
 )
 
-func SpamGetAll(app *app.App) []string {
+func SpamGetCacheAll(app *app.App) []string {
 	return app.SpamGenerator.Get()
 
+}
+
+func SpamGetDBAll(app *app.App) (*[]string, error) {
+	return app.SpamStore.FindAll()
 }

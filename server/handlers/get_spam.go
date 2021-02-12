@@ -13,7 +13,6 @@ func GetSpam(app *app.App) http.HandlerFunc {
 		items := services.SpamGetAll(app)
 
 		stringByte := strings.Join(items, "\x0A") // x20 = space and x00 = null
-
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(stringByte))
 	}

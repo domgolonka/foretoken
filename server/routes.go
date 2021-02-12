@@ -10,26 +10,25 @@ func PublicRoutes(app *app.App) []*route.HandledRoute {
 	var routes []*route.HandledRoute
 
 	routes = append(routes,
-		route.Get("/public/health").
+		route.Get("/health").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetHealth(app)),
-		route.Get("/public/ip/proxy").
+		route.Get("/ip/proxy").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetProxy(app)),
-
-		route.Get("/public/ip/spam").
+		route.Get("/ip/spam").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetSpam(app)),
-		route.Get("/public/ip/vpn").
+		route.Get("/ip/vpn").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetVPN(app)),
-		route.Get("/public/ip/dc-names").
+		route.Get("/ip/dc-names").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetDcNames(app)),
-		route.Get("/public/email/disposal").
+		route.Get("/email/disposal").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetDisposal(app)),
-		route.Get("/public/email/free").
+		route.Get("/email/free").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetFree(app)),
 	)

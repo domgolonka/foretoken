@@ -6,6 +6,7 @@
 package route
 
 import (
+	"github.com/domgolonka/threatscraper/app"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -74,8 +75,10 @@ func (hr *HandledRoute) ServeHTTP(response http.ResponseWriter, request *http.Re
 }
 
 // Attach is the adapter for adding HandledRoutes to a gorilla/mux Router.
-func Attach(router *mux.Router, pathPrefix string, routes ...*HandledRoute) {
+func Attach(app *app.App, router *mux.Router, pathPrefix string, routes ...*HandledRoute) {
 	for _, r := range routes {
+
+		app.Logger.Infof(r.Verb + " " + pathPrefix + r.Tpl)
 		router.
 			PathPrefix(pathPrefix).
 			Methods(r.Verb).

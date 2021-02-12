@@ -1,6 +1,6 @@
 appname: "ThreatScraper"
 appversion: "0.0.2"
-rooturl: "localhost"
+rooturl: "localhost:8080"
 publicport: 8080
 serverport: 8081
 env: "stag"

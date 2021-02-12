@@ -13,20 +13,19 @@ import (
 
 func Router(app *app.App) http.Handler {
 	r := mux.NewRouter()
-	route.Attach(r, app.Config.Rooturl, PublicRoutes(app)...)
+	route.Attach(app, r, "/server", PublicRoutes(app)...)
 
 	return wrapRouter(r, app)
 }
 
 func PublicRouter(app *app.App) http.Handler {
 	r := mux.NewRouter()
-	route.Attach(r, app.Config.Rooturl, PublicRoutes(app)...)
+	route.Attach(app, r, "/public", PublicRoutes(app)...)
 
 	return wrapRouter(r, app)
 }
 
 func wrapRouter(r *mux.Router, app *app.App) http.Handler {
 	stack := handlers.CombinedLoggingHandler(os.Stdout, r)
-	app.Logger.Infof("I M HERE")
 	return ops.PanicHandler(app.Reporter, stack)
 }

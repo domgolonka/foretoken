@@ -4,29 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"regexp"
 	"time"
 
-	"github.com/gocarina/gocsv"
 	"github.com/sirupsen/logrus"
 )
-
-type vpngatecsv struct {
-	HostName                string `csv:"HostName"`
-	IP                      string `csv:"IP"`
-	Score                   string `csv:"Score"`
-	Ping                    string `csv:"Ping"`
-	Speed                   string `csv:"Speed"`
-	CountryLong             string `csv:"CountryLong"`
-	CountryShort            string `csv:"CountryShort"`
-	NumVpnSessions          string `csv:"NumVpnSessions"`
-	Uptime                  string `csv:"Uptime"`
-	TotalUsers              string `csv:"TotalUsers"`
-	TotalTraffic            string `csv:"TotalTraffic"`
-	LogType                 string `csv:"LogType"`
-	Operator                string `csv:"Operator"`
-	Message                 string `csv:"Message"`
-	OpenVPNConfigDataBase64 string `csv:"OpenVPN_ConfigData_Base64"`
-}
 
 type VPNGate struct {
 	hosts      []string
@@ -55,7 +37,8 @@ func (c *VPNGate) Load(body []byte) ([]string, error) {
 	if len(c.hosts) != 0 {
 		return c.hosts, nil
 	}
-	var ips []*vpngatecsv
+
+	re := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
 	var err error
 	if body == nil {
 		if body, err = c.MakeRequest(vpngateURL); err != nil {
@@ -63,15 +46,9 @@ func (c *VPNGate) Load(body []byte) ([]string, error) {
 			return nil, err
 		}
 
-		if err := gocsv.UnmarshalBytes(body, &ips); err != nil { // Load clients from file
-			c.logger.Error(err)
-		}
-	}
-	for _, client := range ips {
-		c.logger.Error(client.IP)
-	}
+		c.hosts = re.FindAllString(string(body), -1)
 
-	//c.hosts = strings.Split(string(allbody), "\n")
+	}
 
 	c.lastUpdate = time.Now()
 

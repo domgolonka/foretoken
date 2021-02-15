@@ -68,8 +68,8 @@ func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {
 			store:  store,
 		}
 		logger.Debug("starting VPN")
-		//instance.AddProvider(providers.NewOpenVpn(logger))
-		//instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewOpenVpn(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger))
 		instance.AddProvider(providers.NewVPNGate(logger))
 		go instance.run()
 	})

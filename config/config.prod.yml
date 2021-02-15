@@ -1,4 +1,4 @@
-appname: "ThreatScraper"
+appname: "ThreatDefender"
 appversion: "0.0.5"
 rooturl: "localhost:8080"
 publicport: 8080

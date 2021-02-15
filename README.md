@@ -1,4 +1,4 @@
-# ThreatScraper
+# ThreatDefender
 
 Note: This is still in alpha release, this might break over time.
 
@@ -6,7 +6,7 @@ Note: This is still in alpha release, this might break over time.
 <img src="assets/img.png" width="200" height="200">
 
 
-ThreatScraper is a tool to scrape for potential dangerous threats faced on the internet. The list of threats scraped at
+ThreatDefender is a tool to scrape for potential dangerous threats faced on the internet. The list of threats scraped at
 the moment is:
 
 - Emails

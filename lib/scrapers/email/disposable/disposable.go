@@ -1,8 +1,8 @@
 package disposable
 
 import (
-	"github.com/domgolonka/threatscraper/app/data"
-	"github.com/domgolonka/threatscraper/lib/scrapers/email/disposable/providers"
+	"github.com/domgolonka/threatdefender/app/data"
+	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"

@@ -1,8 +1,8 @@
 package vpn
 
 import (
-	"github.com/domgolonka/threatscraper/app/data"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/vpn/providers"
+	"github.com/domgolonka/threatdefender/app/data"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/vpn/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"
@@ -68,8 +68,9 @@ func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {
 			store:  store,
 		}
 		logger.Debug("starting VPN")
-		instance.AddProvider(providers.NewOpenVpn(logger))
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		//instance.AddProvider(providers.NewOpenVpn(logger))
+		//instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewVPNGate(logger))
 		go instance.run()
 	})
 	return instance

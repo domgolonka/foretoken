@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/domgolonka/threatscraper/app"
+	"github.com/domgolonka/threatdefender/app"
 )
 
 func DisposableGetCacheAll(app *app.App) (*[]string, error) {

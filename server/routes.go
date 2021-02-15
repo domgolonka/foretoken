@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/lib/route"
-	"github.com/domgolonka/threatscraper/server/handlers"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/lib/route"
+	"github.com/domgolonka/threatdefender/server/handlers"
 )
 
 func PublicRoutes(app *app.App) []*route.HandledRoute {

@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/domgolonka/threatscraper/app/services"
-	"github.com/domgolonka/threatscraper/lib/parse"
+	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/domgolonka/threatdefender/lib/parse"
 	"github.com/sirupsen/logrus"
 )
 

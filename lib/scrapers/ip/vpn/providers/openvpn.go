@@ -38,6 +38,8 @@ var OpenVPNURLs = []URLs{
 	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/AirVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://monstervpn.tech/ovpn_configuration.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip", Typec: "OpenVPN", Format: OPENVPN},
 }
 
 type OpenVpn struct {

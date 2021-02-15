@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/services"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/app/services"
 )
 
 func GetTor(app *app.App) http.HandlerFunc {

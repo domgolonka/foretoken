@@ -3,9 +3,9 @@ package data
 import (
 	"fmt"
 
-	"github.com/domgolonka/threatscraper/app/data/postgresql"
-	"github.com/domgolonka/threatscraper/app/data/sqlite3"
-	"github.com/domgolonka/threatscraper/config"
+	"github.com/domgolonka/threatdefender/app/data/postgresql"
+	"github.com/domgolonka/threatdefender/app/data/sqlite3"
+	"github.com/domgolonka/threatdefender/config"
 	"github.com/jmoiron/sqlx"
 	sq3 "github.com/mattn/go-sqlite3"
 )

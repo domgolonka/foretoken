@@ -1,7 +1,7 @@
 package dc
 
 import (
-	"github.com/domgolonka/threatscraper/app/data"
+	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/sirupsen/logrus"
 
 	"reflect"

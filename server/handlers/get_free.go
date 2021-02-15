@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/domgolonka/threatscraper/app"
+	"github.com/domgolonka/threatdefender/app"
 )
 
 func GetFree(app *app.App) http.HandlerFunc {

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/models"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/app/models"
 )
 
 func ProxyGetCacheAll(app *app.App) []string {

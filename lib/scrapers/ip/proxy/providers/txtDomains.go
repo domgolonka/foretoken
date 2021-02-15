@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/domgolonka/threatscraper/pkg/utils/ip"
+	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
 type TxtDomains struct {

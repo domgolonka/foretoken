@@ -1,8 +1,8 @@
 package tor
 
 import (
-	"github.com/domgolonka/threatscraper/app/data"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/tor/providers"
+	"github.com/domgolonka/threatdefender/app/data"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/tor/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"

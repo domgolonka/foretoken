@@ -5,10 +5,10 @@ import (
 	"os"
 	"path"
 
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/data"
-	"github.com/domgolonka/threatscraper/config"
-	"github.com/domgolonka/threatscraper/server"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/app/data"
+	"github.com/domgolonka/threatdefender/config"
+	"github.com/domgolonka/threatdefender/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
 )
@@ -23,7 +23,7 @@ func main() {
 	var cfg config.Config
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {
-		logrus.Info("\nsee: https://github.com/domgolonka/threatscraper/blob/master/docs/config.md")
+		logrus.Info("\nsee: https://github.com/domgolonka/threatdefender/blob/master/docs/config.md")
 		logrus.Fatal(err)
 	}
 
@@ -54,7 +54,7 @@ func serve(cfg config.Config) {
 	}
 	logger.Out = os.Stdout
 
-	logger.Infof(fmt.Sprintf("~*~ ThreatScraper v%s ~*~", VERSION))
+	logger.Infof(fmt.Sprintf("~*~ ThreatDefender v%s ~*~", VERSION))
 
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {

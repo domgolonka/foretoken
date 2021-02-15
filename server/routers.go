@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/lib/route"
-	"github.com/domgolonka/threatscraper/ops"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/lib/route"
+	"github.com/domgolonka/threatdefender/ops"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/domgolonka/threatscraper/app"
-	"github.com/domgolonka/threatscraper/app/services"
+	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/threatdefender/app/services"
 )
 
 func GetDisposal(app *app.App) http.HandlerFunc {

@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 
-	"github.com/domgolonka/threatscraper/app"
+	"github.com/domgolonka/threatdefender/app"
 
 	"log"
 	"net/http"

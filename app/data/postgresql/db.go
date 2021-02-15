@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/domgolonka/threatscraper/config"
+	"github.com/domgolonka/threatdefender/config"
 	"github.com/jmoiron/sqlx"
 
 	// load pq library with side effects

@@ -3,14 +3,14 @@ package app
 import (
 	"time"
 
-	"github.com/domgolonka/threatscraper/app/data"
-	"github.com/domgolonka/threatscraper/config"
-	"github.com/domgolonka/threatscraper/lib/scrapers/email/disposable"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/proxy"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/spam"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/tor"
-	"github.com/domgolonka/threatscraper/lib/scrapers/ip/vpn"
-	"github.com/domgolonka/threatscraper/ops"
+	"github.com/domgolonka/threatdefender/app/data"
+	"github.com/domgolonka/threatdefender/config"
+	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/spam"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/tor"
+	"github.com/domgolonka/threatdefender/lib/scrapers/ip/vpn"
+	"github.com/domgolonka/threatdefender/ops"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -77,24 +77,24 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
 	vpngen := vpn.NewVPN(vpnStore, logger)
-	disgen := disposable.NewDisposable(disposableStore, logger)
-	spamgen := spam.NewSpam(spamStore, logger)
-	torgen := tor.NewTor(torStore, logger)
+	//disgen := disposable.NewDisposable(disposableStore, logger)
+	//spamgen := spam.NewSpam(spamStore, logger)
+	//torgen := tor.NewTor(torStore, logger)
 
 	return &App{
 		// Provide access to root DB - useful when extending AccountStore functionality
-		Config:              cfg,
-		Reporter:            errorReporter,
-		Logger:              logger,
-		ProxyStore:          proxyStore,
-		VpnStore:            vpnStore,
-		DisableStore:        disposableStore,
-		SpamStore:           spamStore,
-		TorStore:            torStore,
-		ProxyGenerator:      proxygen,
-		VPNGenerator:        vpngen,
-		DisposableGenerator: disgen,
-		SpamGenerator:       spamgen,
-		TorGenerator:        torgen,
+		Config:         cfg,
+		Reporter:       errorReporter,
+		Logger:         logger,
+		ProxyStore:     proxyStore,
+		VpnStore:       vpnStore,
+		DisableStore:   disposableStore,
+		SpamStore:      spamStore,
+		TorStore:       torStore,
+		ProxyGenerator: proxygen,
+		VPNGenerator:   vpngen,
+		//DisposableGenerator: disgen,
+		//SpamGenerator:       spamgen,
+		//TorGenerator:        torgen,
 	}, nil
 }

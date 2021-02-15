@@ -3,7 +3,7 @@
 Note: This is still in alpha release, this might break over time.
 
 ## About
-![logo](assets/img.png){height="36px" width="36px"}
+<img src="assets/img.png" width="200" height="200">
 
 
 ThreatScraper is a tool to scrape for potential dangerous threats faced on the internet. The list of threats scraped at

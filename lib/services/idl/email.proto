@@ -1,0 +1,16 @@
+syntax = "proto3";
+option go_package = ".;proto";
+import "google/protobuf/empty.proto";
+
+service EmailService {
+  rpc GetDisposableList(google.protobuf.Empty) returns (GetDisposableListResponse) {}
+  rpc GetGenericList(google.protobuf.Empty) returns (GetGenericListResponse) {}
+
+}
+
+message GetDisposableListResponse {
+  repeated string emails = 1;
+}
+message GetGenericListResponse {
+  repeated string generic_list = 1;
+}

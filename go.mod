@@ -10,6 +10,7 @@ require (
 	github.com/felixge/httpsnoop v1.0.1
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/golang/protobuf v1.4.3
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/schema v1.2.0
@@ -31,4 +32,6 @@ require (
 	golang.org/x/tools v0.1.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gonum.org/v1/gonum v0.8.2 // indirect
+	google.golang.org/grpc v1.27.0
+	google.golang.org/protobuf v1.25.0
 )

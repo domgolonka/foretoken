@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = ".;proto";
+import "google/protobuf/empty.proto";
+import "message/proxy_dto.proto";
+
+service IPService {
+  rpc GetProxyList(google.protobuf.Empty) returns (GetProxyListResponse) {}
+  rpc GetSpamList(google.protobuf.Empty) returns (GetSpamListResponse) {}
+  rpc GetTorList(google.protobuf.Empty) returns (GetTorListResponse) {}
+  rpc GetVPNList(google.protobuf.Empty) returns (GetVPNListResponse) {}
+
+}
+
+message GetProxyListResponse {
+  repeated Proxy proxies = 1;
+}
+message GetSpamListResponse {
+  repeated string spam = 1;
+}
+
+message GetTorListResponse {
+  repeated string tor = 1;
+}
+
+message GetVPNListResponse {
+  repeated string vpn = 1;
+}

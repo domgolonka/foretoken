@@ -6,6 +6,7 @@ type Config struct {
 	Rooturl        string
 	PublicPort     int
 	ServerPort     int
+	GRPCPort       int
 	Env            string
 	DisposableFile string
 	Proxy          Proxy

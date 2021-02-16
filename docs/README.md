@@ -1,63 +1,17 @@
-# ThreatDefender
-
-Note: This is still in alpha release, this might break over time.
-
-## About
-<img src="assets/img.png" width="200" height="200">
+# Documentation
 
 
-ThreatDefender is a tool to scrape for potential dangerous threats faced on the internet. The list of threats scraped at
-the moment is:
-
-- Emails
-    - Disposable
-    - Generic
-- IPs
-    - VPN
-    - Spam
-    - Proxy
-    - Tor
-
-This tool saves those threats on multiple different databases and uses REST API to outdata
-
-# Usage
-
-## Migrate
-
-**BEFORE YOU RUN THIS**, You need to migrate the database:
-
-`make migrate`
-
-## How to run
-
-To run it on your local computer:
-
-`make run`
-
-### Changing ports and configs
-
-All configurations are in the config files in the directory "config". You can add your own environment variables here.
-
-# Apis
-
-REST API & gRPC is enabled.
-
-### gRPC 
-
-The default gRPC port is 8082 (you can change in the config)
-
-
-### REST API
+## REST API
 
 The REST API to the example app is described below.
 
-#### Request
+### Request
 
 `GET /public/health`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/health
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:21:38 GMT
@@ -68,13 +22,13 @@ The REST API to the example app is described below.
 
     []
 
-#### Request
+### Request
 
 `GET /public/ip/proxy`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/proxy
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Content-Type: application/json
@@ -83,13 +37,13 @@ The REST API to the example app is described below.
     
     {"result":[{"ID":1,"URL":"103.228.xxx.xxx","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.693099-05:00","UpdatedAt":"2020-12-04T19:12:05.693099-05:00","DeletedAt":null},{"ID":2,"URL":"196.3.xxx.xxx","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.69557-05:00","UpdatedAt":"2020-12-04T19:12:05.69557-05:00","DeletedAt":null},{"ID":3,"URL":"165.227.xxx.xxx","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.696224-05:00","UpdatedAt":"2020-12-04T19:12:05.696224-05:00","DeletedAt":null},{"ID":4,"URL":"117.197.xxx.xxx","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.696876-05:00","UpdatedAt":"2020-12-04T19:12:05.696876-05:00","DeletedAt":null},{"ID":5,"URL":"180.183.xxx.xxx","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.697515-05:00","UpdatedAt":"2020-12-04T19:12:05.697515-05:00","DeletedAt":null},{"ID":6,"URL":"159.192.xxx.xxx:8080","Type":"ipv4","CreatedAt":"2020-12-04T19:12:05.698074-05:00","UpdatedAt":"2020-12-04T19:12:05.698074-05:00","DeletedAt":null},{"ID":7,"URL":"185.28.xxx.xxx","Type":"ipv4","
 
-#### Request
+### Request
 
 `GET /public/ip/spam`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/spam
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:29:54 GMT
@@ -101,13 +55,13 @@ The REST API to the example app is described below.
     103.245.xxx.xxx/23
     209.161.xxx.xxx/19
 
-#### Request
+### Request
 
 `GET /public/ip/vpn`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/vpn
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:29:54 GMT
@@ -118,13 +72,13 @@ The REST API to the example app is described below.
     lim-c04.xxx.com
     bhx-c05.xxx.com
 
-#### Request
+### Request
 
 `GET /public/ip/tor`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/tor
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:29:54 GMT
@@ -136,13 +90,13 @@ The REST API to the example app is described below.
     103.245.xxx.xxx/23
     209.161.xxx.xxx/19
 
-#### Request
+### Request
 
 `GET /public/email/disposal`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/email/disposal
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:29:54 GMT
@@ -154,13 +108,13 @@ The REST API to the example app is described below.
     xxx.ca
 
 
-#### Request
+### Request
 
 `GET /public/email/generic`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/email/generic
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 12 Feb 2021 03:29:54 GMT
@@ -171,14 +125,3 @@ The REST API to the example app is described below.
     xxx.com
     xxx.ca
 
-
-
-## Work in progress
-
-Lots of features are being worked on.
-
-## Roadmap
-
-I would like a discussion going on the potential expansion of the tool.
-
-I would like this tool to detect all modern threats.

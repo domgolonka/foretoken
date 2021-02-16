@@ -5,6 +5,9 @@ import (
 	"os"
 	"path"
 
+	"github.com/domgolonka/threatdefender/lib/services"
+	"github.com/domgolonka/threatdefender/lib/services/impl"
+
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
@@ -46,6 +49,10 @@ func main() {
 
 func serve(cfg config.Config) {
 
+	var (
+		ch = make(chan bool)
+	)
+
 	// Default logger
 	logger := logrus.New()
 	logger.Formatter = &logrus.JSONFormatter{}
@@ -62,7 +69,13 @@ func serve(cfg config.Config) {
 		return
 	}
 
+	impl.InitRPCService(newApp)
+
+	services.ServeRPC(newApp, ch, cfg.GRPCPort)
+
 	server.Server(newApp)
+
+	<-ch
 }
 
 func migrate(cfg config.Config) {

@@ -1,8 +1,8 @@
 <p align="center"> 
-  <img src="assets/img.png" width="300" height="300" alt="Threat Defender" />
+  <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
   <h2 align="center">ThreatDefender</h2>
   <p align="center">A modern-day defence tool using REST/gRPC protocols.</p>
-</p>
+
 <p align="center">
     <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Report Bug</a>
     ·
@@ -10,7 +10,7 @@
 </p>
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
-<div style="text-align:center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </div>
+<p align="center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </p>
 <p align="center">Note: This is still in alpha release, this might break over time. </p>
 
 ## About

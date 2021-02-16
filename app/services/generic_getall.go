@@ -1,10 +1,11 @@
 package services
 
 import (
-	"github.com/domgolonka/threatdefender/app"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/domgolonka/threatdefender/app"
 )
 
 func GenericGetAll(app *app.App) (*[]string, error) {

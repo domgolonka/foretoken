@@ -24,6 +24,7 @@ require (
 	github.com/prometheus/client_golang v1.9.0
 	github.com/sirupsen/logrus v1.7.0
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
+	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614
 	github.com/test-go/testify v1.1.4
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect

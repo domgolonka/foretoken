@@ -159,12 +159,11 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 		//add providers to generator
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
-		instance.AddProvider(providers.NewFreeProxyListNet())
 		instance.AddProvider(providers.NewProxyList())
 		instance.AddProvider(providers.NewTxtDomains())
 
-		//instance.AddProvider(providers.NewHidemyName())
-		instance.AddProvider(providers.NewCoolProxy())
+		instance.AddProvider(providers.NewHidemyName())
+		//instance.AddProvider(providers.NewCoolProxy())
 		//instance.AddProvider(providers.NewProxyTech())
 		instance.AddProvider(providers.NewPubProxy())
 		//run workers

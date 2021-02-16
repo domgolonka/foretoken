@@ -86,7 +86,8 @@ func (x *HidemyName) Load(body []byte) ([]string, error) {
 	}
 	defer doc.Free()
 
-	ips, err := doc.Search(`//td[contains(@class, 'tdl')]`)
+	//ips, err := doc.Search(`//td[contains(@class, 'tdl')]`)
+	ips, err := doc.Search(`/html/body/div[1]/div[4]/div/div[4]/table/tbody/tr/td[1]`)
 	if err != nil {
 		return nil, err
 	}

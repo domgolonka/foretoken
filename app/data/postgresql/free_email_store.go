@@ -1,0 +1,84 @@
+package postgresql
+
+import (
+	"database/sql"
+	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/jmoiron/sqlx"
+)
+
+type FreeEmailStore struct {
+	sqlx.Ext
+}
+
+func (db *FreeEmailStore) FindByURL(url string) (*models.FreeEmail, error) {
+	freeEmail := models.FreeEmail{}
+	err := sqlx.Get(db, &freeEmail, "SELECT * FROM freeemail WHERE url = ?", url)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &freeEmail, nil
+}
+
+func (db *FreeEmailStore) Find(id int) (*models.FreeEmail, error) {
+	freeEmail := models.FreeEmail{}
+	err := sqlx.Get(db, &freeEmail, "SELECT * FROM freeemail WHERE id = ?", id)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &freeEmail, nil
+}
+
+func (db *FreeEmailStore) FindAll() (*[]string, error) {
+	freeEmail := []models.FreeEmail{}
+	err := sqlx.Select(db, &freeEmail, "SELECT * FROM freeemail")
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	strings := make([]string, 0, len(freeEmail))
+	for i := 0; i < len(freeEmail); i++ {
+		strings = append(strings, freeEmail[i].URL)
+	}
+	return &strings, nil
+}
+
+func (db *FreeEmailStore) Create(url string) (*models.FreeEmail, error) {
+	now := time.Now()
+
+	freeEmail := &models.FreeEmail{
+		URL:       url,
+		CreatedAt: now,
+		UpdatedAt: now,
+	}
+
+	result, err := sqlx.NamedExec(db,
+		"INSERT OR IGNORE INTO freeemail (url,  created_at, updated_at) VALUES (:url, :created_at, :updated_at)",
+		freeEmail,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	id, err := result.LastInsertId()
+
+	if err != nil {
+		return nil, err
+	}
+	freeEmail.ID = uint(int(id))
+
+	return freeEmail, nil
+}
+
+func (db *FreeEmailStore) Delete(id int) (bool, error) {
+	result, err := db.Exec("DELETE FROM freeemail WHERE id = ?", id)
+	return ok(result, err)
+}

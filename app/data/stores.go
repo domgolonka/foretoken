@@ -58,6 +58,23 @@ func NewDisposableStore(db sqlx.Ext) (DisposableStore, error) {
 	}
 }
 
+type FreeEmailStore interface {
+	FindByURL(url string) (*models.FreeEmail, error)
+	Find(id int) (*models.FreeEmail, error)
+	FindAll() (*[]string, error)
+	Create(url string) (*models.FreeEmail, error)
+	Delete(id int) (bool, error)
+}
+
+func NewFreeEmailStore(db sqlx.Ext) (FreeEmailStore, error) {
+	switch db.DriverName() {
+	case "sqlite3":
+		return &sqlite3.FreeEmailStore{Ext: db}, nil
+	default:
+		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
+	}
+}
+
 type SpamStore interface {
 	FindByURL(url string) (*models.Spam, error)
 	Find(id int) (*models.Spam, error)

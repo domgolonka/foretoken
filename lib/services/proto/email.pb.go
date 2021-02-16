@@ -8,9 +8,6 @@ package proto
 
 import (
 	context "context"
-	reflect "reflect"
-	sync "sync"
-
 	proto "github.com/golang/protobuf/proto"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
@@ -18,6 +15,8 @@ import (
 	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -86,7 +85,7 @@ var file_email_proto_rawDesc = []byte{
 	0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2e, 0x0a, 0x14, 0x47, 0x65,
 	0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x09, 0x52, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x32, 0xd7, 0x01, 0x0a, 0x0c, 0x45,
+	0x28, 0x09, 0x52, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x32, 0x9c, 0x02, 0x0a, 0x0c, 0x45,
 	0x6d, 0x61, 0x69, 0x6c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x44, 0x0a, 0x11, 0x47,
 	0x65, 0x74, 0x44, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x4c, 0x69, 0x73, 0x74,
 	0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
@@ -100,8 +99,12 @@ var file_email_proto_rawDesc = []byte{
 	0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x15, 0x2e, 0x47, 0x65,
 	0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x00, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x3b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x43, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x45,
+	0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
+	0x1a, 0x15, 0x2e, 0x47, 0x65, 0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x3b, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -125,11 +128,13 @@ var file_email_proto_depIdxs = []int32{
 	1, // 0: EmailService.GetDisposableList:input_type -> google.protobuf.Empty
 	1, // 1: EmailService.GetGenericList:input_type -> google.protobuf.Empty
 	1, // 2: EmailService.GetSpamList:input_type -> google.protobuf.Empty
-	0, // 3: EmailService.GetDisposableList:output_type -> GetEmailListResponse
-	0, // 4: EmailService.GetGenericList:output_type -> GetEmailListResponse
-	0, // 5: EmailService.GetSpamList:output_type -> GetEmailListResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	1, // 3: EmailService.GetFreeEmailList:input_type -> google.protobuf.Empty
+	0, // 4: EmailService.GetDisposableList:output_type -> GetEmailListResponse
+	0, // 5: EmailService.GetGenericList:output_type -> GetEmailListResponse
+	0, // 6: EmailService.GetSpamList:output_type -> GetEmailListResponse
+	0, // 7: EmailService.GetFreeEmailList:output_type -> GetEmailListResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -189,6 +194,7 @@ type EmailServiceClient interface {
 	GetDisposableList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
 	GetGenericList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
 	GetSpamList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
+	GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
 }
 
 type emailServiceClient struct {
@@ -226,11 +232,21 @@ func (c *emailServiceClient) GetSpamList(ctx context.Context, in *empty.Empty, o
 	return out, nil
 }
 
+func (c *emailServiceClient) GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error) {
+	out := new(GetEmailListResponse)
+	err := c.cc.Invoke(ctx, "/EmailService/GetFreeEmailList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EmailServiceServer is the server API for EmailService service.
 type EmailServiceServer interface {
 	GetDisposableList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
 	GetGenericList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
 	GetSpamList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
+	GetFreeEmailList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
 }
 
 // UnimplementedEmailServiceServer can be embedded to have forward compatible implementations.
@@ -245,6 +261,9 @@ func (*UnimplementedEmailServiceServer) GetGenericList(context.Context, *empty.E
 }
 func (*UnimplementedEmailServiceServer) GetSpamList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSpamList not implemented")
+}
+func (*UnimplementedEmailServiceServer) GetFreeEmailList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFreeEmailList not implemented")
 }
 
 func RegisterEmailServiceServer(s *grpc.Server, srv EmailServiceServer) {
@@ -305,6 +324,24 @@ func _EmailService_GetSpamList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EmailService_GetFreeEmailList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServiceServer).GetFreeEmailList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/EmailService/GetFreeEmailList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServiceServer).GetFreeEmailList(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _EmailService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "EmailService",
 	HandlerType: (*EmailServiceServer)(nil),
@@ -320,6 +357,10 @@ var _EmailService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSpamList",
 			Handler:    _EmailService_GetSpamList_Handler,
+		},
+		{
+			MethodName: "GetFreeEmailList",
+			Handler:    _EmailService_GetFreeEmailList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

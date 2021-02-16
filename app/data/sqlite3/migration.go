@@ -6,6 +6,7 @@ func MigrateDB(db *sqlx.DB) error {
 	migrations := []func(db *sqlx.DB) error{
 		createVpn,
 		createDisposable,
+		createFreeEmail,
 		createGenericName,
 		createSpam,
 		createProxy,
@@ -34,6 +35,18 @@ func createVpn(db *sqlx.DB) error {
 func createDisposable(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS disposable (
+            id INTEGER PRIMARY KEY,
+            url TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            created_at DATETIME NOT NULL,
+            updated_at DATETIME NOT NULL
+        )
+    `)
+	return err
+}
+
+func createFreeEmail(db *sqlx.DB) error {
+	_, err := db.Exec(`
+        CREATE TABLE IF NOT EXISTS freeemail (
             id INTEGER PRIMARY KEY,
             url TEXT NOT NULL CONSTRAINT uniq UNIQUE,
             created_at DATETIME NOT NULL,

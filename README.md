@@ -1,10 +1,19 @@
-# ThreatDefender
+<p align="center"> 
+  <img src="assets/img.png" width="300" height="300" alt="Threat Defender" />
+  <h2 align="center">ThreatDefender</h2>
+  <p align="center">A modern-day defence tool using REST/gRPC protocols.</p>
+</p>
+<p align="center">
+    <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Report Bug</a>
+    ·
+    <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Request Feature</a>
+</p>
+<p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
-Note: This is still in alpha release, this might break over time.
+<img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" />
+<p align="center">Note: This is still in alpha release, this might break over time. </p>
 
 ## About
-<img src="assets/img.png" width="200" height="200">
-
 
 ThreatDefender is a tool to scrape for potential dangerous threats faced on the internet. The list of threats scraped at
 the moment is:
@@ -35,6 +44,15 @@ This tool saves those threats on multiple different databases and uses REST API 
 To run it on your local computer:
 
 `make run`
+
+The default config file is `config/config.dev.yml`. If you want to run it with a different config file (or add your own).
+
+`make build` (make sure to build it first)
+
+`./bin/threatdefender --config=/PATH/TO/CONFIG`
+
+example:
+`./bin/threatdefender --config=config/config.prod.yml`
 
 ### Changing ports and configs
 

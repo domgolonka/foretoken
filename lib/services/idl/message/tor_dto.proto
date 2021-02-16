@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = ".;proto";
+import "google/protobuf/timestamp.proto";
+
+message Tor {
+  uint32 id = 1;
+  string ip = 2;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}

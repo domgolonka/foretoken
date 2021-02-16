@@ -2,9 +2,6 @@ syntax = "proto3";
 option go_package = ".;proto";
 import "google/protobuf/empty.proto";
 import "message/proxy_dto.proto";
-import "message/spam_dto.proto";
-import "message/tor_dto.proto";
-import "message/vpn_dto.proto";
 
 service IPService {
   rpc GetProxyList(google.protobuf.Empty) returns (GetProxyListResponse) {}
@@ -18,13 +15,13 @@ message GetProxyListResponse {
   repeated Proxy proxies = 1;
 }
 message GetSpamListResponse {
-  repeated Spam spam = 1;
+  repeated string spam = 1;
 }
 
 message GetTorListResponse {
-  repeated Tor tor = 1;
+  repeated string tor = 1;
 }
 
 message GetVPNListResponse {
-  repeated VPN vpn = 1;
+  repeated string vpn = 1;
 }

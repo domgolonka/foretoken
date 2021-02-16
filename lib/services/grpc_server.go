@@ -12,6 +12,7 @@ import (
 
 func ServeRPC(app *app.App, ch chan bool, port int) {
 	s := grpc.NewServer()
+
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		app.Logger.Panic(err)

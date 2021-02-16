@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"path/filepath"
 	"regexp"
@@ -39,6 +38,7 @@ var OpenVPNURLs = []URLs{
 	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://monstervpn.tech/ovpn_configuration.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://freevpnme.b-cdn.net/FreeVPN.me-OpenVPN-Bundle-July-2020.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip", Typec: "OpenVPN", Format: OPENVPN},
 }
 
@@ -63,12 +63,12 @@ func (c *OpenVpn) Download(src URLs) ([]string, error) {
 	if src.Format == OPENVPN {
 		res, err := http.Get(src.URL)
 		if err != nil {
-			log.Fatal(err)
+			c.logger.Fatal(err)
 		}
 		defer res.Body.Close()
 		d, err := ioutil.ReadAll(res.Body)
 		if err != nil {
-			log.Fatal(err)
+			c.logger.Fatal(err)
 		}
 
 		var filenames []string
@@ -84,7 +84,7 @@ func (c *OpenVpn) Download(src URLs) ([]string, error) {
 
 				rc, err := f.Open()
 				if err != nil {
-					log.Fatal(err)
+					c.logger.Fatal(err)
 				}
 
 				reRemote := regexp.MustCompile(`remote (\S+)`)

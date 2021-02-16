@@ -94,12 +94,13 @@ func (c *TxtDomains) Load(body []byte) ([]string, []string, error) {
 		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
 	feodotracker := Feed{"feodotracker", "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
 		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
+	fireholdabusers := Feed{"boyscout1d", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_abusers_1d.netset",
+		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
 	var activeFeeds = []Feed{teamCymruOrg, stopforumspamCom, greensnowCo, binarydefenseCom, haleysOrgSSH,
 		haleysOrgWp, haleysOrgSMTP, spamhaus, firehol, alienvaultCom, badipsCom, blocklistDe, botscout,
 		bruteforceblocker, cinsscoreCom, cruzit, dshieldOrg, emergingthreatsNet, feodotracker, malwaredomainlist,
-		myip, sslbl,
-		rutgersEdu, sblamCom, talosintelligenceCom,
-		turrisCz, feodotracker}
+		myip, sslbl, rutgersEdu, sblamCom, talosintelligenceCom,
+		turrisCz, feodotracker, fireholdabusers}
 	ips := make(map[string]IPAnalysis)
 	subnets := make(map[string]SUBNETAnalysis)
 	for _, activeFeed := range activeFeeds {

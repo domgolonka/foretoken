@@ -18,13 +18,15 @@ type TxtDomains struct {
 	lastUpdate time.Time
 }
 
-var speedlist = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst"}
+var speedlist = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
+	"https://www.dan.me.uk/torlist/",
+	"https://iplists.firehol.org/files/bm_tor.ipset"}
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
 	return &TxtDomains{logger: logger}
 }
 func (*TxtDomains) Name() string {
-	return "SecOps-Institute"
+	return "tor-txt-domains"
 }
 
 func (c *TxtDomains) SetProxy(tor string) {

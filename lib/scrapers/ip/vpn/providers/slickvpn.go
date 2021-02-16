@@ -16,7 +16,6 @@ type SlickVpn struct {
 	lastUpdate time.Time
 }
 
-// todo
 func NewSlickVpn(logger logrus.FieldLogger) *SlickVpn {
 	logger.Debug("starting SlickVPN")
 	return &SlickVpn{

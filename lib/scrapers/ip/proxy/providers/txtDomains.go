@@ -16,6 +16,12 @@ type TxtDomains struct {
 	lastUpdate time.Time
 }
 
+type Feed struct {
+	Name string
+	URL  string
+	Type string
+}
+
 var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
 	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
 	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
@@ -30,7 +36,7 @@ func NewTxtDomains() *TxtDomains {
 	return &TxtDomains{}
 }
 func (*TxtDomains) Name() string {
-	return "github.com/TheSpeedX/PROXY-List"
+	return "txt_domain_proxy"
 }
 
 func (c *TxtDomains) SetProxy(proxy string) {

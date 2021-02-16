@@ -8,3 +8,4 @@ bin
 main
 db.sqlite3
 docker-compose.yml
+db.sqlite3-journal

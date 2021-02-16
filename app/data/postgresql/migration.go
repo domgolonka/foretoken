@@ -8,6 +8,7 @@ func MigrateDB(db *sqlx.DB) error {
 		createDisposable,
 		createSpam,
 		createProxy,
+		createTor,
 	}
 	for _, m := range migrations {
 		if err := m(db); err != nil {
@@ -60,6 +61,18 @@ func createProxy(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             url TEXT NOT NULL CONSTRAINT uniq UNIQUE,
               type TEXT NOT NULL,
+            created_at DATETIME NOT NULL,
+            updated_at DATETIME NOT NULL
+        )
+    `)
+	return err
+}
+
+func createTor(db *sqlx.DB) error {
+	_, err := db.Exec(`
+        CREATE TABLE IF NOT EXISTS tor (
+            id INTEGER PRIMARY KEY,
+            ip TEXT NOT NULL CONSTRAINT uniq UNIQUE,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )

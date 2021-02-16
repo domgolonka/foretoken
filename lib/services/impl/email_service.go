@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+
 	"github.com/domgolonka/threatdefender/lib/services/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 )
@@ -11,7 +12,7 @@ var _ proto.EmailServiceServer = new(emailService)
 type emailService struct {
 }
 
-func NewRegistryService() *emailService {
+func NewEmailService() *emailService {
 	return &emailService{}
 }
 

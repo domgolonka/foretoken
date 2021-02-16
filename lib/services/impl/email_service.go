@@ -59,13 +59,13 @@ func (e emailService) GetSpamList(ctx context.Context, e2 *empty.Empty) (*proto.
 	return result, nil
 }
 
-func (e emailService) GetFreeEmailList(ctx context.Context, e2 *empty.Empty) (*proto.GetFreeEmailListResponse, error) {
+func (e emailService) GetFreeEmailList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
 	freeEmailList, err := services.FreeEmailGetDBAll(e.app)
 	if err != nil {
 		return nil, err
 	}
 
-	result := &proto.GetFreeEmailListResponse{
+	result := &proto.GetEmailListResponse{
 		Emails: *freeEmailList,
 	}
 

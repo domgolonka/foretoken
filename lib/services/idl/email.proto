@@ -6,7 +6,7 @@ service EmailService {
   rpc GetDisposableList(google.protobuf.Empty) returns (GetEmailListResponse) {}
   rpc GetGenericList(google.protobuf.Empty) returns (GetEmailListResponse) {}
   rpc GetSpamList(google.protobuf.Empty) returns (GetEmailListResponse) {}
-  rpc GetFreeEmailList(google.protobuf.Empty) returns (GetFreeEmailListResponse) {}
+  rpc GetFreeEmailList(google.protobuf.Empty) returns (GetEmailListResponse) {}
 }
 
 message GetEmailListResponse {

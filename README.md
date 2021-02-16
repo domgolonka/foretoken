@@ -12,6 +12,8 @@ the moment is:
 - Emails
     - Disposable
     - Generic
+    - Free
+    - Spam
 - IPs
     - VPN
     - Spam

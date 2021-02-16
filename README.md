@@ -10,7 +10,7 @@
 </p>
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
-<img align="center" src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" />
+<div style="text-align:center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </div>
 <p align="center">Note: This is still in alpha release, this might break over time. </p>
 
 ## About

@@ -9,7 +9,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var domains = []string{"https://raw.githubusercontent.com/dpup/freemail/main/data/free.txt"}
+var domains = []string{
+	"https://gist.githubusercontent.com/Artistan/9662757/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/agarstang/0d87cae417f25a0b90f3/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/cnsaturn/9919758/raw/3rd_party_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/cyriac/f89634a28f4d441719d8/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/defeated/6500068/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/hadees/3cc0e2cf97d06e0b8ebb/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/jpadilla/8459489/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/rasmussvanejensen/3a361d113864ef35eafb/raw/free_email_provider_domains.txt",
+	"https://gist.githubusercontent.com/adamloving/4677212/raw/common-email-providers.txt",
+	"https://raw.githubusercontent.com/tarr11/Webmail-Domains/master/domains.txt",
+}
 
 type TxtDomains struct {
 	hosts      []string
@@ -18,13 +29,13 @@ type TxtDomains struct {
 }
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
-	logger.Debug("starting TxtDomains")
+	logger.Debug("starting free email txdomain")
 	return &TxtDomains{
 		logger: logger,
 	}
 }
 func (*TxtDomains) Name() string {
-	return "text_domain"
+	return "free_email_text_domain"
 }
 
 func (c *TxtDomains) Load(body []byte) ([]string, error) {

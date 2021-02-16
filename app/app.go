@@ -6,6 +6,7 @@ import (
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
 	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable"
+	"github.com/domgolonka/threatdefender/lib/scrapers/email/free"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/spam"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/tor"
@@ -30,11 +31,13 @@ type App struct {
 	DisableStore        data.DisposableStore
 	SpamStore           data.SpamStore
 	TorStore            data.TorStore
+	FreeEmailStore      data.FreeEmailStore
 	ProxyGenerator      *proxy.ProxyGenerator
 	VPNGenerator        *vpn.VPN
 	DisposableGenerator *disposable.Disposable
 	SpamGenerator       *spam.Spam
 	TorGenerator        *tor.Tor
+	FreeEmailGenerator  *free.Free
 }
 
 func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
@@ -66,6 +69,10 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "NewDisposableStore")
 	}
+	freeEmailStore, err := data.NewFreeEmailStore(db)
+	if err != nil {
+		return nil, errors.Wrap(err, "NewFreeEmailStore")
+	}
 	spamStore, err := data.NewSpamStore(db)
 	if err != nil {
 		return nil, errors.Wrap(err, "NewSpamStore")
@@ -80,6 +87,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	disgen := disposable.NewDisposable(disposableStore, logger)
 	spamgen := spam.NewSpam(spamStore, logger)
 	torgen := tor.NewTor(torStore, logger)
+	freeEmailGen := free.NewFreeEmail(freeEmailStore, logger)
 
 	return &App{
 		// Provide access to root DB - useful when extending AccountStore functionality
@@ -89,6 +97,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		ProxyStore:          proxyStore,
 		VpnStore:            vpnStore,
 		DisableStore:        disposableStore,
+		FreeEmailStore:      freeEmailStore,
 		SpamStore:           spamStore,
 		TorStore:            torStore,
 		ProxyGenerator:      proxygen,
@@ -96,5 +105,6 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		DisposableGenerator: disgen,
 		SpamGenerator:       spamgen,
 		TorGenerator:        torgen,
+		FreeEmailGenerator:  freeEmailGen,
 	}, nil
 }

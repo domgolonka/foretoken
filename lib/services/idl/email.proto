@@ -5,7 +5,7 @@ import "google/protobuf/empty.proto";
 service EmailService {
   rpc GetDisposableList(google.protobuf.Empty) returns (GetDisposableListResponse) {}
   rpc GetGenericList(google.protobuf.Empty) returns (GetGenericListResponse) {}
-
+  rpc GetFreeEmailList(google.protobuf.Empty) returns (GetFreeEmailListResponse) {}
 }
 
 message GetDisposableListResponse {
@@ -13,4 +13,8 @@ message GetDisposableListResponse {
 }
 message GetGenericListResponse {
   repeated string generic_list = 1;
+}
+
+message GetFreeEmailListResponse {
+  repeated string emails = 1;
 }

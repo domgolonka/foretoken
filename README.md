@@ -12,6 +12,8 @@ the moment is:
 - Emails
     - Disposable
     - Generic
+    - Free
+    - Spam
 - IPs
     - VPN
     - Spam
@@ -159,6 +161,23 @@ The REST API to the example app is described below.
 `GET /public/email/generic`
 
     curl -i -H 'Accept: application/json' http://localhost:8080/public/email/generic
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Transfer-Encoding: chunked
+
+    xxx.cc
+    xxx.com
+    xxx.ca
+
+#### Request
+
+`GET /public/email/spam`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/public/email/spam
 
 #### Response
 

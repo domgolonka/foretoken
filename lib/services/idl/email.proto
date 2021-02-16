@@ -3,18 +3,13 @@ option go_package = ".;proto";
 import "google/protobuf/empty.proto";
 
 service EmailService {
-  rpc GetDisposableList(google.protobuf.Empty) returns (GetDisposableListResponse) {}
-  rpc GetGenericList(google.protobuf.Empty) returns (GetGenericListResponse) {}
-  rpc GetFreeEmailList(google.protobuf.Empty) returns (GetFreeEmailListResponse) {}
+  rpc GetDisposableList(google.protobuf.Empty) returns (GetEmailListResponse) {}
+  rpc GetGenericList(google.protobuf.Empty) returns (GetEmailListResponse) {}
+  rpc GetSpamList(google.protobuf.Empty) returns (GetEmailListResponse) {}
+  rpc GetFreeEmailList(google.protobuf.Empty) returns (GetEmailListResponse) {}
 }
 
-message GetDisposableListResponse {
+message GetEmailListResponse {
   repeated string emails = 1;
-}
-message GetGenericListResponse {
-  repeated string generic_list = 1;
 }
 
-message GetFreeEmailListResponse {
-  repeated string emails = 1;
-}

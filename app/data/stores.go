@@ -107,3 +107,20 @@ func NewTorStore(db sqlx.Ext) (TorStore, error) {
 		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
 	}
 }
+
+type SpamEmailStore interface {
+	FindByURL(url string) (*models.SpamEmail, error)
+	Find(id int) (*models.SpamEmail, error)
+	FindAll() (*[]string, error)
+	Create(url string) (*models.SpamEmail, error)
+	Delete(id int) (bool, error)
+}
+
+func NewSpamEmailStore(db sqlx.Ext) (SpamEmailStore, error) {
+	switch db.DriverName() {
+	case "sqlite3":
+		return &sqlite3.SpamEmailStore{Ext: db}, nil
+	default:
+		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
+	}
+}

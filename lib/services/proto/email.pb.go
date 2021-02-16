@@ -31,7 +31,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type GetDisposableListResponse struct {
+type GetEmailListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -39,8 +39,8 @@ type GetDisposableListResponse struct {
 	Emails []string `protobuf:"bytes,1,rep,name=emails,proto3" json:"emails,omitempty"`
 }
 
-func (x *GetDisposableListResponse) Reset() {
-	*x = GetDisposableListResponse{}
+func (x *GetEmailListResponse) Reset() {
+	*x = GetEmailListResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_email_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -48,13 +48,13 @@ func (x *GetDisposableListResponse) Reset() {
 	}
 }
 
-func (x *GetDisposableListResponse) String() string {
+func (x *GetEmailListResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetDisposableListResponse) ProtoMessage() {}
+func (*GetEmailListResponse) ProtoMessage() {}
 
-func (x *GetDisposableListResponse) ProtoReflect() protoreflect.Message {
+func (x *GetEmailListResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_email_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -66,106 +66,12 @@ func (x *GetDisposableListResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetDisposableListResponse.ProtoReflect.Descriptor instead.
-func (*GetDisposableListResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetEmailListResponse.ProtoReflect.Descriptor instead.
+func (*GetEmailListResponse) Descriptor() ([]byte, []int) {
 	return file_email_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetDisposableListResponse) GetEmails() []string {
-	if x != nil {
-		return x.Emails
-	}
-	return nil
-}
-
-type GetGenericListResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	GenericList []string `protobuf:"bytes,1,rep,name=generic_list,json=genericList,proto3" json:"generic_list,omitempty"`
-}
-
-func (x *GetGenericListResponse) Reset() {
-	*x = GetGenericListResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_email_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetGenericListResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetGenericListResponse) ProtoMessage() {}
-
-func (x *GetGenericListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_email_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetGenericListResponse.ProtoReflect.Descriptor instead.
-func (*GetGenericListResponse) Descriptor() ([]byte, []int) {
-	return file_email_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetGenericListResponse) GetGenericList() []string {
-	if x != nil {
-		return x.GenericList
-	}
-	return nil
-}
-
-type GetFreeEmailListResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Emails []string `protobuf:"bytes,1,rep,name=emails,proto3" json:"emails,omitempty"`
-}
-
-func (x *GetFreeEmailListResponse) Reset() {
-	*x = GetFreeEmailListResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_email_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetFreeEmailListResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetFreeEmailListResponse) ProtoMessage() {}
-
-func (x *GetFreeEmailListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_email_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetFreeEmailListResponse.ProtoReflect.Descriptor instead.
-func (*GetFreeEmailListResponse) Descriptor() ([]byte, []int) {
-	return file_email_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetFreeEmailListResponse) GetEmails() []string {
+func (x *GetEmailListResponse) GetEmails() []string {
 	if x != nil {
 		return x.Emails
 	}
@@ -177,33 +83,29 @@ var File_email_proto protoreflect.FileDescriptor
 var file_email_proto_rawDesc = []byte{
 	0x0a, 0x0b, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65,
-	0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x33, 0x0a, 0x19, 0x47, 0x65,
-	0x74, 0x44, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c,
-	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x22,
-	0x3b, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x4c, 0x69, 0x73,
-	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x67, 0x65, 0x6e,
-	0x65, 0x72, 0x69, 0x63, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52,
-	0x0b, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x32, 0x0a, 0x18,
-	0x47, 0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6d, 0x61, 0x69,
-	0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73,
-	0x32, 0xe7, 0x01, 0x0a, 0x0c, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x12, 0x49, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x44, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x61, 0x62,
-	0x6c, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x1a,
-	0x2e, 0x47, 0x65, 0x74, 0x44, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x4c, 0x69,
-	0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x43, 0x0a, 0x0e,
-	0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16,
-	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
-	0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x17, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65,
-	0x72, 0x69, 0x63, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x12, 0x47, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x45, 0x6d, 0x61, 0x69,
-	0x6c, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x19, 0x2e,
-	0x47, 0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x3b,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2e, 0x0a, 0x14, 0x47, 0x65,
+	0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x06, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x73, 0x32, 0x9c, 0x02, 0x0a, 0x0c, 0x45,
+	0x6d, 0x61, 0x69, 0x6c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x44, 0x0a, 0x11, 0x47,
+	0x65, 0x74, 0x44, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x15, 0x2e, 0x47, 0x65, 0x74, 0x45, 0x6d,
+	0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x41, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x15, 0x2e, 0x47, 0x65,
+	0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x53, 0x70, 0x61, 0x6d, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x15, 0x2e, 0x47, 0x65,
+	0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x43, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x45,
+	0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
+	0x1a, 0x15, 0x2e, 0x47, 0x65, 0x74, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x3b, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -218,22 +120,22 @@ func file_email_proto_rawDescGZIP() []byte {
 	return file_email_proto_rawDescData
 }
 
-var file_email_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_email_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_email_proto_goTypes = []interface{}{
-	(*GetDisposableListResponse)(nil), // 0: GetDisposableListResponse
-	(*GetGenericListResponse)(nil),    // 1: GetGenericListResponse
-	(*GetFreeEmailListResponse)(nil),  // 2: GetFreeEmailListResponse
-	(*empty.Empty)(nil),               // 3: google.protobuf.Empty
+	(*GetEmailListResponse)(nil), // 0: GetEmailListResponse
+	(*empty.Empty)(nil),          // 1: google.protobuf.Empty
 }
 var file_email_proto_depIdxs = []int32{
-	3, // 0: EmailService.GetDisposableList:input_type -> google.protobuf.Empty
-	3, // 1: EmailService.GetGenericList:input_type -> google.protobuf.Empty
-	3, // 2: EmailService.GetFreeEmailList:input_type -> google.protobuf.Empty
-	0, // 3: EmailService.GetDisposableList:output_type -> GetDisposableListResponse
-	1, // 4: EmailService.GetGenericList:output_type -> GetGenericListResponse
-	2, // 5: EmailService.GetFreeEmailList:output_type -> GetFreeEmailListResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	1, // 0: EmailService.GetDisposableList:input_type -> google.protobuf.Empty
+	1, // 1: EmailService.GetGenericList:input_type -> google.protobuf.Empty
+	1, // 2: EmailService.GetSpamList:input_type -> google.protobuf.Empty
+	1, // 3: EmailService.GetFreeEmailList:input_type -> google.protobuf.Empty
+	0, // 4: EmailService.GetDisposableList:output_type -> GetEmailListResponse
+	0, // 5: EmailService.GetGenericList:output_type -> GetEmailListResponse
+	0, // 6: EmailService.GetSpamList:output_type -> GetEmailListResponse
+	0, // 7: EmailService.GetFreeEmailList:output_type -> GetEmailListResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -246,31 +148,7 @@ func file_email_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_email_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetDisposableListResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_email_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGenericListResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_email_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetFreeEmailListResponse); i {
+			switch v := v.(*GetEmailListResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -288,7 +166,7 @@ func file_email_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_email_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -314,9 +192,10 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type EmailServiceClient interface {
-	GetDisposableList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDisposableListResponse, error)
-	GetGenericList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetGenericListResponse, error)
-	GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetFreeEmailListResponse, error)
+	GetDisposableList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
+	GetGenericList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
+	GetSpamList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
+	GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error)
 }
 
 type emailServiceClient struct {
@@ -327,8 +206,8 @@ func NewEmailServiceClient(cc grpc.ClientConnInterface) EmailServiceClient {
 	return &emailServiceClient{cc}
 }
 
-func (c *emailServiceClient) GetDisposableList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDisposableListResponse, error) {
-	out := new(GetDisposableListResponse)
+func (c *emailServiceClient) GetDisposableList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error) {
+	out := new(GetEmailListResponse)
 	err := c.cc.Invoke(ctx, "/EmailService/GetDisposableList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -336,8 +215,8 @@ func (c *emailServiceClient) GetDisposableList(ctx context.Context, in *empty.Em
 	return out, nil
 }
 
-func (c *emailServiceClient) GetGenericList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetGenericListResponse, error) {
-	out := new(GetGenericListResponse)
+func (c *emailServiceClient) GetGenericList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error) {
+	out := new(GetEmailListResponse)
 	err := c.cc.Invoke(ctx, "/EmailService/GetGenericList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -345,8 +224,17 @@ func (c *emailServiceClient) GetGenericList(ctx context.Context, in *empty.Empty
 	return out, nil
 }
 
-func (c *emailServiceClient) GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetFreeEmailListResponse, error) {
-	out := new(GetFreeEmailListResponse)
+func (c *emailServiceClient) GetSpamList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error) {
+	out := new(GetEmailListResponse)
+	err := c.cc.Invoke(ctx, "/EmailService/GetSpamList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *emailServiceClient) GetFreeEmailList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetEmailListResponse, error) {
+	out := new(GetEmailListResponse)
 	err := c.cc.Invoke(ctx, "/EmailService/GetFreeEmailList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -356,22 +244,26 @@ func (c *emailServiceClient) GetFreeEmailList(ctx context.Context, in *empty.Emp
 
 // EmailServiceServer is the server API for EmailService service.
 type EmailServiceServer interface {
-	GetDisposableList(context.Context, *empty.Empty) (*GetDisposableListResponse, error)
-	GetGenericList(context.Context, *empty.Empty) (*GetGenericListResponse, error)
-	GetFreeEmailList(context.Context, *empty.Empty) (*GetFreeEmailListResponse, error)
+	GetDisposableList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
+	GetGenericList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
+	GetSpamList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
+	GetFreeEmailList(context.Context, *empty.Empty) (*GetEmailListResponse, error)
 }
 
 // UnimplementedEmailServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedEmailServiceServer struct {
 }
 
-func (*UnimplementedEmailServiceServer) GetDisposableList(context.Context, *empty.Empty) (*GetDisposableListResponse, error) {
+func (*UnimplementedEmailServiceServer) GetDisposableList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDisposableList not implemented")
 }
-func (*UnimplementedEmailServiceServer) GetGenericList(context.Context, *empty.Empty) (*GetGenericListResponse, error) {
+func (*UnimplementedEmailServiceServer) GetGenericList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGenericList not implemented")
 }
-func (*UnimplementedEmailServiceServer) GetFreeEmailList(context.Context, *empty.Empty) (*GetFreeEmailListResponse, error) {
+func (*UnimplementedEmailServiceServer) GetSpamList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSpamList not implemented")
+}
+func (*UnimplementedEmailServiceServer) GetFreeEmailList(context.Context, *empty.Empty) (*GetEmailListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFreeEmailList not implemented")
 }
 
@@ -415,6 +307,24 @@ func _EmailService_GetGenericList_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EmailService_GetSpamList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServiceServer).GetSpamList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/EmailService/GetSpamList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServiceServer).GetSpamList(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _EmailService_GetFreeEmailList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
@@ -444,6 +354,10 @@ var _EmailService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGenericList",
 			Handler:    _EmailService_GetGenericList_Handler,
+		},
+		{
+			MethodName: "GetSpamList",
+			Handler:    _EmailService_GetSpamList_Handler,
 		},
 		{
 			MethodName: "GetFreeEmailList",

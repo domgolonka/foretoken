@@ -20,27 +20,40 @@ func NewEmailService(app *app.App) *emailService { //nolint
 	return &emailService{app}
 }
 
-func (e emailService) GetDisposableList(ctx context.Context, empty *empty.Empty) (*proto.GetDisposableListResponse, error) {
+func (e emailService) GetDisposableList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
 	emails, err := services.DisposableGetDBAll(e.app)
 	if err != nil {
 		return nil, err
 	}
 
-	result := &proto.GetDisposableListResponse{
+	result := &proto.GetEmailListResponse{
 		Emails: *emails,
 	}
 
 	return result, nil
 }
 
-func (e emailService) GetGenericList(ctx context.Context, empty *empty.Empty) (*proto.GetGenericListResponse, error) {
+func (e emailService) GetGenericList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
 	genericList, err := services.GenericGetAll(e.app)
 	if err != nil {
 		return nil, err
 	}
 
-	result := &proto.GetGenericListResponse{
-		GenericList: *genericList,
+	result := &proto.GetEmailListResponse{
+		Emails: *genericList,
+	}
+
+	return result, nil
+}
+
+func (e emailService) GetSpamList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
+	spamList, err := services.SpamEmailGetDBAll(e.app)
+	if err != nil {
+		return nil, err
+	}
+
+	result := &proto.GetEmailListResponse{
+		Emails: *spamList,
 	}
 
 	return result, nil

@@ -47,7 +47,7 @@ func (db *ProxyStore) Create(url, types string) (*models.Proxy, error) {
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT INTO proxy (url, type, created_at, updated_at) VALUES (:url, :type, :locked,:created_at, :updated_at)",
+		"INSERT INTO proxy (url, type, created_at, updated_at) VALUES (:url, :type,:created_at, :updated_at)",
 		proxy,
 	)
 	if err != nil {

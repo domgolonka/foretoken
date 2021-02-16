@@ -171,6 +171,23 @@ The REST API to the example app is described below.
     xxx.com
     xxx.ca
 
+#### Request
+
+`GET /public/email/spam`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/public/email/spam
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Transfer-Encoding: chunked
+
+    xxx.cc
+    xxx.com
+    xxx.ca
+
 
 
 ## Work in progress

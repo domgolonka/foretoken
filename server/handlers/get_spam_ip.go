@@ -7,7 +7,7 @@ import (
 	"github.com/domgolonka/threatdefender/app/services"
 )
 
-func GetSpam(app *app.App) http.HandlerFunc {
+func GetSpamIP(app *app.App) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		items, err := services.SpamGetDBAll(app)

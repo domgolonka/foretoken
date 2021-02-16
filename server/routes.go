@@ -18,7 +18,7 @@ func PublicRoutes(app *app.App) []*route.HandledRoute {
 			Handle(handlers.GetProxy(app)),
 		route.Get("/ip/spam").
 			SecuredWith(route.Unsecured()).
-			Handle(handlers.GetSpam(app)),
+			Handle(handlers.GetSpamIP(app)),
 		route.Get("/ip/vpn").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetVPN(app)),
@@ -37,6 +37,9 @@ func PublicRoutes(app *app.App) []*route.HandledRoute {
 		route.Get("/email/generic").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetGeneric(app)),
+		route.Get("/email/generic/spam").
+			SecuredWith(route.Unsecured()).
+			Handle(handlers.GetSpamEmail(app)),
 	)
 
 	return routes

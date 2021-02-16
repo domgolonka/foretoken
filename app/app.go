@@ -3,6 +3,8 @@ package app
 import (
 	"time"
 
+	spamemail "github.com/domgolonka/threatdefender/lib/scrapers/email/spam"
+
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
 	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable"
@@ -29,11 +31,13 @@ type App struct {
 	VpnStore            data.VpnStore
 	DisableStore        data.DisposableStore
 	SpamStore           data.SpamStore
+	SpamEmailStore      data.SpamEmailStore
 	TorStore            data.TorStore
 	ProxyGenerator      *proxy.ProxyGenerator
 	VPNGenerator        *vpn.VPN
 	DisposableGenerator *disposable.Disposable
 	SpamGenerator       *spam.Spam
+	SpamEmailGenerator  *spamemail.SpamEmail
 	TorGenerator        *tor.Tor
 }
 
@@ -70,6 +74,10 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "NewSpamStore")
 	}
+	spamEmailStore, err := data.NewSpamEmailStore(db)
+	if err != nil {
+		return nil, errors.Wrap(err, "NewSpamEmailStore")
+	}
 	torStore, err := data.NewTorStore(db)
 	if err != nil {
 		return nil, errors.Wrap(err, "NewSpamStore")
@@ -79,6 +87,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	vpngen := vpn.NewVPN(vpnStore, logger)
 	disgen := disposable.NewDisposable(disposableStore, logger)
 	spamgen := spam.NewSpam(spamStore, logger)
+	spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger)
 	torgen := tor.NewTor(torStore, logger)
 
 	return &App{
@@ -90,11 +99,13 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		VpnStore:            vpnStore,
 		DisableStore:        disposableStore,
 		SpamStore:           spamStore,
+		SpamEmailStore:      spamEmailStore,
 		TorStore:            torStore,
 		ProxyGenerator:      proxygen,
 		VPNGenerator:        vpngen,
 		DisposableGenerator: disgen,
 		SpamGenerator:       spamgen,
+		SpamEmailGenerator:  spamemailgen,
 		TorGenerator:        torgen,
 	}, nil
 }

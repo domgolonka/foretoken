@@ -25,7 +25,7 @@ var OpenVPNURLs = []URLs{
 	{URL: "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://support.vyprvpn.com/hc/article_attachments/360052617332/Vypr_OpenVPN_20200320.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/windows/New+OVPN+Files.zip", Typec: "OpenVPN", Format: OPENVPN},
-	{URL: "http://www.digibit.tv/certs/Certificates.zip", Typec: "OpenVPN", Format: OPENVPN},
+	//{URL: "http://www.digibit.tv/certs/Certificates.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://www.limevpn.com/downloads/OpenVPN-Config-1194.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/Windscribe.zip", Typec: "OpenVPN", Format: OPENVPN},
 	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/VPNUnlimited.zip", Typec: "OpenVPN", Format: OPENVPN},
@@ -84,7 +84,7 @@ func (c *OpenVpn) Download(src URLs) ([]string, error) {
 
 				rc, err := f.Open()
 				if err != nil {
-					c.logger.Fatal(err)
+					c.logger.Error(err)
 				}
 
 				reRemote := regexp.MustCompile(`remote (\S+)`)

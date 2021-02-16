@@ -35,7 +35,6 @@ func (i ipService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto
 			Type:      v.Type,
 			CreatedAt: timestamppb.New(v.CreatedAt),
 			UpdatedAt: timestamppb.New(v.UpdatedAt),
-			DeletedAt: timestamppb.New(*v.DeletedAt),
 		}
 	}
 

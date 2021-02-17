@@ -12,9 +12,9 @@ type VpnStore struct {
 	sqlx.Ext
 }
 
-func (db *VpnStore) FindByIP(ipaddress string) (*models.Vpn, error) {
+func (db *VpnStore) FindByURL(url string) (*models.Vpn, error) {
 	vpn := models.Vpn{}
-	err := sqlx.Get(db, &vpn, "SELECT * FROM vpn WHERE ip = ?", ipaddress)
+	err := sqlx.Get(db, &vpn, "SELECT * FROM vpn WHERE url = ?", url)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -46,24 +46,23 @@ func (db *VpnStore) FindAll() (*[]string, error) {
 	}
 	strings := make([]string, 0, len(vpn))
 	for i := 0; i < len(vpn); i++ {
-		strings = append(strings, vpn[i].IP+":"+vpn[i].Port)
+		strings = append(strings, vpn[i].URL)
 	}
 	return &strings, nil
 }
 
-func (db *VpnStore) Create(ip, port, source string) (*models.Vpn, error) {
+func (db *VpnStore) Create(url, source string) (*models.Vpn, error) {
 	now := time.Now()
 
 	vpn := &models.Vpn{
-		IP:        ip,
-		Port:      port,
+		URL:       url,
 		Source:    source,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO vpn (ip, port, source,  created_at, updated_at) VALUES (:ip, :port, :source, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO vpn (url, source,  created_at, updated_at) VALUES (:url, :source, :created_at, :updated_at)",
 		vpn,
 	)
 	if err != nil {

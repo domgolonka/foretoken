@@ -23,7 +23,7 @@ func ScoreIP(app *app.App, ip string) (uint8, error) {
 		return score, err
 	}
 
-	vpnIP, err := app.VpnStore.FindByIP(ip)
+	vpnIP, err := app.VpnStore.FindByURL(ip)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err

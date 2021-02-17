@@ -4,8 +4,7 @@ import "time"
 
 type Vpn struct {
 	ID        uint
-	IP        string     `db:"ip"`
-	Port      string     `db:"port"`
+	URL       string     `db:"url"`
 	Source    string     `db:"source"`
 	CreatedAt time.Time  `db:"created_at"`
 	UpdatedAt time.Time  `db:"updated_at"`

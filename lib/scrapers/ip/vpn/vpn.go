@@ -44,12 +44,12 @@ func (p *VPN) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 		//p.hosts <- hosts
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i])
+			p.createOrIgnore(hosts[i], provider.Name())
 		}
 	}
 }
-func (p *VPN) createOrIgnore(vpn string) bool {
-	_, err := p.store.Create(vpn)
+func (p *VPN) createOrIgnore(url, source string) bool {
+	_, err := p.store.Create(url, source)
 	return err == nil
 }
 

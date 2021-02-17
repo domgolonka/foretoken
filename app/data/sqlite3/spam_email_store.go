@@ -12,9 +12,9 @@ type SpamEmailStore struct {
 	sqlx.Ext
 }
 
-func (db *SpamEmailStore) FindByURL(url string) (*models.SpamEmail, error) {
+func (db *SpamEmailStore) FindByEmail(email string) (*models.SpamEmail, error) {
 	spam := models.SpamEmail{}
-	err := sqlx.Get(db, &spam, "SELECT * FROM spamemail WHERE url = ?", url)
+	err := sqlx.Get(db, &spam, "SELECT * FROM spamemail WHERE email = ?", email)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -46,22 +46,22 @@ func (db *SpamEmailStore) FindAll() (*[]string, error) {
 	}
 	strings := make([]string, 0, len(spam))
 	for i := 0; i < len(spam); i++ {
-		strings = append(strings, spam[i].URL)
+		strings = append(strings, spam[i].Email)
 	}
 	return &strings, nil
 }
 
-func (db *SpamEmailStore) Create(url string) (*models.SpamEmail, error) {
+func (db *SpamEmailStore) Create(email string) (*models.SpamEmail, error) {
 	now := time.Now()
 
 	spamemail := &models.SpamEmail{
-		URL:       url,
+		Email:     email,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT INTO spamemail (url, created_at, updated_at) VALUES (:url, :created_at, :updated_at)",
+		"INSERT INTO spamemail (email, created_at, updated_at) VALUES (:email, :created_at, :updated_at)",
 		spamemail,
 	)
 	if err != nil {

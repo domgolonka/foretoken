@@ -12,7 +12,6 @@ type SpamStore struct {
 	sqlx.Ext
 }
 
-// todo needs fix
 func (db *SpamStore) FindByIP(ipaddress string) (*models.Spam, error) {
 	spam := models.Spam{}
 	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE url = ?", ipaddress)

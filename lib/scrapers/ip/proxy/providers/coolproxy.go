@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/base64"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"regexp"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/jbowtie/gokogiri"
 )
@@ -16,8 +17,8 @@ import (
 const coolProxyURL = `https://www.cool-proxy.net/proxies/http_proxy_list/sort:score/direction:desc`
 
 type CoolProxy struct {
-	proxy      string
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
 }
 
@@ -25,7 +26,7 @@ func NewCoolProxy() *CoolProxy {
 	return &CoolProxy{}
 }
 
-func (c *CoolProxy) SetProxy(proxy string) {
+func (c *CoolProxy) SetProxy(proxy models.Proxy) {
 	c.proxy = proxy
 }
 
@@ -33,9 +34,9 @@ func (*CoolProxy) Name() string {
 	return "www.cool-proxy.net"
 }
 
-func (c *CoolProxy) Load(body []byte) ([]string, error) {
+func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(60*20) {
-		c.proxyList = make([]string, 0)
+		c.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(c.proxyList) != 0 {
@@ -86,8 +87,13 @@ func (c *CoolProxy) Load(body []byte) ([]string, error) {
 		if err != nil {
 			continue
 		}
-
-		c.proxyList = append(c.proxyList, fmt.Sprintf("%s:%s", decoded, ports[i].Content()))
+		prox := models.Proxy{
+			IP:   string(decoded),
+			Port: ports[i].Content(),
+			Type: "http", // todo
+		}
+		c.proxyList = append(c.proxyList, prox)
+		//c.proxyList = append(c.proxyList, fmt.Sprintf("%s:%s", decoded, ports[i].Content()))
 	}
 	c.lastUpdate = time.Now()
 	return c.proxyList, nil
@@ -102,8 +108,8 @@ func (c *CoolProxy) MakeRequest() ([]byte, error) {
 	}
 
 	var client = NewClient()
-	if c.proxy != "" {
-		proxyURL, err := url.Parse("http://" + c.proxy)
+	if c.proxy.IP != "" {
+		proxyURL, err := url.Parse("http://" + c.proxy.IP + ":" + c.proxy.Port)
 		if err != nil {
 			return nil, err
 		}
@@ -129,7 +135,7 @@ func (c *CoolProxy) MakeRequest() ([]byte, error) {
 	return body.Bytes(), err
 }
 
-func (c *CoolProxy) List() ([]string, error) {
+func (c *CoolProxy) List() ([]models.Proxy, error) {
 	return c.Load(nil)
 }
 

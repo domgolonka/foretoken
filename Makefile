@@ -64,19 +64,23 @@ check: format-check ## Linting and static analysis
 	fi
 	@./bin/golangci-lint run --timeout 180s -E gosec -E stylecheck -E golint -E goimports
 
-start:
+start: ## start defending on localmachine
 	@echo "Starting bin/$(GONAME)"
 	@./bin/$(GONAME) & echo $$! > $(PID)
 
-stop:
+stop: ## stop defending on localmachine
 	@echo "Stopping bin/$(GONAME) if it's running"
 	@-kill `[[ -f $(PID) ]] && cat $(PID)` 2>/dev/null || true
 
-clear:
+clear: ## clear
 	@clear
 
-clean:
+clean: ## clean
 	@echo "Cleaning"
 	@GOBIN=$(GOBIN) go clean
 
-.PHONY: build get install run watch start stop restart clean
+genproto: ## generate protobuf files
+	@echo "Generating protobuf files"
+	./script/generate-proto.sh
+
+.PHONY: format check build get install run watch start stop restart clean

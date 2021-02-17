@@ -7,11 +7,13 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/sirupsen/logrus"
 )
 
 type TorIps struct {
-	torlist    []string
+	torlist    []models.Tor
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
@@ -28,11 +30,11 @@ func (*TorIps) Name() string {
 	return "tor"
 }
 
-func (c *TorIps) Load(body []byte) ([]string, error) {
-	var torlist []string
+func (c *TorIps) Load(body []byte) ([]models.Tor, error) {
+
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.torlist = make([]string, 0)
+		c.torlist = make([]models.Tor, 0)
 	}
 
 	allbody, err := c.MakeRequest()
@@ -42,12 +44,16 @@ func (c *TorIps) Load(body []byte) ([]string, error) {
 
 	reExitNode := regexp.MustCompile(`ExitAddress (\d+\.\d+\.\d+\.\d+)`)
 	for _, node := range reExitNode.FindAllStringSubmatch(string(allbody), -1) {
-		torlist = append(torlist, node[1])
+		tor := models.Tor{
+			IP: node[1],
+		}
+		c.torlist = append(c.torlist, tor)
+		//torlist = append(torlist, node[1])
 	}
 
 	c.lastUpdate = time.Now()
-	c.torlist = torlist
-	return torlist, nil
+	//c.torlist = torlist
+	return c.torlist, nil
 }
 
 func (c *TorIps) MakeRequest() ([]byte, error) {
@@ -71,6 +77,6 @@ func (c *TorIps) MakeRequest() ([]byte, error) {
 	return body.Bytes(), nil
 }
 
-func (c *TorIps) List() ([]string, error) {
+func (c *TorIps) List() ([]models.Tor, error) {
 	return c.Load(nil)
 }

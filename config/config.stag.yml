@@ -1,11 +1,11 @@
 appname: "ThreatDefender"
-appversion: "0.0.5"
+appversion: "0.1.8"
 rooturl: "localhost:8080"
 publicport: 8080
 serverport: 8081
 grpcport: 8082
 env: "stag"
-disposablefile: "app/data/raw/disposable_email.txt"
+autotls: true
 debug: true
 databasename: "postgresql"
 errorreporter:

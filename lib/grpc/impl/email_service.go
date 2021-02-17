@@ -6,7 +6,7 @@ import (
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/services"
 
-	"github.com/domgolonka/threatdefender/lib/services/proto"
+	"github.com/domgolonka/threatdefender/lib/grpc/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 

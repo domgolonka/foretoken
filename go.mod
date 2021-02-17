@@ -20,6 +20,7 @@ require (
 	github.com/leesper/go_rng v0.0.0-20190531154944-a612b043e353 // indirect
 	github.com/lib/pq v1.9.0
 	github.com/mattn/go-sqlite3 v1.14.6
+	github.com/micro/go-micro/v2 v2.9.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.9.0
@@ -27,6 +28,7 @@ require (
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614
 	github.com/test-go/testify v1.1.4
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect
 	golang.org/x/tools v0.1.0 // indirect

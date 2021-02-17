@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
 type TxtDomains struct {
-	proxy      string
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
 }
 
@@ -39,14 +42,14 @@ func (*TxtDomains) Name() string {
 	return "txt_domain_proxy"
 }
 
-func (c *TxtDomains) SetProxy(proxy string) {
+func (c *TxtDomains) SetProxy(proxy models.Proxy) {
 	c.proxy = proxy
 }
 
-func (c *TxtDomains) Load(body []byte) ([]string, error) {
+func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.proxyList = make([]string, 0)
+		c.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(c.proxyList) != 0 {
@@ -67,8 +70,15 @@ func (c *TxtDomains) Load(body []byte) ([]string, error) {
 			allbody = append(allbody, ipv4...)
 		}
 	}
-
-	c.proxyList = allbody
+	for _, s := range allbody {
+		proxy := strings.Split(s, ":")
+		prox := models.Proxy{
+			IP:   proxy[0],
+			Port: proxy[1],
+			Type: "http",
+		}
+		c.proxyList = append(c.proxyList, prox)
+	}
 
 	c.lastUpdate = time.Now()
 
@@ -84,8 +94,8 @@ func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
 	}
 
 	var client = NewClient()
-	if c.proxy != "" {
-		proxyURL, err := url.Parse("http://" + c.proxy)
+	if c.proxy.IP != "" {
+		proxyURL, err := url.Parse(c.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}
@@ -115,7 +125,7 @@ func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
 	return cut, err
 }
 
-func (c *TxtDomains) List() ([]string, error) {
+func (c *TxtDomains) List() ([]models.Proxy, error) {
 	return c.Load(nil)
 }
 

@@ -8,12 +8,14 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/jbowtie/gokogiri"
 )
 
 type FreeProxyList struct {
-	proxy      string
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
 }
 
@@ -21,7 +23,7 @@ func NewFreeProxyList() *FreeProxyList {
 	return &FreeProxyList{}
 }
 
-func (x *FreeProxyList) SetProxy(proxy string) {
+func (x *FreeProxyList) SetProxy(proxy models.Proxy) {
 	x.proxy = proxy
 }
 
@@ -43,8 +45,8 @@ func (x *FreeProxyList) MakeRequest() ([]byte, error) {
 	req.Header.Set("Referer", "https://free-proxy-list.net/web-proxy.html")
 
 	var client = NewClient()
-	if x.proxy != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy)
+	if x.proxy.IP != "" {
+		proxyURL, err := url.Parse("http://" + x.proxy.IP + ":" + x.proxy.Port)
 		if err != nil {
 			return nil, err
 		}
@@ -69,9 +71,9 @@ func (x *FreeProxyList) MakeRequest() ([]byte, error) {
 	return body.Bytes(), nil
 }
 
-func (x *FreeProxyList) Load(body []byte) ([]string, error) {
+func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0)
+		x.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(x.proxyList) != 0 {
@@ -109,16 +111,22 @@ func (x *FreeProxyList) Load(body []byte) ([]string, error) {
 		return nil, errors.New("len port not equal ip")
 	}
 
-	x.proxyList = make([]string, 0, len(ips))
+	x.proxyList = make([]models.Proxy, 0, len(ips))
 
 	for i, ip := range ips {
-		x.proxyList = append(x.proxyList, ip.Content()+":"+ports[i].Content())
+		prox := models.Proxy{
+			IP:   ip.Content(),
+			Port: ports[i].Content(),
+			Type: "http", // todo
+		}
+		x.proxyList = append(x.proxyList, prox)
+		//x.proxyList = append(x.proxyList, ip.Content()+":"+ports[i].Content())
 	}
 
 	x.lastUpdate = time.Now()
 	return x.proxyList, nil
 }
 
-func (x *FreeProxyList) List() ([]string, error) {
+func (x *FreeProxyList) List() ([]models.Proxy, error) {
 	return x.Load(nil)
 }

@@ -8,10 +8,14 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+////////////////////////////
+/// ipaddress
+///////////////////////////
 type ProxyStore interface {
 	Find(id int) (*models.Proxy, error)
 	FindAll() (*[]models.Proxy, error)
-	Create(url string, types string) (*models.Proxy, error)
+	FindByIP(ipaddress string) (*models.Proxy, error)
+	Create(ip, port, types string) (*models.Proxy, error)
 	Delete(id int) (bool, error)
 }
 
@@ -25,10 +29,10 @@ func NewProxyStore(db sqlx.Ext) (ProxyStore, error) {
 }
 
 type VpnStore interface {
-	FindByURL(url string) (*models.Vpn, error)
+	FindByIP(ipaddress string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
 	FindAll() (*[]string, error)
-	Create(url string) (*models.Vpn, error)
+	Create(ip, port, source string) (*models.Vpn, error)
 	Delete(id int) (bool, error)
 }
 
@@ -41,6 +45,43 @@ func NewVpnStore(db sqlx.Ext) (VpnStore, error) {
 	}
 }
 
+type SpamStore interface {
+	FindByIP(ipaddress string) (*models.Spam, error)
+	Find(id int) (*models.Spam, error)
+	FindAll() (*[]string, error)
+	Create(url string, sub bool) (*models.Spam, error)
+	Delete(id int) (bool, error)
+}
+
+func NewSpamStore(db sqlx.Ext) (SpamStore, error) {
+	switch db.DriverName() {
+	case "sqlite3":
+		return &sqlite3.SpamStore{Ext: db}, nil
+	default:
+		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
+	}
+}
+
+type TorStore interface {
+	FindByIP(ipaddress string) (*models.Tor, error)
+	Find(id int) (*models.Tor, error)
+	FindAll() (*[]string, error)
+	Create(ip) (*models.Tor, error)
+	Delete(id int) (bool, error)
+}
+
+func NewTorStore(db sqlx.Ext) (TorStore, error) {
+	switch db.DriverName() {
+	case "sqlite3":
+		return &sqlite3.TorStore{Ext: db}, nil
+	default:
+		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
+	}
+}
+
+////////////////////////////
+/// email
+///////////////////////////
 type DisposableStore interface {
 	FindByURL(url string) (*models.DisposableEmail, error)
 	Find(id int) (*models.DisposableEmail, error)
@@ -70,39 +111,6 @@ func NewFreeEmailStore(db sqlx.Ext) (FreeEmailStore, error) {
 	switch db.DriverName() {
 	case "sqlite3":
 		return &sqlite3.FreeEmailStore{Ext: db}, nil
-	default:
-		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
-	}
-}
-
-type SpamStore interface {
-	FindByURL(url string) (*models.Spam, error)
-	Find(id int) (*models.Spam, error)
-	FindAll() (*[]string, error)
-	Create(url string, sub bool) (*models.Spam, error)
-	Delete(id int) (bool, error)
-}
-
-func NewSpamStore(db sqlx.Ext) (SpamStore, error) {
-	switch db.DriverName() {
-	case "sqlite3":
-		return &sqlite3.SpamStore{Ext: db}, nil
-	default:
-		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
-	}
-}
-
-type TorStore interface {
-	Find(id int) (*models.Tor, error)
-	FindAll() (*[]string, error)
-	Create(url string) (*models.Tor, error)
-	Delete(id int) (bool, error)
-}
-
-func NewTorStore(db sqlx.Ext) (TorStore, error) {
-	switch db.DriverName() {
-	case "sqlite3":
-		return &sqlite3.TorStore{Ext: db}, nil
 	default:
 		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
 	}

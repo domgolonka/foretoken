@@ -4,9 +4,14 @@ import "time"
 
 type Proxy struct {
 	ID        uint
-	URL       string     `db:"url"`
+	IP        string     `db:"ip"`
+	Port      string     `db:"port"`
 	Type      string     `db:"type"`
 	CreatedAt time.Time  `db:"created_at"`
 	UpdatedAt time.Time  `db:"updated_at"`
 	DeletedAt *time.Time `db:"deleted_at"`
+}
+
+func (p *Proxy) ToString() string {
+	return p.Type + "://" + p.IP + ":" + p.Port
 }

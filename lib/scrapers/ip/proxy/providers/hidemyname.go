@@ -6,15 +6,18 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/jbowtie/gokogiri"
 	scraper "github.com/soluchok/go-cloudflare-scraper"
 )
 
 type HidemyName struct {
-	proxy      string
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
 }
 
@@ -26,15 +29,15 @@ func (x *HidemyName) Name() string {
 	return "hidemyna.me"
 }
 
-func (x *HidemyName) SetProxy(proxy string) {
+func (x *HidemyName) SetProxy(proxy models.Proxy) {
 	x.proxy = proxy
 }
 
 func (x *HidemyName) MakeRequest() ([]byte, error) {
 	transport := NewTransport()
 
-	if x.proxy != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy)
+	if x.proxy.IP != "" {
+		proxyURL, err := url.Parse("http://" + x.proxy.IP + ":" + x.proxy.Port)
 		if err != nil {
 			return nil, err
 		}
@@ -64,9 +67,9 @@ func (x *HidemyName) MakeRequest() ([]byte, error) {
 	return body.Bytes(), nil
 }
 
-func (x *HidemyName) Load(body []byte) ([]string, error) {
+func (x *HidemyName) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0)
+		x.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(x.proxyList) != 0 {
@@ -96,12 +99,19 @@ func (x *HidemyName) Load(body []byte) ([]string, error) {
 		return nil, errors.New("ip not found")
 	}
 
-	x.proxyList = make([]string, 0, len(ips))
+	x.proxyList = make([]models.Proxy, 0, len(ips))
 
 	for _, ip := range ips {
 		port := ip.NextSibling()
+		types := ip.NextSibling().NextSibling().NextSibling()
 		if ipRegexp.MatchString(ip.Content()) {
-			x.proxyList = append(x.proxyList, ip.Content()+":"+port.Content())
+			prox := models.Proxy{
+				IP:   ip.Content(),
+				Port: port.Content(),
+				Type: strings.ToLower(types.Content()),
+			}
+			x.proxyList = append(x.proxyList, prox)
+			//x.proxyList = append(x.proxyList, ip.Content()+":"+port.Content())
 		}
 
 	}
@@ -109,6 +119,6 @@ func (x *HidemyName) Load(body []byte) ([]string, error) {
 	return x.proxyList, nil
 }
 
-func (x *HidemyName) List() ([]string, error) {
+func (x *HidemyName) List() ([]models.Proxy, error) {
 	return x.Load(nil)
 }

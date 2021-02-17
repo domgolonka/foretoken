@@ -12,6 +12,18 @@ type TorStore struct {
 	sqlx.Ext
 }
 
+func (db *TorStore) FindByIP(ipaddress string) (*models.Tor, error) {
+	tor := models.Tor{}
+	err := sqlx.Get(db, &tor, "SELECT * FROM tor WHERE ip = ?", ipaddress)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &tor, nil
+}
+
 func (db *TorStore) Find(id int) (*models.Tor, error) {
 	tor := models.Tor{}
 	err := sqlx.Get(db, &tor, "SELECT * FROM tor WHERE id = ?", id)

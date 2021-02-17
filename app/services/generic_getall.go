@@ -23,6 +23,22 @@ func GenericGetAll(app *app.App) (*[]string, error) {
 	}
 	generic := strings.Split(string(b), "\n")
 
-	app.Logger.Error(generic)
 	return &generic, nil
+}
+
+func GenericGetEmail(app *app.App, emailAddress string) (*bool, error) {
+	pwd, _ := os.Getwd()
+	file, err := os.Open(pwd + "/app/data/raw/generic_list.txt")
+	if err != nil {
+		app.Logger.Error(err)
+		return nil, err
+	}
+
+	b, err := ioutil.ReadAll(file)
+	if err != nil {
+		app.Logger.Error(err)
+		return nil, err
+	}
+	hasEmail := strings.Contains(string(b), emailAddress)
+	return &hasEmail, nil
 }

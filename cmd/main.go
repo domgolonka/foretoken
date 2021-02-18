@@ -23,7 +23,7 @@ var VERSION string
 func main() {
 	var cmd string
 	var appPath, _ = os.Getwd()
-	configFilePath := appPath + "/config/config.dev.yml"
+	configFilePath := appPath + "/config.dev.yml"
 	var cfg config.Config
 	configFlag := flag.String("config", configFilePath, "the config file.")
 	flag.Parse()

@@ -79,9 +79,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/health`
+`GET /health`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/health
+    curl -i -H 'Accept: application/json' http://localhost:8080/health
 
 #### Response
 
@@ -96,9 +96,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/ip/proxy`
+`GET /ip/proxy`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/proxy
+    curl -i -H 'Accept: application/json' http://localhost:8080/ip/proxy
 
 #### Response
 
@@ -111,9 +111,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/ip/spam`
+`GET /ip/spam`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/spam
+    curl -i -H 'Accept: application/json' http://localhost:8080/ip/spam
 
 #### Response
 
@@ -129,9 +129,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/ip/vpn`
+`GET /ip/vpn`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/vpn
+    curl -i -H 'Accept: application/json' http://localhost:8080/ip/vpn
 
 #### Response
 
@@ -146,9 +146,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/ip/tor`
+`GET /ip/tor`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/ip/tor
+    curl -i -H 'Accept: application/json' http://localhost:8080/ip/tor
 
 #### Response
 
@@ -164,9 +164,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/email/disposal`
+`GET /email/disposal`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/email/disposal
+    curl -i -H 'Accept: application/json' http://localhost:8080/email/disposal
 
 #### Response
 
@@ -182,9 +182,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/email/generic`
+`GET /email/generic`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/email/generic
+    curl -i -H 'Accept: application/json' http://localhost:8080/email/generic
 
 #### Response
 
@@ -199,9 +199,26 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /public/email/spam`
+`GET /email/spam`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/public/email/spam
+    curl -i -H 'Accept: application/json' http://localhost:8080/email/spam
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Transfer-Encoding: chunked
+
+    xxx.cc
+    xxx.com
+    xxx.ca
+
+#### Request
+
+`GET /score/email?email=youremail@gmail.com`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/score/email?email=youremail@gmail.com
 
 #### Response
 

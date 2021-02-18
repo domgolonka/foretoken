@@ -29,16 +29,17 @@ func Server(app *app.App) {
 			"http/1.1", "acme-tls/1",
 		},
 	}
-	ln, err := tls.Listen("tcp", fmt.Sprintf(":%d", app.Config.PublicPort), cfg)
-	if err != nil {
-		panic(err)
-	}
+
 	srv := fiber.New(fiber.Config{
 		//Prefork:      prefork,
 		ErrorHandler: Error(app),
 	})
 	routers(srv, app)
 	if app.Config.AutoTLS {
+		ln, err := tls.Listen("tcp", fmt.Sprintf(":%d", app.Config.PublicPort), cfg)
+		if err != nil {
+			panic(err)
+		}
 		app.Logger.Fatal(srv.Listener(ln))
 	} else {
 		app.Logger.Fatal(srv.Listen(fmt.Sprintf(":%d", app.Config.PublicPort)))

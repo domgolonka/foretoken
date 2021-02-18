@@ -54,11 +54,15 @@ The default config file is `config/config.dev.yml`. If you want to run it with a
 example:
 `./bin/threatdefender --config=config/config.prod.yml`
 
-### Changing ports and configs
+# Configs
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
-# Apis
+## Change the databases
+
+At this moment, threatdefender only supports SQLite and PostgreSQL. You can change the `databasename` field with either `postgresql` or `sqlite3`
+
+# APIs
 
 REST API & gRPC is enabled.
 

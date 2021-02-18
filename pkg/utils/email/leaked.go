@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/domgolonka/threatdefender/app"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app"
 )
 
 const (

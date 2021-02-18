@@ -5,6 +5,7 @@ type EmailResponse struct {
 	Disposable bool    `json:"disposable"`
 	RecentSpam bool    `json:"recent_spam"`
 	Free       bool    `json:"free"`
+	CatchAll   bool    `json:"catch_all,omitempty"`
 	SMTPScore  uint8   `json:"smtp_score,omitempty"`
 	Generic    bool    `json:"generic"`
 	Score      uint8   `json:"score"`

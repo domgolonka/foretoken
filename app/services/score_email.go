@@ -2,28 +2,40 @@ package services
 
 import (
 	"github.com/domgolonka/threatdefender/app"
+	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
 )
 
-func ScoreEmail(app *app.App, emailAddress string) (uint8, error) {
+func ScoreEmail(app *app.App, email string) (uint8, error) {
 	var score uint8
 	score = 0
-	disposableEmail, err := app.DisableStore.FindByEmail(emailAddress)
+	disposableEmail, err := app.DisableStore.FindByEmail(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	spamEmail, err := app.SpamEmailStore.FindByEmail(emailAddress)
+	spamEmail, err := app.SpamEmailStore.FindByEmail(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	freeEmail, err := app.FreeEmailStore.FindByEmail(emailAddress)
+	freeEmail, err := app.FreeEmailStore.FindByEmail(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
 
-	isGeneric, err := GenericGetEmail(app, emailAddress)
+	err = utils.ValidateEmail(app, email)
+	// is not a valid email
+	if err != nil {
+		score += 8
+	}
+	// only use catch all if smtp is enabled
+	used, err := utils.CatchAll(app, email)
+	if err != nil && used {
+		score += 30
+	}
+
+	isGeneric, err := GenericGetEmail(app, email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err

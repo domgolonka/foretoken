@@ -95,13 +95,11 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:21:38 GMT
-    Status: 200 OK
-    Connection: close
+    Date: Thu, 18 Feb 2021 04:56:45 GMT
     Content-Type: application/json
-    Content-Length: 2
-
-    []
+    Content-Length: 13
+    
+    {"http":true}
 
 #### Request
 
@@ -127,14 +125,12 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:57:33 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
+    Content-Length: 34952
     
-    205.159.xxx.xxx/24
-    103.62.xxx.xxx/22
-    103.245.xxx.xxx/23
-    209.161.xxx.xxx/19
+    168.0.xxx.0/22
+    202.49.xxx.0/24
 
 #### Request
 
@@ -162,14 +158,13 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:58:18 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
-
-    205.159.xxx.xxx/24
-    103.62.xxx.xxx/22
-    103.245.xxx.xxx/23
-    209.161.xxx.xxx/19
+    Content-Length: 23253
+    
+    176.10.xxx.xxx
+    54.37.xxx.xxx
+    109.70.xxx.xxx
 
 #### Request
 
@@ -180,9 +175,9 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:58:18 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
+    Content-Length: xxx
 
     xxx.cc
     xxx.com
@@ -198,13 +193,13 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:59:38 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
-
-    xxx.cc
-    xxx.com
-    xxx.ca
+    Content-Length: xxxx
+    
+    xxx@
+    xxx@
+    xxx@
 
 #### Request
 
@@ -215,9 +210,9 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:59:38 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
+    Content-Length: xxxx
 
     xxx.cc
     xxx.com
@@ -232,9 +227,9 @@ The REST API to the example app is described below.
 #### Response
 
     HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Date: Thu, 18 Feb 2021 04:59:38 GMT
     Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
+    Content-Length: xxxx
 
     xxx.cc
     xxx.com

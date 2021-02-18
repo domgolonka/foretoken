@@ -41,7 +41,12 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 	emailsrv.Generic = *genericEmail
 	err = utils.ValidateEmail(app, email)
 	if err != nil {
-		emailsrv.RecentSpam = false
+		emailsrv.Valid = false
+	}
+	// only use catch all if smtp is enabled
+	used, err := utils.CatchAll(app, email)
+	if err != nil && used {
+		emailsrv.CatchAll = false
 	}
 	score, err := ScoreEmail(app, email)
 	if err != nil {

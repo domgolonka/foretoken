@@ -39,6 +39,8 @@ func GenericGetEmail(app *app.App, emailAddress string) (*bool, error) {
 		app.Logger.Error(err)
 		return nil, err
 	}
-	hasEmail := strings.Contains(string(b), emailAddress)
+	addy := strings.Split(emailAddress, "@")
+	hasEmail := strings.Contains(string(b), addy[0]+"@")
+
 	return &hasEmail, nil
 }

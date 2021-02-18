@@ -13,7 +13,7 @@ type getHealth struct {
 func GetHealth() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		c.Response().Header.SetStatusCode(http.StatusOK)
-		return c.JSON(&getHealth{
+		return c.JSON(getHealth{
 			HTTP: true,
 		})
 	}

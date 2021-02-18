@@ -3,6 +3,7 @@ package email
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"net"
 	"net/smtp"
 	"strings"
@@ -36,6 +37,18 @@ func ValidateEmail(app *app.App, email string) error {
 		return validateHostAndEmail(app.Config.SMTP.Hostname, app.Config.SMTP.MailAddress, email)
 	}
 	return validateHost(email)
+}
+
+func CatchAll(app *app.App, email string) (bool, error) {
+	if app.Config.SMTP.Hostname != "" && app.Config.SMTP.MailAddress != "" {
+		return true, catchAll(app.Config.SMTP.Hostname, app.Config.SMTP.MailAddress, email)
+	}
+	return false, nil
+}
+
+func catchAll(serverHostName, serverMailAddress, email string) error {
+	_, domain := Split(email)
+	return validateHostAndEmail(serverHostName, serverMailAddress, randSeq(10)+"@"+domain)
 }
 
 func validateHostAndEmail(serverHostName, serverMailAddress, email string) error {
@@ -97,4 +110,14 @@ func Split(email string) (account, host string) {
 	account = email[:i]
 	host = email[i+1:]
 	return
+}
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyz")
+
+func randSeq(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))] //nolint
+	}
+	return "ee" + string(b)
 }

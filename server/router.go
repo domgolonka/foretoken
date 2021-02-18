@@ -13,7 +13,7 @@ func routers(srv fiber.Router, app *app.App) {
 	srv.Get("/list/ip/spam", handlers.GetSpamIPs(app))
 	srv.Get("/list/ip/vpn", handlers.GetVPNIPs(app))
 	srv.Get("/list/ip/tor", handlers.GetTorIPs(app))
-	srv.Get("/list/ip/dc-names", handlers.GetDCIPs(app))
+	srv.Get("/list/ip/dc", handlers.GetDCIPs(app))
 	srv.Get("/list/email/disposal", handlers.GetDisasableEmails(app))
 	srv.Get("/list/email/free", handlers.GetFreeEmails(app))
 	srv.Get("/list/email/generic", handlers.GetGenericEmails(app))
@@ -22,4 +22,5 @@ func routers(srv fiber.Router, app *app.App) {
 	srv.Get("/score/ip/:ip", handlers.GetScoreIP(app))
 	srv.Get("/validate/email/:email", handlers.GetValidateEmail(app))
 	srv.Get("/email/:email", handlers.GetEmail(app))
+	srv.Get("/address/", handlers.GetAddress())
 }

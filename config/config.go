@@ -10,10 +10,16 @@ type Config struct {
 	Env           string
 	AutoTLS       bool
 	Proxy         Proxy
+	SMTP          SMTP
 	Debug         bool
 	DatabaseName  string
 	Database      Database
 	ErrorReporter ErrorReporter
+}
+
+type SMTP struct {
+	Hostname    string
+	MailAddress string
 }
 
 type Proxy struct {

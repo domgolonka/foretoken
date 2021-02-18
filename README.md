@@ -105,9 +105,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /ip/proxy`
+`GET /list/ip/proxy`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/ip/proxy
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/ip/proxy
 
 #### Response
 
@@ -120,9 +120,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /ip/spam`
+`GET /list/ip/spam`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/ip/spam
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/ip/spam
 
 #### Response
 
@@ -138,9 +138,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /ip/vpn`
+`GET /list/ip/vpn`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/ip/vpn
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/ip/vpn
 
 #### Response
 
@@ -155,9 +155,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /ip/tor`
+`GET /list/ip/tor`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/ip/tor
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/ip/tor
 
 #### Response
 
@@ -173,9 +173,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /email/disposal`
+`GET /list/email/disposal`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/email/disposal
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/email/disposal
 
 #### Response
 
@@ -191,26 +191,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /email/generic`
+`GET /list/email/generic`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/email/generic
-
-#### Response
-
-    HTTP/1.1 200 OK
-    Date: Fri, 12 Feb 2021 03:29:54 GMT
-    Content-Type: text/plain; charset=utf-8
-    Transfer-Encoding: chunked
-
-    xxx.cc
-    xxx.com
-    xxx.ca
-
-#### Request
-
-`GET /email/spam`
-
-    curl -i -H 'Accept: application/json' http://localhost:8080/email/spam
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/email/generic
 
 #### Response
 
@@ -225,9 +208,43 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /score/email?email=youremail@gmail.com`
+`GET /list/email/spam`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/score/email?email=youremail@gmail.com
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/email/spam
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Transfer-Encoding: chunked
+
+    xxx.cc
+    xxx.com
+    xxx.ca
+
+#### Request
+
+`GET /list/email/free`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/list/email/free
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Transfer-Encoding: chunked
+
+    xxx.cc
+    xxx.com
+    xxx.ca
+
+#### Request
+
+`GET /score/email/youremail@gmail.com`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/score/email/youremail@gmail.com
 
 #### Response
 
@@ -240,9 +257,9 @@ The REST API to the example app is described below.
 
 #### Request
 
-`GET /score/ip?ip=127.0.0.1`
+`GET /score/ip/127.0.0.1`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/score/ip?ip=127.0.0.1
+    curl -i -H 'Accept: application/json' http://localhost:8080/score/ip/127.0.0.1
 
 #### Response
 
@@ -252,6 +269,49 @@ The REST API to the example app is described below.
     Transfer-Encoding: chunked
 
     0
+
+
+#### Request
+
+`GET /validate/email/youremail@gmail.com`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/validate/email/youremail@gmail.com
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/json; charset=utf-8
+    Transfer-Encoding: chunked
+
+    {
+    "valid": true
+    }
+
+#### Request
+
+`GET /email/youremail@gmail.com`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/email/youremail@gmail.com
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/json; charset=utf-8
+    Transfer-Encoding: chunked
+
+    {
+    "valid": true,
+    "disposable": false,
+    "recent_spam": false,
+    "free": false,
+    "generic": false,
+    "score": 0,
+    "domain_age": "2005-05-24T20:18:07Z"
+    }
+
+
 
 
 ## Work in progress

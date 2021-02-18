@@ -8,6 +8,9 @@ env: "prod"
 autotls: true
 debug: true
 databasename: "postgresql"
+smtp:
+  hostname: ""
+  mailaddress: ""
 errorreporter:
   default: ""
   airbrakecredentials: ""

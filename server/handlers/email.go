@@ -6,14 +6,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetScoreEmail(app *app.App) fiber.Handler {
+func GetEmail(app *app.App) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		items, err := services.ScoreEmail(app, c.Params("email"))
+		response, err := services.EmailService(app, c.Params("email"))
 		if err != nil {
 			return err
 		}
-
-		return c.JSON(items)
+		return c.JSON(response)
 	}
 }

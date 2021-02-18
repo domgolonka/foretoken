@@ -8,6 +8,9 @@ env: "dev"
 autotls: false
 debug: true
 databasename: "sqlite3"
+smtp:
+  hostname: ""
+  mailaddress: ""
 errorreporter:
   default: ""
   airbrakecredentials: ""

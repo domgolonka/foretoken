@@ -24,7 +24,7 @@ var (
 type Verify func(proxy models.Proxy) bool
 
 type ProxyGenerator struct { //nolint
-	lastValidProxy *models.Proxy
+	lastValidProxy models.Proxy
 	cache          *cache.Cache
 	logger         logrus.FieldLogger
 	VerifyFn       Verify
@@ -68,11 +68,11 @@ func (p *ProxyGenerator) load() {
 	for {
 		for _, provider := range p.providers {
 			usedProxy.Store(p.lastValidProxy, time.Now().Hour())
-			provider.SetProxy(*p.lastValidProxy)
+			provider.SetProxy(p.lastValidProxy)
 
 			ips, err := provider.List()
 			if err != nil {
-				p.lastValidProxy = nil
+				p.lastValidProxy = models.Proxy{}
 				p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
 				continue
 			}
@@ -100,7 +100,7 @@ func (p *ProxyGenerator) GetLast() models.Proxy {
 	proxy := <-p.proxy
 	_, ok := usedProxy.Load(proxy)
 	if !ok {
-		p.lastValidProxy = &proxy
+		p.lastValidProxy = proxy
 	}
 	return proxy
 }
@@ -162,7 +162,7 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
 		instance.AddProvider(providers.NewProxyList())
-		instance.AddProvider(providers.NewTxtDomains())
+		instance.AddProvider(providers.NewTxtDomains(logger))
 
 		instance.AddProvider(providers.NewHidemyName())
 		//instance.AddProvider(providers.NewCoolProxy())

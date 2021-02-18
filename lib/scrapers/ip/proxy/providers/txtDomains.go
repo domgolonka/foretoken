@@ -8,6 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/domgolonka/threatdefender/pkg/utils/ip"
@@ -17,6 +19,7 @@ type TxtDomains struct {
 	proxy      models.Proxy
 	proxyList  []models.Proxy
 	lastUpdate time.Time
+	logger     logrus.FieldLogger
 }
 
 type Feed struct {
@@ -35,8 +38,8 @@ var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List
 	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
 	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset"}
 
-func NewTxtDomains() *TxtDomains {
-	return &TxtDomains{}
+func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
+	return &TxtDomains{logger: logger}
 }
 func (*TxtDomains) Name() string {
 	return "txt_domain_proxy"
@@ -55,7 +58,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	if len(c.proxyList) != 0 {
 		return c.proxyList, nil
 	}
-	allbody := make([]string, len(speedlist))
+	allbody := make([]string, 0, len(speedlist))
 	if body == nil {
 		var err error
 		for i := 0; i < len(speedlist); i++ {

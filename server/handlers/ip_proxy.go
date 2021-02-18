@@ -1,20 +1,19 @@
 package handlers
 
 import (
-	"net/http"
-
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/gofiber/fiber/v2"
 )
 
-func GetProxy(app *app.App) http.HandlerFunc {
+func GetProxyIPs(app *app.App) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 
-	return func(w http.ResponseWriter, r *http.Request) {
 		items, err := services.ProxyGetDBAll(app)
 		if err != nil {
-			app.Reporter.ReportError(err)
+			return err
 		}
-		WriteJSON(w, http.StatusOK, items)
 
+		return c.JSON(items)
 	}
 }

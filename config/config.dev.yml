@@ -5,7 +5,7 @@ publicport: 8080
 serverport: 8081
 grpcport: 8082
 env: "dev"
-autotls: true
+autotls: false
 debug: true
 databasename: "sqlite3"
 errorreporter:

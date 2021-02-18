@@ -4,41 +4,45 @@ import (
 	"crypto/tls"
 	"fmt"
 
-	"golang.org/x/crypto/acme/autocert"
-
 	"github.com/domgolonka/threatdefender/app"
-
-	"log"
-	"net/http"
+	"github.com/gofiber/fiber/v2"
+	"golang.org/x/crypto/acme/autocert"
 )
 
 func Server(app *app.App) {
-	// create the autocert.Manager with domains and path to the cache
+
 	certManager := autocert.Manager{
 		Prompt: autocert.AcceptTOS,
-		Cache:  autocert.DirCache("./assets"),
+
+		Cache: autocert.DirCache("./assets"),
 	}
-	server := &http.Server{
-		Addr:    ":https",
-		Handler: PublicRouter(app),
-		TLSConfig: &tls.Config{
-			MinVersion:     tls.VersionTLS12,
-			GetCertificate: certManager.GetCertificate,
+	// TLS Config
+	cfg := &tls.Config{
+		MinVersion: tls.VersionTLS12,
+		// Get Certificate from Let's Encrypt
+		GetCertificate: certManager.GetCertificate,
+		// By default NextProtos contains the "h2"
+		// This has to be removed since Fasthttp does not support HTTP/2
+		// Or it will cause a flood of PRI method logs
+		// http://webconcepts.info/concepts/http-method/PRI
+		NextProtos: []string{
+			"http/1.1", "acme-tls/1",
 		},
 	}
-	if app.Config.PublicPort != 0 {
-		go func() {
-			if app.Config.AutoTLS {
-				log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", app.Config.PublicPort), certManager.HTTPHandler(PublicRouter(app))))
-			} else {
-				log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", app.Config.PublicPort), PublicRouter(app)))
-			}
 
-		}()
-	}
-	go log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", app.Config.ServerPort), Router(app)))
+	srv := fiber.New(fiber.Config{
+		//Prefork:      prefork,
+		ErrorHandler: Error(app),
+	})
+	routers(srv, app)
 	if app.Config.AutoTLS {
-		log.Fatal(server.ListenAndServeTLS("", ""))
+		ln, err := tls.Listen("tcp", fmt.Sprintf(":%d", app.Config.PublicPort), cfg)
+		if err != nil {
+			panic(err)
+		}
+		app.Logger.Fatal(srv.Listener(ln))
+	} else {
+		app.Logger.Fatal(srv.Listen(fmt.Sprintf(":%d", app.Config.PublicPort)))
 	}
 
 }

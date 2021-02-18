@@ -1,6 +1,6 @@
 <p align="center"> 
   <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
-  <h2 align="center">ThreatDefender</h2>
+  <h2 align="center">Threat Defender</h2>
   <p align="center">A modern-day defence tool using REST/gRPC protocols.</p>
 
 <p align="center">
@@ -60,7 +60,9 @@ All configurations are in the config files in the directory "config". You can ad
 
 ## Change the databases
 
-At this moment, threatdefender only supports SQLite and PostgreSQL. You can change the `databasename` field with either `postgresql` or `sqlite3`
+At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with either `postgresql` or `sqlite3`
+
+For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/). 
 
 # APIs
 

@@ -10,6 +10,7 @@ type Config struct {
 	Env           string
 	AutoTLS       bool
 	Proxy         Proxy
+	PwnedKey      string
 	SMTP          SMTP
 	Debug         bool
 	DatabaseName  string

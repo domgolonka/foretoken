@@ -11,7 +11,6 @@ var ErrFormatInvalid = "FORMAT_INVALID"
 var ErrLocked = "LOCKED"
 var ErrExpired = "EXPIRED"
 var ErrNotFound = "NOT_FOUND"
-var ErrUnresolvableHost = "UNRESOLVED_HOST"
 
 type FieldError struct {
 	Field   string `json:"field"`

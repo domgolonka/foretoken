@@ -1,5 +1,5 @@
 appname: "ThreatDefender"
-appversion: "0.1.8"
+appversion: "0.2.0"
 rooturl: "localhost:8080"
 publicport: 8080
 serverport: 8081
@@ -8,6 +8,7 @@ env: "prod"
 autotls: true
 debug: true
 databasename: "postgresql"
+pwnedkey: ""
 smtp:
   hostname: ""
   mailaddress: ""

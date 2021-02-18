@@ -306,9 +306,13 @@ The REST API to the example app is described below.
     "disposable": false,
     "recent_spam": false,
     "free": false,
+    "leaked": false,
     "generic": false,
     "score": 0,
-    "domain_age": "2005-05-24T20:18:07Z"
+    "domain": {
+        "created_at": "1995-08-13T04:00:00Z",
+        "expiration_date": "2021-08-12T04:00:00Z"
+        }
     }
 
 

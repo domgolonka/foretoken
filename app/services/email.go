@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/entity"
+	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
 )
 
 func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
@@ -38,7 +39,7 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 		app.Logger.Error(err)
 	}
 	emailsrv.Generic = *genericEmail
-	err = ValidateEmail(app, email)
+	err = utils.ValidateEmail(app, email)
 	if err != nil {
 		emailsrv.RecentSpam = false
 	}
@@ -48,12 +49,20 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 	} else {
 		emailsrv.Score = score
 	}
-	_, domain := split(email)
-	age, err := domainAge(domain)
+	_, domain := utils.Split(email)
+	dom, err := utils.DomainAge(domain)
 	if err != nil {
 		app.Logger.Error(err)
 	} else {
-		emailsrv.DomainAge = age
+		emailsrv.Domain = dom
+	}
+
+	if app.Config.PwnedKey != "" {
+		leaked, err := utils.Leaked(app, email, "")
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		emailsrv.Leaked = *leaked
 	}
 	return emailsrv, nil
 }

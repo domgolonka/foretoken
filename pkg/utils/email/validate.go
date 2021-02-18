@@ -1,4 +1,4 @@
-package services
+package email
 
 import (
 	"errors"
@@ -10,6 +10,8 @@ import (
 
 	"github.com/domgolonka/threatdefender/app"
 )
+
+var ErrUnresolvableHost = "UNRESOLVED_HOST"
 
 type SMTPError struct {
 	Err error
@@ -37,7 +39,7 @@ func ValidateEmail(app *app.App, email string) error {
 }
 
 func validateHostAndEmail(serverHostName, serverMailAddress, email string) error {
-	_, host := split(email)
+	_, host := Split(email)
 	mx, err := net.LookupMX(host)
 	if err != nil {
 		return errors.New(ErrUnresolvableHost)
@@ -64,7 +66,7 @@ func validateHostAndEmail(serverHostName, serverMailAddress, email string) error
 
 // ValidateHost validate mail host.
 func validateHost(email string) error {
-	_, host := split(email)
+	_, host := Split(email)
 	mx, err := net.LookupMX(host)
 	if err != nil {
 		return errors.New(ErrUnresolvableHost)
@@ -90,7 +92,7 @@ func DialTimeout(addr string, timeout time.Duration) (*smtp.Client, error) {
 	return smtp.NewClient(conn, host)
 }
 
-func split(email string) (account, host string) {
+func Split(email string) (account, host string) {
 	i := strings.LastIndexByte(email, '@')
 	account = email[:i]
 	host = email[i+1:]

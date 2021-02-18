@@ -44,7 +44,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	if len(c.torList) != 0 {
 		return c.torList, nil
 	}
-	allbody := make([]string, len(speedlist))
+	allbody := make([]string, 0, len(speedlist))
 	if body == nil {
 		var err error
 		for i := 0; i < len(speedlist); i++ {

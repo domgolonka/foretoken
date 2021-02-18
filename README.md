@@ -310,6 +310,47 @@ The REST API to the example app is described below.
         }
     }
 
+#### Request
+
+`GET /ip/127.0.0.1`
+
+    curl -i -H 'Accept: application/json' http://localhost:8080/ip/127.0.0.1
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 12 Feb 2021 03:29:54 GMT
+    Content-Type: text/json; charset=utf-8
+    Transfer-Encoding: chunked
+
+    {
+    "success": false,
+    "proxy": false,
+    "ISP": "",
+    "organization": "",
+    "ASN": 0,
+    "host": "",
+    "country_code": "",
+    "city": "",
+    "region": "",
+    "is_crawler": false,
+    "connection_type": "",
+    "latitude": 0,
+    "longitude": 0,
+    "timezone": "",
+    "vpn": false,
+    "tor": false,
+    "recent_abuse": false,
+    "abuse_velocity": "",
+    "bot_status": false,
+    "mobile": false,
+    "score": 0,
+    "operating_system": "",
+    "browser": "",
+    "device_model": "",
+    "device_brand": ""
+    }
+
 
 
 

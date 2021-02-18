@@ -22,5 +22,6 @@ func routers(srv fiber.Router, app *app.App) {
 	srv.Get("/score/ip/:ip", handlers.GetScoreIP(app))
 	srv.Get("/validate/email/:email", handlers.GetValidateEmail(app))
 	srv.Get("/email/:email", handlers.GetEmail(app))
+	srv.Get("/ip/:ip", handlers.GetIP(app))
 	srv.Get("/address/", handlers.GetAddress())
 }

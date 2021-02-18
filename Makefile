@@ -1,10 +1,8 @@
-export
-
 GOBIN=$(shell pwd)/bin
 GOFILES=cmd/main.go
 GONAME=$(shell basename "$(PWD)")
 PID=/tmp/go-$(GONAME).pid
-
+# git tag --list '0.0.*' | xargs -I % echo "git tag -d %; git push --delete origin %" | sh
 ## Display this help text
 help:
 	$(info Available Targets)

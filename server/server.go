@@ -3,8 +3,8 @@ package server
 import (
 	"crypto/tls"
 	"fmt"
+
 	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/server/handlers"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/acme/autocert"
 )
@@ -13,10 +13,12 @@ func Server(app *app.App) {
 
 	certManager := autocert.Manager{
 		Prompt: autocert.AcceptTOS,
-		Cache:  autocert.DirCache("./assets"),
+
+		Cache: autocert.DirCache("./assets"),
 	}
 	// TLS Config
 	cfg := &tls.Config{
+		MinVersion: tls.VersionTLS12,
 		// Get Certificate from Let's Encrypt
 		GetCertificate: certManager.GetCertificate,
 		// By default NextProtos contains the "h2"
@@ -31,8 +33,11 @@ func Server(app *app.App) {
 	if err != nil {
 		panic(err)
 	}
-	srv := fiber.New()
-	srv.Get("/health", handlers.GetHealth())
+	srv := fiber.New(fiber.Config{
+		//Prefork:      prefork,
+		ErrorHandler: Error(app),
+	})
+	routers(srv, app)
 	if app.Config.AutoTLS {
 		app.Logger.Fatal(srv.Listener(ln))
 	} else {

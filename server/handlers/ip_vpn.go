@@ -1,26 +1,23 @@
 package handlers
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/gofiber/fiber/v2"
 )
 
-func GetVPN(app *app.App) http.HandlerFunc {
+func GetVPNIPs(app *app.App) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 
-	return func(w http.ResponseWriter, r *http.Request) {
 		items, err := services.VpnGetDBAll(app)
 		if err != nil {
-			WriteErrors(w, err)
+			return err
 		}
+
 		stringByte := strings.Join(*items, "\x0A") // x20 = space and x00 = null
 
-		w.WriteHeader(http.StatusOK)
-		_, err = w.Write([]byte(stringByte))
-		if err != nil {
-			WriteErrors(w, err)
-		}
+		return c.SendString(stringByte)
 	}
 }

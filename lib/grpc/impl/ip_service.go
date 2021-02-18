@@ -8,7 +8,7 @@ import (
 
 	"github.com/domgolonka/threatdefender/app"
 
-	"github.com/domgolonka/threatdefender/lib/services/proto"
+	"github.com/domgolonka/threatdefender/lib/grpc/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
@@ -31,7 +31,8 @@ func (i ipService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto
 	for i, v := range *proxies {
 		arr[i] = &proto.Proxy{
 			Id:        uint32(v.ID),
-			Url:       v.URL,
+			Ip:        v.IP,
+			Port:      v.Port,
 			Type:      v.Type,
 			CreatedAt: timestamppb.New(v.CreatedAt),
 			UpdatedAt: timestamppb.New(v.UpdatedAt),

@@ -51,17 +51,18 @@ func (db *VpnStore) FindAll() (*[]string, error) {
 	return &strings, nil
 }
 
-func (db *VpnStore) Create(url string) (*models.Vpn, error) {
+func (db *VpnStore) Create(url, source string) (*models.Vpn, error) {
 	now := time.Now()
 
 	vpn := &models.Vpn{
 		URL:       url,
+		Source:    source,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO vpn (url,  created_at, updated_at) VALUES (:url, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO vpn (url, source,  created_at, updated_at) VALUES (:url, :source, :created_at, :updated_at)",
 		vpn,
 	)
 	if err != nil {

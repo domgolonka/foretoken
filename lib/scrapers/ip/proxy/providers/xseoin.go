@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/jbowtie/gokogiri"
 )
 
@@ -20,16 +22,16 @@ var (
 )
 
 type XseoIn struct {
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
-	proxy      string
 }
 
 func NewXseoIn() *XseoIn {
 	return &XseoIn{}
 }
 
-func (x *XseoIn) SetProxy(proxy string) {
+func (x *XseoIn) SetProxy(proxy models.Proxy) {
 	x.proxy = proxy
 }
 
@@ -52,8 +54,8 @@ func (x *XseoIn) MakeRequest() ([]byte, error) {
 	req.Header.Set("Referer", "http://xseo.in/proxylist")
 	req.Header.Set("Connection", "keep-alive")
 	var client = NewClient()
-	if x.proxy != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy)
+	if x.proxy.IP != "" {
+		proxyURL, err := url.Parse(x.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}
@@ -107,9 +109,9 @@ func (x *XseoIn) DecodePort(decodeParams map[byte]byte, encryptedData string) []
 	return nil
 }
 
-func (x *XseoIn) Load(body []byte) ([]string, error) {
+func (x *XseoIn) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0)
+		x.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(x.proxyList) != 0 {
@@ -143,14 +145,20 @@ func (x *XseoIn) Load(body []byte) ([]string, error) {
 		return nil, errors.New("ip not found")
 	}
 
-	x.proxyList = make([]string, 0, len(ips))
+	x.proxyList = make([]models.Proxy, 0, len(ips))
 
 	for _, ip := range ips {
 		data := strings.Split(ip.Content(), ":")
 		if len(data) > 1 {
 			if ipRegexp.MatchString(data[0]) {
 				if port := x.DecodePort(decodeParams, portRegexp.FindString(data[1])); port != nil {
-					x.proxyList = append(x.proxyList, data[0]+":"+string(port))
+					prox := models.Proxy{
+						IP:   data[0],
+						Port: string(port),
+						Type: "http",
+					}
+					x.proxyList = append(x.proxyList, prox)
+					//x.proxyList = append(x.proxyList, data[0]+":"+string(port))
 				}
 			}
 		}
@@ -159,6 +167,6 @@ func (x *XseoIn) Load(body []byte) ([]string, error) {
 	return x.proxyList, nil
 }
 
-func (x *XseoIn) List() ([]string, error) {
+func (x *XseoIn) List() ([]models.Proxy, error) {
 	return x.Load(nil)
 }

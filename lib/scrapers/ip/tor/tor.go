@@ -43,12 +43,12 @@ func (p *Tor) load() {
 		}
 		p.logger.Println(provider.Name(), len(hosts))
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i])
+			p.createOrIgnore(hosts[i].IP)
 		}
 	}
 }
-func (p *Tor) createOrIgnore(tor string) bool {
-	_, err := p.store.Create(tor)
+func (p *Tor) createOrIgnore(ip string) bool {
+	_, err := p.store.Create(ip)
 	return err == nil
 }
 

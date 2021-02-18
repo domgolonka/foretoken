@@ -12,6 +12,18 @@ type ProxyStore struct {
 	sqlx.Ext
 }
 
+func (db *ProxyStore) FindByIP(ipaddress string) (*models.Proxy, error) {
+	proxy := models.Proxy{}
+	err := sqlx.Get(db, &proxy, "SELECT * FROM proxy WHERE ip = ?", ipaddress)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &proxy, nil
+}
+
 func (db *ProxyStore) Find(id int) (*models.Proxy, error) {
 	proxy := models.Proxy{}
 	err := sqlx.Get(db, &proxy, "SELECT * FROM proxy WHERE id = ?", id)
@@ -36,18 +48,19 @@ func (db *ProxyStore) FindAll() (*[]models.Proxy, error) {
 	return &proxy, nil
 }
 
-func (db *ProxyStore) Create(url, types string) (*models.Proxy, error) {
+func (db *ProxyStore) Create(ip, port, types string) (*models.Proxy, error) {
 	now := time.Now()
 
 	proxy := &models.Proxy{
-		URL:       url,
+		IP:        ip,
+		Port:      port,
 		Type:      types,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT INTO proxy (url, type, created_at, updated_at) VALUES (:url, :type, :created_at, :updated_at)",
+		"INSERT INTO proxy (ip, port, type, created_at, updated_at) VALUES (:ip, :port, :type, :created_at, :updated_at)",
 		proxy,
 	)
 	if err != nil {

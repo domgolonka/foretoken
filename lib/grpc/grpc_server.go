@@ -5,8 +5,8 @@ import (
 	"net"
 
 	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/lib/services/impl"
-	"github.com/domgolonka/threatdefender/lib/services/proto"
+	"github.com/domgolonka/threatdefender/lib/grpc/impl"
+	"github.com/domgolonka/threatdefender/lib/grpc/proto"
 	"google.golang.org/grpc"
 )
 

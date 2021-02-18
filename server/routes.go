@@ -37,9 +37,13 @@ func PublicRoutes(app *app.App) []*route.HandledRoute {
 		route.Get("/email/generic").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetGeneric(app)),
-		route.Get("/email/generic/spam").
+		route.Get("/email/spam").
 			SecuredWith(route.Unsecured()).
 			Handle(handlers.GetSpamEmail(app)),
+
+		route.Get("/score/email").
+			SecuredWith(route.Unsecured()).
+			Handle(handlers.GetScoreEmail(app)),
 	)
 
 	return routes

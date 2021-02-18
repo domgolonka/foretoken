@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package = ".;proto";
+import "google/protobuf/timestamp.proto";
+
+
+message Proxy {
+  uint32 id = 1;
+  string ip = 2;
+  string port = 3;
+  string type = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp deleted_at = 7;
+}

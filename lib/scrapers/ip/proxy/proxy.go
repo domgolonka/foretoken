@@ -6,6 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/domgolonka/threatdefender/app/data"
 
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy/providers"
@@ -19,17 +21,17 @@ var (
 	once      sync.Once
 )
 
-type Verify func(proxy string) bool
+type Verify func(proxy models.Proxy) bool
 
 type ProxyGenerator struct { //nolint
-	lastValidProxy string
+	lastValidProxy models.Proxy
 	cache          *cache.Cache
 	logger         logrus.FieldLogger
 	VerifyFn       Verify
 	store          data.ProxyStore
 	providers      []Provider
-	proxy          chan string
-	job            chan string
+	proxy          chan models.Proxy
+	job            chan models.Proxy
 }
 
 func (p *ProxyGenerator) isProvider(provider Provider) bool {
@@ -47,7 +49,7 @@ func (p *ProxyGenerator) AddProvider(provider Provider) {
 	}
 }
 
-func shuffle(vals []string) {
+func shuffle(vals []models.Proxy) {
 	r := rand.New(rand.NewSource(time.Now().Unix())) //nolint
 	for len(vals) > 0 {
 		n := len(vals)
@@ -57,8 +59,8 @@ func shuffle(vals []string) {
 	}
 }
 
-func (p *ProxyGenerator) createOrIgnore(dis string, ptype string) bool {
-	_, err := p.store.Create(dis, ptype)
+func (p *ProxyGenerator) createOrIgnore(ip, port, ptype string) bool {
+	_, err := p.store.Create(ip, port, ptype)
 	return err == nil
 }
 
@@ -70,7 +72,7 @@ func (p *ProxyGenerator) load() {
 
 			ips, err := provider.List()
 			if err != nil {
-				p.lastValidProxy = ""
+				p.lastValidProxy = models.Proxy{}
 				p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
 				continue
 			}
@@ -88,13 +90,13 @@ func (p *ProxyGenerator) load() {
 			shuffle(ips)
 			for _, proxy := range ips {
 				//p.job <- proxy
-				p.createOrIgnore(proxy, "ipv4")
+				p.createOrIgnore(proxy.IP, proxy.Port, proxy.Type)
 			}
 		}
 	}
 }
 
-func (p *ProxyGenerator) GetLast() string {
+func (p *ProxyGenerator) GetLast() models.Proxy {
 	proxy := <-p.proxy
 	_, ok := usedProxy.Load(proxy)
 	if !ok {
@@ -115,17 +117,17 @@ func (p *ProxyGenerator) Get() []string {
 	return items
 }
 
-func (p *ProxyGenerator) verifyWithCache(proxy string) bool {
-	val, found := p.cache.Get(proxy)
+func (p *ProxyGenerator) verifyWithCache(proxy models.Proxy) bool {
+	val, found := p.cache.Get(proxy.ToString())
 	if found {
 		return val.(bool)
 	}
 	res := p.VerifyFn(proxy)
-	p.cache.Set(proxy, res, cache.DefaultExpiration)
+	p.cache.Set(proxy.ToString(), res, cache.DefaultExpiration)
 	return res
 }
 
-func (p *ProxyGenerator) do(proxy string) {
+func (p *ProxyGenerator) do(proxy models.Proxy) {
 	if p.verifyWithCache(proxy) {
 		p.proxy <- proxy
 	}
@@ -150,17 +152,17 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 		instance = &ProxyGenerator{
 			cache:    cache.New(cacheminutes*time.Minute, 5*time.Minute),
 			VerifyFn: verifyProxy,
-			proxy:    make(chan string),
+			proxy:    make(chan models.Proxy),
 			store:    store,
 			logger:   logger,
-			job:      make(chan string, 100),
+			job:      make(chan models.Proxy, 100),
 		}
 
 		//add providers to generator
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
 		instance.AddProvider(providers.NewProxyList())
-		instance.AddProvider(providers.NewTxtDomains())
+		instance.AddProvider(providers.NewTxtDomains(logger))
 
 		instance.AddProvider(providers.NewHidemyName())
 		//instance.AddProvider(providers.NewCoolProxy())

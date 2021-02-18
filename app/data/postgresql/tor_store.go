@@ -12,9 +12,9 @@ type TorStore struct {
 	sqlx.Ext
 }
 
-func (db *TorStore) FindByURL(url string) (*models.Tor, error) {
+func (db *TorStore) FindByIP(ipaddress string) (*models.Tor, error) {
 	tor := models.Tor{}
-	err := sqlx.Get(db, &tor, "SELECT * FROM tor WHERE url = ?", url)
+	err := sqlx.Get(db, &tor, "SELECT * FROM tor WHERE ip = ?", ipaddress)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -61,7 +61,7 @@ func (db *TorStore) Create(ip string) (*models.Tor, error) {
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO tor (url, subnet, created_at, updated_at) VALUES (:url, :subnet, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO tor (ip, created_at, updated_at) VALUES (:ip, :created_at, :updated_at)",
 		tor,
 	)
 	if err != nil {

@@ -1,6 +1,6 @@
 <p align="center"> 
   <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
-  <h2 align="center">ThreatDefender</h2>
+  <h2 align="center">Threat Defender</h2>
   <p align="center">A modern-day defence tool using REST/gRPC protocols.</p>
 
 <p align="center">
@@ -54,11 +54,17 @@ The default config file is `config/config.dev.yml`. If you want to run it with a
 example:
 `./bin/threatdefender --config=config/config.prod.yml`
 
-### Changing ports and configs
+# Configs
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
-# Apis
+## Change the databases
+
+At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with either `postgresql` or `sqlite3`
+
+For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/). 
+
+# APIs
 
 REST API & gRPC is enabled.
 

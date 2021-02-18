@@ -7,11 +7,13 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
 )
 
 type PubProxy struct {
-	proxy      string
-	proxyList  []string
+	proxy      models.Proxy
+	proxyList  []models.Proxy
 	lastUpdate time.Time
 }
 
@@ -23,14 +25,14 @@ func (*PubProxy) Name() string {
 	return "pubproxy.com"
 }
 
-func (x *PubProxy) SetProxy(proxy string) {
+func (x *PubProxy) SetProxy(proxy models.Proxy) {
 	x.proxy = proxy
 }
 
 func (x *PubProxy) MakeRequest() ([]byte, error) {
 	var client = NewClient()
-	if x.proxy != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy)
+	if x.proxy.IP != "" {
+		proxyURL, err := url.Parse(x.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}
@@ -56,9 +58,9 @@ func (x *PubProxy) MakeRequest() ([]byte, error) {
 	return body.Bytes(), nil
 }
 
-func (x *PubProxy) Load() ([]string, error) {
+func (x *PubProxy) Load() ([]models.Proxy, error) {
 	if time.Now().Unix() >= x.lastUpdate.Unix()+(60*20) {
-		x.proxyList = make([]string, 0)
+		x.proxyList = make([]models.Proxy, 0)
 	}
 
 	if len(x.proxyList) != 0 {
@@ -70,16 +72,22 @@ func (x *PubProxy) Load() ([]string, error) {
 		return nil, err
 	}
 
-	x.proxyList = strings.Split(string(body), "\n")
-	if len(x.proxyList) != 20 {
-		x.proxyList = make([]string, 0)
-	} else {
-		x.lastUpdate = time.Now()
+	proxies := strings.Split(string(body), "\n")
+	for _, s := range proxies {
+		proxy := strings.Split(s, ":")
+		prox := models.Proxy{
+			IP:   proxy[0],
+			Port: proxy[1],
+			Type: "http",
+		}
+		x.proxyList = append(x.proxyList, prox)
 	}
+
+	x.lastUpdate = time.Now()
 
 	return x.proxyList, nil
 }
 
-func (x *PubProxy) List() ([]string, error) {
+func (x *PubProxy) List() ([]models.Proxy, error) {
 	return x.Load()
 }

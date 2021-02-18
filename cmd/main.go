@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path"
 
-	"github.com/domgolonka/threatdefender/lib/services"
-	"github.com/domgolonka/threatdefender/lib/services/impl"
+	services "github.com/domgolonka/threatdefender/lib/grpc"
+	"github.com/domgolonka/threatdefender/lib/grpc/impl"
 
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/data"
@@ -24,6 +25,12 @@ func main() {
 	var appPath, _ = os.Getwd()
 	configFilePath := appPath + "/config/config.dev.yml"
 	var cfg config.Config
+	configFlag := flag.String("config", configFilePath, "the config file.")
+	flag.Parse()
+	// set the config file
+	if configFlag != nil {
+		configFilePath = *configFlag
+	}
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {
 		logrus.Info("\nsee: https://github.com/domgolonka/threatdefender/blob/master/docs/config.md")
@@ -70,10 +77,8 @@ func serve(cfg config.Config) {
 	}
 
 	impl.InitRPCService(newApp)
-
+	go server.Server(newApp)
 	services.ServeRPC(newApp, ch, cfg.GRPCPort)
-
-	server.Server(newApp)
 
 	<-ch
 }

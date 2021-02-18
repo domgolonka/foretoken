@@ -1,19 +1,19 @@
 package config
 
 type Config struct {
-	Appname        string
-	Appversion     string
-	Rooturl        string
-	PublicPort     int
-	ServerPort     int
-	GRPCPort       int
-	Env            string
-	DisposableFile string
-	Proxy          Proxy
-	Debug          bool
-	DatabaseName   string
-	Database       Database
-	ErrorReporter  ErrorReporter
+	Appname       string
+	Appversion    string
+	Rooturl       string
+	PublicPort    int
+	ServerPort    int
+	GRPCPort      int
+	Env           string
+	AutoTLS       bool
+	Proxy         Proxy
+	Debug         bool
+	DatabaseName  string
+	Database      Database
+	ErrorReporter ErrorReporter
 }
 
 type Proxy struct {

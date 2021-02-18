@@ -12,9 +12,9 @@ type DisposableStore struct {
 	sqlx.Ext
 }
 
-func (db *DisposableStore) FindByURL(url string) (*models.DisposableEmail, error) {
+func (db *DisposableStore) FindByEmail(email string) (*models.DisposableEmail, error) {
 	disposable := models.DisposableEmail{}
-	err := sqlx.Get(db, &disposable, "SELECT * FROM disposable WHERE url = ?", url)
+	err := sqlx.Get(db, &disposable, "SELECT * FROM disposable WHERE email = ?", email)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -46,22 +46,22 @@ func (db *DisposableStore) FindAll() (*[]string, error) {
 	}
 	strings := make([]string, 0, len(disposable))
 	for i := 0; i < len(disposable); i++ {
-		strings = append(strings, disposable[i].URL)
+		strings = append(strings, disposable[i].Email)
 	}
 	return &strings, nil
 }
 
-func (db *DisposableStore) Create(url string) (*models.DisposableEmail, error) {
+func (db *DisposableStore) Create(email string) (*models.DisposableEmail, error) {
 	now := time.Now()
 
 	disposable := &models.DisposableEmail{
-		URL:       url,
+		Email:     email,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO disposable (url,  created_at, updated_at) VALUES (:url, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO disposable (email,  created_at, updated_at) VALUES (:email, :created_at, :updated_at)",
 		disposable,
 	)
 	if err != nil {

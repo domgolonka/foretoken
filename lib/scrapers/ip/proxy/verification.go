@@ -8,6 +8,8 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy/providers"
 	"github.com/sirupsen/logrus"
 )
@@ -16,14 +18,14 @@ type checkIP struct {
 	IP string
 }
 
-func verifyProxy(proxy string) bool {
+func verifyProxy(proxy models.Proxy) bool {
 	req, err := http.NewRequest("GET", "https://api.ipify.org/?format=json", nil)
 	if err != nil {
 		logrus.Errorf("cannot create new request for verify err:%s", err)
 		return false
 	}
 
-	proxyURL, err := url.Parse("http://" + proxy)
+	proxyURL, err := url.Parse(proxy.ToString())
 	if err != nil {
 		logrus.Errorf("cannot parse proxy %q err:%s", proxy, err)
 		return false
@@ -58,5 +60,5 @@ func verifyProxy(proxy string) bool {
 		return false
 	}
 
-	return strings.HasPrefix(proxy, check.IP)
+	return strings.HasPrefix(proxy.ToString(), check.IP)
 }

@@ -1,7 +1,9 @@
 package proxy
 
+import "github.com/domgolonka/threatdefender/app/models"
+
 type Provider interface {
-	List() ([]string, error)
+	List() ([]models.Proxy, error)
 	Name() string
-	SetProxy(string)
+	SetProxy(models.Proxy)
 }

@@ -37,7 +37,7 @@ func (x *HidemyName) MakeRequest() ([]byte, error) {
 	transport := NewTransport()
 
 	if x.proxy.IP != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy.IP + ":" + x.proxy.Port)
+		proxyURL, err := url.Parse(x.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}

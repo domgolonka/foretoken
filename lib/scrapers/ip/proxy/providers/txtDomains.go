@@ -28,16 +28,15 @@ type Feed struct {
 	Type string
 }
 
-// todo fix type of proxy
-var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
-	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
-	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
-	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset"}
+//var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
+//	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
+//	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
+//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset"}
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
 	return &TxtDomains{logger: logger}
@@ -55,15 +54,24 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
 		c.proxyList = make([]models.Proxy, 0)
 	}
+	feeds := make([]Feed, 0)
+	feeds = append(feeds, Feed{Name: "speedx5", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt", Type: "socks5"})
+	feeds = append(feeds, Feed{Name: "speedx4", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt", Type: "socks4"})
+	feeds = append(feeds, Feed{Name: "speedxhttp", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt", Type: "http"})
+	feeds = append(feeds, Feed{Name: "proxylists_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset", Type: "http"})
+	feeds = append(feeds, Feed{Name: "proxyrss_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset", Type: "http"})
+	feeds = append(feeds, Feed{Name: "proxyspy_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset", Type: "http"})
+	feeds = append(feeds, Feed{Name: "socks_proxy_7d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset", Type: "socks5"})
+	feeds = append(feeds, Feed{Name: "ri_web_proxies_30d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset", Type: "http"})
+	feeds = append(feeds, Feed{Name: "sslproxies_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset", Type: "https"})
 
 	if len(c.proxyList) != 0 {
 		return c.proxyList, nil
 	}
-	allbody := make([]string, 0, len(speedlist))
 	if body == nil {
 		var err error
-		for i := 0; i < len(speedlist); i++ {
-			if body, err = c.MakeRequest(speedlist[i]); err != nil {
+		for i := 0; i < len(feeds); i++ {
+			if body, err = c.MakeRequest(feeds[i].URL); err != nil {
 				return nil, err
 			}
 
@@ -71,26 +79,25 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 			if err != nil {
 				return nil, err
 			}
-			allbody = append(allbody, ipv4...)
-		}
-	}
-	for _, s := range allbody {
-		prox := models.Proxy{}
-		if strings.Contains(s, ":") {
-			proxy := strings.Split(s, ":")
-			prox = models.Proxy{
-				IP:   proxy[0],
-				Port: proxy[1],
-				Type: "http",
-			}
-		} else {
-			prox = models.Proxy{
-				IP:   s,
-				Type: "http",
-			}
-		}
+			for _, s := range ipv4 {
+				var prox models.Proxy
+				if strings.Contains(s, ":") {
+					proxy := strings.Split(s, ":")
+					prox = models.Proxy{
+						IP:   proxy[0],
+						Port: proxy[1],
+						Type: feeds[i].Type,
+					}
+				} else {
+					prox = models.Proxy{
+						IP:   s,
+						Type: feeds[i].Type,
+					}
+				}
 
-		c.proxyList = append(c.proxyList, prox)
+				c.proxyList = append(c.proxyList, prox)
+			}
+		}
 	}
 
 	c.lastUpdate = time.Now()

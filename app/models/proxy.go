@@ -13,5 +13,8 @@ type Proxy struct {
 }
 
 func (p *Proxy) ToString() string {
+	if p.Port == "" {
+		return p.Type + "://" + p.IP
+	}
 	return p.Type + "://" + p.IP + ":" + p.Port
 }

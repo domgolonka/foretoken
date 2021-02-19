@@ -46,7 +46,7 @@ func (x *FreeProxyList) MakeRequest() ([]byte, error) {
 
 	var client = NewClient()
 	if x.proxy.IP != "" {
-		proxyURL, err := url.Parse("http://" + x.proxy.IP + ":" + x.proxy.Port)
+		proxyURL, err := url.Parse(x.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}

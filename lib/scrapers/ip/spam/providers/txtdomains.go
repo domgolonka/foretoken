@@ -84,7 +84,7 @@ func (c *TxtDomains) Load(body []byte) ([]string, []string, error) {
 
 	sslbl := Feed{"sslbl", "https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt",
 		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	rutgersEdu := Feed{"rutgers.edu", "https://report.cs.rutgers.edu/DROP/attackers",
+	rutgersEdu := Feed{"rutgers.edu", "http://report.cs.rutgers.edu/DROP/attackers",
 		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
 	sblamCom := Feed{"sblam.com", "http://sblam.com/blacklist.txt",
 		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}

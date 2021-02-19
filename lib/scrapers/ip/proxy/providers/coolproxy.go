@@ -109,7 +109,7 @@ func (c *CoolProxy) MakeRequest() ([]byte, error) {
 
 	var client = NewClient()
 	if c.proxy.IP != "" {
-		proxyURL, err := url.Parse("http://" + c.proxy.IP + ":" + c.proxy.Port)
+		proxyURL, err := url.Parse(c.proxy.ToString())
 		if err != nil {
 			return nil, err
 		}

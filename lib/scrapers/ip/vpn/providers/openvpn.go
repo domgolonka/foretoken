@@ -63,12 +63,17 @@ func (c *OpenVpn) Download(src URLs) ([]string, error) {
 	if src.Format == OPENVPN {
 		res, err := http.Get(src.URL)
 		if err != nil {
-			c.logger.Fatal(err)
+			c.logger.Error(err)
 		}
-		defer res.Body.Close()
+		defer func() {
+			err = res.Body.Close()
+			if err != nil {
+				c.logger.Error(err)
+			}
+		}()
 		d, err := ioutil.ReadAll(res.Body)
 		if err != nil {
-			c.logger.Fatal(err)
+			c.logger.Error(err)
 		}
 
 		var filenames []string
@@ -95,7 +100,7 @@ func (c *OpenVpn) Download(src URLs) ([]string, error) {
 				}
 
 				rc.Close()
-				domainTmp := reRemote.FindStringSubmatch(string(buf.String()))
+				domainTmp := reRemote.FindStringSubmatch(buf.String())
 				var domainName = domainTmp[1]
 
 				hosts = append(hosts, domainName)

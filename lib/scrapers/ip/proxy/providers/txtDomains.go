@@ -10,6 +10,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
+	"github.com/domgolonka/threatdefender/app/entity"
 	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/domgolonka/threatdefender/pkg/utils/ip"
@@ -54,24 +55,19 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
 		c.proxyList = make([]models.Proxy, 0)
 	}
-	feeds := make([]Feed, 0)
-	feeds = append(feeds, Feed{Name: "speedx5", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt", Type: "socks5"})
-	feeds = append(feeds, Feed{Name: "speedx4", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt", Type: "socks4"})
-	feeds = append(feeds, Feed{Name: "speedxhttp", URL: "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt", Type: "http"})
-	feeds = append(feeds, Feed{Name: "proxylists_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset", Type: "http"})
-	feeds = append(feeds, Feed{Name: "proxyrss_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset", Type: "http"})
-	feeds = append(feeds, Feed{Name: "proxyspy_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset", Type: "http"})
-	feeds = append(feeds, Feed{Name: "socks_proxy_7d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset", Type: "socks5"})
-	feeds = append(feeds, Feed{Name: "ri_web_proxies_30d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset", Type: "http"})
-	feeds = append(feeds, Feed{Name: "sslproxies_1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset", Type: "https"})
+	f := entity.Feed{}
+	feed, err := f.ReadFile("ip_proxy.json")
+	if err != nil {
+		return nil, err
+	}
 
 	if len(c.proxyList) != 0 {
 		return c.proxyList, nil
 	}
 	if body == nil {
 		var err error
-		for i := 0; i < len(feeds); i++ {
-			if body, err = c.MakeRequest(feeds[i].URL); err != nil {
+		for i := 0; i < len(feed); i++ {
+			if body, err = c.MakeRequest(feed[i].URL); err != nil {
 				return nil, err
 			}
 
@@ -86,12 +82,12 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 					prox = models.Proxy{
 						IP:   proxy[0],
 						Port: proxy[1],
-						Type: feeds[i].Type,
+						Type: feed[i].Type,
 					}
 				} else {
 					prox = models.Proxy{
 						IP:   s,
-						Type: feeds[i].Type,
+						Type: feed[i].Type,
 					}
 				}
 

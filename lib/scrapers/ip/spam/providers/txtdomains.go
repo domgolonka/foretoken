@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/entity"
+
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,71 +40,71 @@ func (c *TxtDomains) Load(body []byte) ([]string, []string, error) {
 	regexpIP := "((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))"
 	regexpSubnet := regexpIP + "\\/(3[0-1]|[1-2][0-9]|[1-9])"
 
-	spamhaus := Feed{"spamhaus", "https://www.spamhaus.org/drop/drop.txt",
-		10, []FeedAnalyzer{{3, "^" + regexpSubnet + ".*"},
-			{3, "^" + regexpIP + ".*"}}}
-	firehol := Feed{"firehol", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset",
-		10, []FeedAnalyzer{{3, "^" + regexpSubnet + ".*"},
-			{3, "^" + regexpIP + ".*"}}}
-	alienvaultCom := Feed{"alienvault.com", "https://reputation.alienvault.com/reputation.generic",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + " # Scanning Host.*"},
-			{3, "^" + regexpIP + " # Malicious Host.*"}}}
-	badipsCom := Feed{"badips.com", "https://www.badips.com/get/list/any/2?age=7d", 10,
-		[]FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	teamCymruOrg := Feed{"team-cymru.org", "https://www.team-cymru.org/Services/Bogons/fullbogons-ipv4.txt", 10,
-		[]FeedAnalyzer{{3, "^" + regexpSubnet + ".*"}}}
-	stopforumspamCom := Feed{"stopforumspam.com", "https://www.stopforumspam.com/downloads/toxic_ip_cidr.txt", 10,
-		[]FeedAnalyzer{{2, "^" + regexpSubnet + ".*"}}}
-	greensnowCo := Feed{"greensnow.co", "https://blocklist.greensnow.co/greensnow.txt",
-		10, []FeedAnalyzer{{2, "^" + regexpIP + ".*"}}}
-	binarydefenseCom := Feed{"binarydefense.com", "https://www.binarydefense.com/banlist.txt",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	haleysOrgSSH := Feed{"the-haleys.org", "http://charles.the-haleys.org/ssh_dico_attack_with_timestamps.php?days=7",
-		10, []FeedAnalyzer{{1, "^ALL : ((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*"}}}
-	haleysOrgWp := Feed{"the-haleys.org", "http://charles.the-haleys.org/wp_attack_with_timestamps.php?days=7",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	haleysOrgSMTP := Feed{"the-haleys.org", "http://charles.the-haleys.org/smtp_dico_attack_with_timestamps.php?days=7",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	blocklistDe := Feed{"blocklist.de", "http://lists.blocklist.de/lists/all.txt", 10,
-		[]FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	botscout := Feed{"botscout", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/botscout_1d.ipset",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	bruteforceblocker := Feed{"bruteforceblocker", "http://danger.rulez.sk/projects/bruteforceblocker/blist.php",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	cinsscoreCom := Feed{"cinsscore.com", "http://cinsscore.com/list/ci-badguys.txt", 10,
-		[]FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	cruzit := Feed{"cruzit", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/cruzit_web_attacks.ipset",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	dshieldOrg := Feed{"dshield.org", "http://feeds.dshield.org/top10-2.txt", 10,
-		[]FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	emergingthreatsNet := Feed{"emergingthreats.net", "http://rules.emergingthreats.net/open/suricata/rules/compromised-ips.txt",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	malwaredomainlist := Feed{"malwaredomainlist", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/malwaredomainlist.ipset",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	myip := Feed{"myip", "https://myip.ms/files/blacklist/htaccess/latest_blacklist.txt", 10,
-		[]FeedAnalyzer{{3, "^deny from ((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*"}}}
+	spamhaus := entity.Feed{Name: "spamhaus", URL: "https://www.spamhaus.org/drop/drop.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpSubnet + ".*"},
+			{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	firehol := entity.Feed{Name: "firehol", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpSubnet + ".*"},
+			{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	alienvaultCom := entity.Feed{Name: "alienvault.com", URL: "https://reputation.alienvault.com/reputation.generic",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + " # Scanning Host.*"},
+			{Score: 3, Expression: "^" + regexpIP + " # Malicious Host.*"}}}
+	badipsCom := entity.Feed{Name: "badips.com", URL: "https://www.badips.com/get/list/any/2?age=7d", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	teamCymruOrg := entity.Feed{Name: "team-cymru.org", URL: "https://www.team-cymru.org/Services/Bogons/fullbogons-ipv4.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpSubnet + ".*"}}}
+	stopforumspamCom := entity.Feed{Name: "stopforumspam.com", URL: "https://www.stopforumspam.com/downloads/toxic_ip_cidr.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 2, Expression: "^" + regexpSubnet + ".*"}}}
+	greensnowCo := entity.Feed{Name: "greensnow.co", URL: "https://blocklist.greensnow.co/greensnow.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 2, Expression: "^" + regexpIP + ".*"}}}
+	binarydefenseCom := entity.Feed{Name: "binarydefense.com", URL: "https://www.binarydefense.com/banlist.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + ".*"}}}
+	haleysOrgSSH := entity.Feed{Name: "the-haleys.org", URL: "http://charles.the-haleys.org/ssh_dico_attack_with_timestamps.php?days=7",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^ALL : ((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*"}}}
+	haleysOrgWp := entity.Feed{Name: "the-haleys.org", URL: "http://charles.the-haleys.org/wp_attack_with_timestamps.php?days=7",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + ".*"}}}
+	haleysOrgSMTP := entity.Feed{Name: "the-haleys.org", URL: "http://charles.the-haleys.org/smtp_dico_attack_with_timestamps.php?days=7",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + ".*"}}}
+	blocklistDe := entity.Feed{Name: "blocklist.de", URL: "http://lists.blocklist.de/lists/all.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	botscout := entity.Feed{Name: "botscout", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/botscout_1d.ipset",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	bruteforceblocker := entity.Feed{Name: "bruteforceblocker", URL: "http://danger.rulez.sk/projects/bruteforceblocker/blist.php",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	cinsscoreCom := entity.Feed{Name: "cinsscore.com", URL: "http://cinsscore.com/list/ci-badguys.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	cruzit := entity.Feed{Name: "cruzit", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/cruzit_web_attacks.ipset",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	dshieldOrg := entity.Feed{Name: "dshield.org", URL: "http://feeds.dshield.org/top10-2.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	emergingthreatsNet := entity.Feed{Name: "emergingthreats.net", URL: "http://rules.emergingthreats.net/open/suricata/rules/compromised-ips.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	malwaredomainlist := entity.Feed{Name: "malwaredomainlist", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/malwaredomainlist.ipset",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	myip := entity.Feed{Name: "myip", URL: "https://myip.ms/files/blacklist/htaccess/latest_blacklist.txt", Timeout: 10,
+		FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^deny from ((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*"}}}
 
-	sslbl := Feed{"sslbl", "https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	rutgersEdu := Feed{"rutgers.edu", "http://report.cs.rutgers.edu/DROP/attackers",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	sblamCom := Feed{"sblam.com", "http://sblam.com/blacklist.txt",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	talosintelligenceCom := Feed{"talosintelligence.com", "http://www.talosintelligence.com/feeds/ip-filter.blf",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	turrisCz := Feed{"turris.cz", "https://www.turris.cz/greylist-data/greylist-latest.csv",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	feodotracker := Feed{"feodotracker", "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
-		10, []FeedAnalyzer{{3, "^" + regexpIP + ".*"}}}
-	fireholdabusers := Feed{"boyscout1d", "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_abusers_1d.netset",
-		10, []FeedAnalyzer{{1, "^" + regexpIP + ".*"}}}
-	var activeFeeds = []Feed{teamCymruOrg, stopforumspamCom, greensnowCo, binarydefenseCom, haleysOrgSSH,
+	sslbl := entity.Feed{Name: "sslbl", URL: "https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	rutgersEdu := entity.Feed{Name: "rutgers.edu", URL: "http://report.cs.rutgers.edu/DROP/attackers",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	sblamCom := entity.Feed{Name: "sblam.com", URL: "http://sblam.com/blacklist.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + ".*"}}}
+	talosintelligenceCom := entity.Feed{Name: "talosintelligence.com", URL: "http://www.talosintelligence.com/feeds/ip-filter.blf",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	turrisCz := entity.Feed{Name: "turris.cz", URL: "https://www.turris.cz/greylist-data/greylist-latest.csv",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	feodotracker := entity.Feed{Name: "feodotracker", URL: "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 3, Expression: "^" + regexpIP + ".*"}}}
+	fireholdabusers := entity.Feed{Name: "boyscout1d", URL: "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_abusers_1d.netset",
+		Timeout: 10, FeedAnalyzers: []entity.FeedAnalyzer{{Score: 1, Expression: "^" + regexpIP + ".*"}}}
+	var activeFeeds = []entity.Feed{teamCymruOrg, stopforumspamCom, greensnowCo, binarydefenseCom, haleysOrgSSH,
 		haleysOrgWp, haleysOrgSMTP, spamhaus, firehol, alienvaultCom, badipsCom, blocklistDe, botscout,
 		bruteforceblocker, cinsscoreCom, cruzit, dshieldOrg, emergingthreatsNet, feodotracker, malwaredomainlist,
 		myip, sslbl, rutgersEdu, sblamCom, talosintelligenceCom,
 		turrisCz, feodotracker, fireholdabusers}
-	ips := make(map[string]IPAnalysis)
-	subnets := make(map[string]SUBNETAnalysis)
+	ips := make(map[string]entity.IPAnalysis)
+	subnets := make(map[string]entity.SUBNETAnalysis)
 	for _, activeFeed := range activeFeeds {
 		c.logger.Printf("[INFO] Importing data feed %s\n", activeFeed.Name)
 		feedResultsIPs, feedResultsSubnets, err := activeFeed.Fetch()

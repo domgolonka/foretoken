@@ -1,0 +1,5 @@
+[
+  {"Name": "ejrvipv4", "URL": "https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt", "Type": "ipv4"},
+  {"Name": "ejrvipv6", "URL": "https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt", "Type": "ipv6"}
+ ]
+

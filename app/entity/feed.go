@@ -1,9 +1,12 @@
-package providers
+package entity
 
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -31,8 +34,27 @@ type FeedAnalyzer struct {
 type Feed struct {
 	Name          string
 	URL           string
+	Type          string
+	Format        string
 	Timeout       time.Duration
 	FeedAnalyzers []FeedAnalyzer
+}
+
+func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
+	var f []*Feed
+	workingdir, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	file, err := ioutil.ReadFile(workingdir + "/resource/" + filename)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(file, &f)
+	if err != nil {
+		return nil, err
+	}
+	return f, nil
 }
 
 func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {
@@ -45,7 +67,9 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 		return nil, nil, err
 	}
 
-	defer response.Body.Close()
+	defer func() {
+		err = response.Body.Close()
+	}()
 
 	scanner := bufio.NewScanner(response.Body)
 	scanner.Split(bufio.ScanRunes)

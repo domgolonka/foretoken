@@ -3,15 +3,15 @@ package providers
 import (
 	"bytes"
 	"fmt"
+	"github.com/domgolonka/threatdefender/app/entity"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/sirupsen/logrus"
 )
 
-var ervsfreevps = []string{"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",
-	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"}
+//var ervsfreevps = []string{"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",
+//	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"}
 
 type TxtDomains struct {
 	hosts      []string
@@ -35,15 +35,21 @@ func (c *TxtDomains) Load(body []byte) ([]string, error) {
 		c.hosts = make([]string, 0)
 	}
 
+	f := entity.Feed{}
+	feed, err := f.ReadFile("ip_vpn.json")
+	if err != nil {
+		return nil, err
+	}
+
 	if len(c.hosts) != 0 {
 		return c.hosts, nil
 	}
-	allbody := make([]byte, 0, len(ervsfreevps))
+	allbody := make([]byte, 0, len(feed))
 	if body == nil {
 		var err error
-		for i := 0; i < len(ervsfreevps); i++ {
-			c.logger.Debug(ervsfreevps[i])
-			if body, err = c.MakeRequest(ervsfreevps[i]); err != nil {
+		for i := 0; i < len(feed); i++ {
+			c.logger.Debug(feed[i].URL)
+			if body, err = c.MakeRequest(feed[i].URL); err != nil {
 				allbody = append(allbody, body...)
 			}
 

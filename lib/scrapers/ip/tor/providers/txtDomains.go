@@ -20,7 +20,7 @@ type TxtDomains struct {
 	lastUpdate time.Time
 }
 
-var speedlist = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
+var torList = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
 	"https://www.dan.me.uk/torlist/",
 	"https://iplists.firehol.org/files/bm_tor.ipset"}
 
@@ -44,11 +44,11 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	if len(c.torList) != 0 {
 		return c.torList, nil
 	}
-	allbody := make([]string, 0, len(speedlist))
+	allbody := make([]string, 0, len(torList))
 	if body == nil {
 		var err error
-		for i := 0; i < len(speedlist); i++ {
-			if body, err = c.MakeRequest(speedlist[i]); err != nil {
+		for i := 0; i < len(torList); i++ {
+			if body, err = c.MakeRequest(torList[i]); err != nil {
 				return nil, err
 			}
 

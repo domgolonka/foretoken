@@ -28,6 +28,7 @@ type Feed struct {
 	Type string
 }
 
+// todo fix type of proxy
 var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
 	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
 	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
@@ -74,12 +75,21 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 		}
 	}
 	for _, s := range allbody {
-		proxy := strings.Split(s, ":")
-		prox := models.Proxy{
-			IP:   proxy[0],
-			Port: proxy[1],
-			Type: "http",
+		prox := models.Proxy{}
+		if strings.Contains(s, ":") {
+			proxy := strings.Split(s, ":")
+			prox = models.Proxy{
+				IP:   proxy[0],
+				Port: proxy[1],
+				Type: "http",
+			}
+		} else {
+			prox = models.Proxy{
+				IP:   s,
+				Type: "http",
+			}
 		}
+
 		c.proxyList = append(c.proxyList, prox)
 	}
 

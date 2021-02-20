@@ -51,17 +51,19 @@ func (db *TorStore) FindAll() (*[]string, error) {
 	return &strings, nil
 }
 
-func (db *TorStore) Create(ip string) (*models.Tor, error) {
+func (db *TorStore) Create(ip string, prefix byte, score int) (*models.Tor, error) {
 	now := time.Now()
 
 	tor := &models.Tor{
 		IP:        ip,
+		Prefix:    prefix,
+		Score:     score,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO tor (ip, created_at, updated_at) VALUES (:ip, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO tor (ip, prefix, score, created_at, updated_at) VALUES (:ip, :prefix, :score, :created_at, :updated_at)",
 		tor,
 	)
 	if err != nil {

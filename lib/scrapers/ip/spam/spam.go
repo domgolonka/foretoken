@@ -36,7 +36,7 @@ func (p *Spam) AddProvider(provider Provider) {
 }
 func (p *Spam) load() {
 	for _, provider := range p.providers {
-		iplist, subnetlist, err := provider.List()
+		iplist, err := provider.List()
 
 		if err != nil {
 			p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
@@ -44,13 +44,8 @@ func (p *Spam) load() {
 		}
 
 		p.logger.Println(provider.Name(), len(iplist))
-		p.logger.Println(provider.Name(), len(subnetlist))
 		//p.hosts <- hosts
 		for _, s := range iplist {
-			p.createOrIgnore(s.IP, 0, s.Score, s.Type)
-			p.hosts = append(p.hosts, s.ToString())
-		}
-		for _, s := range subnetlist {
 			p.createOrIgnore(s.IP, s.Prefix, s.Score, s.Type)
 			p.hosts = append(p.hosts, s.ToString())
 		}
@@ -58,9 +53,6 @@ func (p *Spam) load() {
 }
 func (p *Spam) createOrIgnore(ip string, prefix uint8, score int, iptype string) bool {
 	_, err := p.store.Create(ip, prefix, score, iptype)
-	if err != nil {
-		p.logger.Error(err)
-	}
 	return err == nil
 }
 

@@ -15,6 +15,17 @@
     ]
   },
   {
+    "name": "vpngate",
+    "url": "https://www.vpngate.net/api/iphone/",
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4two"
+      }
+    ]
+  },
+  {
     "name": "ejrvipv6",
     "url": "https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt",
     "type": "ipv6",

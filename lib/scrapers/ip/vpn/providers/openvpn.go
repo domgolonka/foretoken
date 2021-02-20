@@ -103,8 +103,8 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]models.Vpn, error) {
 				rc.Close()
 				domainTmp := reRemote.FindStringSubmatch(buf.String())
 				vpn := models.Vpn{
-					URL:    domainTmp[1],
-					Source: "openvpn",
+					IP:   domainTmp[1],
+					Type: "openvpn",
 				}
 				hosts = append(hosts, vpn)
 			}

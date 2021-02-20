@@ -29,16 +29,6 @@ type Feed struct {
 	Type string
 }
 
-//var speedlist = []string{"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
-//	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
-//	"https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
-//	"https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset"}
-
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
 	return &TxtDomains{logger: logger}
 }

@@ -1,7 +1,7 @@
 <p align="center"> 
   <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
   <h2 align="center">Threat Defender</h2>
-  <p align="center">A modern-day defence tool using REST/gRPC protocols.</p>
+  <p align="center">A highly customizable modern-day defence tool using REST/gRPC protocols.</p>
 
 <p align="center">
     <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Report Bug</a>
@@ -15,30 +15,29 @@
 
 ## About
 
-ThreatDefender is a tool to scrape and defend against potential dangerous threats faced on the internet. It aims to be a highly customizable tool for companies and individuals to use to block threats. 
-The current list of scraping and defending includes.
+ThreatDefender is a tool to scrape and defend against potential dangerous threats faced on the internet. It aims to be a
+highly customizable tools for companies and individuals to use to counter threats.
 
-- Emails
+### Features
+
+- **Emails** (Rest/gRPC)
     - Disposable
     - Generic
     - Free
     - Spam
-- IPs
+- **IPs** (Rest/gRPC)
     - VPN
     - Spam
     - Proxy
     - Tor
-  
-- Score
+- **Score** (Rest/gRPC)
     - IP [(0 to 100)](#score)
     - Email [(0 to 100)](#score)
-
-### Score
-
-The overall Fraud Score of the email and IP's reputation and recent behavior across the threat network. Fraud Scores >= 75 are suspicious, but not necessarily fraudulent.
-
-
-This tool saves those threats on multiple different databases and uses REST API & gRPC to output data.
+- **Database**
+    - SQLite
+    - PostgreSQL
+- **[Editable Sources](#source)**
+    - You can edit all sources
 
 # Usage
 
@@ -54,7 +53,8 @@ To run it on your local computer:
 
 `make run`
 
-The default config file is `config/config.dev.yml`. If you want to run it with a different config file (or add your own).
+The default config file is `config/config.dev.yml`. If you want to run it with a different config file (or add your own)
+.
 
 `make build` (make sure to build it first)
 
@@ -69,18 +69,69 @@ All configurations are in the config files in the directory "config". You can ad
 
 ## Change the databases
 
-At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with either `postgresql` or `sqlite3`
+At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with
+either `postgresql` or `sqlite3`
 
-For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/). 
+For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/).
+
+## Score
+
+The overall Fraud Score of the email and IP's reputation and recent behavior across the threat network. Fraud Scores >=
+75 are suspicious, but not necessarily fraudulent.
+
+This tool saves those threats on multiple different databases and uses REST API & gRPC to output data.
+
+## Source
+
+All sources are available in the `./resource` directory. You can edit and the resources. They files get checked once a
+day by the different modules.
+
+### Regular Expressions
+
+Regex expressions are saved in the `./resource/expressions.json` file in JSON format.
+
+Each regex looks like this:
+
+    {
+    "name": "ipv4",
+    "expression": "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*",
+    "type": "ipv4"
+    },
+
+_**Name**:_  The UNIQUE name of the regular expression. 
+
+_**Expression**:_ The regex 
+
+_**Type:**_ The type of expression. For IPs, it is
+usually is a ipv4 or ipv6. For IP proxy, its http, https, sock4, sock5.
+
+### IPs
+
+The ip files are stored in the `./resource` directory and start with `ip_` such as `ip_tor` for tor.
+
+#### Spam
+
+#### Proxy
+
+#### VPN
+
+#### Tor
+
+### Email
+
+#### Disposable
+
+#### Free
+
+#### Spam
 
 # APIs
 
 REST API & gRPC is enabled.
 
-### gRPC 
+### gRPC
 
 The default gRPC port is 8082 (you can change in the config)
-
 
 ### REST API
 
@@ -183,7 +234,6 @@ The REST API to the example app is described below.
     xxx.com
     xxx.ca
 
-
 #### Request
 
 `GET /list/email/generic`
@@ -264,7 +314,6 @@ The REST API to the example app is described below.
     Transfer-Encoding: chunked
 
     0
-
 
 #### Request
 
@@ -350,9 +399,6 @@ The REST API to the example app is described below.
     "device_model": "",
     "device_brand": ""
     }
-
-
-
 
 ## Work in progress
 

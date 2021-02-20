@@ -33,10 +33,10 @@ func NewProxyStore(db sqlx.Ext) (ProxyStore, error) {
 }
 
 type VpnStore interface {
-	FindByURL(url string) (*models.Vpn, error)
+	FindByIP(ip string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
 	FindAll() (*[]string, error)
-	Create(url, subnet, source string) (*models.Vpn, error)
+	Create(ip string, prefix byte, source int) (*models.Vpn, error)
 	Delete(id int) (bool, error)
 }
 
@@ -72,10 +72,10 @@ func NewSpamStore(db sqlx.Ext) (SpamStore, error) {
 }
 
 type TorStore interface {
-	FindByIP(ipaddress string) (*models.Tor, error)
+	FindByIP(ip string) (*models.Tor, error)
 	Find(id int) (*models.Tor, error)
 	FindAll() (*[]string, error)
-	Create(ip string) (*models.Tor, error)
+	Create(ip string, prefix byte, source int) (*models.Tor, error)
 	Delete(id int) (bool, error)
 }
 

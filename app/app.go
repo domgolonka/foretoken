@@ -89,9 +89,9 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	}
 
 	//proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
-	//vpngen := vpn.NewVPN(vpnStore, logger)
-	//torgen := tor.NewTor(torStore, logger)
-	spamgen := spam.NewSpam(spamStore, logger)
+	vpngen := vpn.NewVPN(vpnStore, logger)
+	torgen := tor.NewTor(torStore, logger)
+	//spamgen := spam.NewSpam(spamStore, logger)
 	//freeEmailGen := free.NewFreeEmail(freeEmailStore, logger)
 	//disgen := disposable.NewDisposable(disposableStore, logger)
 	//spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger)
@@ -108,10 +108,10 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		SpamStore:      spamStore,
 		SpamEmailStore: spamEmailStore,
 		TorStore:       torStore,
-		//ProxyGenerator: proxygen,
-		//VPNGenerator:   vpngen,
-		//TorGenerator:   torgen,
-		SpamGenerator: spamgen,
+		//ProxyGenerator:      proxygen,
+		VPNGenerator: vpngen,
+		TorGenerator: torgen,
+		//SpamGenerator:       spamgen,
 		//DisposableGenerator: disgen,
 		//SpamEmailGenerator:  spamemailgen,
 		//FreeEmailGenerator:  freeEmailGen,

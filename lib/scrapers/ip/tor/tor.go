@@ -42,12 +42,15 @@ func (p *Tor) load() {
 		}
 		p.logger.Println(provider.Name(), len(hosts))
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i].IP)
+			p.createOrIgnore(hosts[i].IP, hosts[i].Prefix, hosts[i].Score)
 		}
 	}
 }
-func (p *Tor) createOrIgnore(ip string) bool {
-	_, err := p.store.Create(ip)
+func (p *Tor) createOrIgnore(ip string, prefix byte, score int) bool {
+	_, err := p.store.Create(ip, prefix, score)
+	if err != nil {
+		logrus.Error(err)
+	}
 	return err == nil
 }
 

@@ -14,7 +14,6 @@ import (
 
 type TxtDomains struct {
 	iplist     []models.Spam
-	sublist    []models.Spam
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
@@ -29,18 +28,18 @@ func (*TxtDomains) Name() string {
 	return "text_domain"
 }
 
-func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
+func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
 		c.iplist = make([]models.Spam, 0)
-		c.sublist = make([]models.Spam, 0)
+
 	}
 
 	f := entity.Feed{}
 	feed, err := f.ReadFile("ip_spam.json")
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	ips := make(map[string]entity.IPAnalysis)
 	subnets := make(map[string]entity.SUBNETAnalysis)
@@ -83,7 +82,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
 					Score:  subnets[k].Score,
 					Type:   subnets[k].Type,
 				}
-				c.sublist = append(c.iplist, spam)
+				c.iplist = append(c.iplist, spam)
 			}
 			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %s\n", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)
@@ -93,7 +92,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
 	}
 
 	c.lastUpdate = time.Now()
-	return c.iplist, c.sublist, nil
+	return c.iplist, nil
 
 }
 func (c *TxtDomains) MakeRequest(urlList string) ([]byte, error) {
@@ -123,6 +122,6 @@ func (c *TxtDomains) MakeRequest(urlList string) ([]byte, error) {
 	return body.Bytes(), err
 }
 
-func (c *TxtDomains) List() ([]models.Spam, []models.Spam, error) {
+func (c *TxtDomains) List() ([]models.Spam, error) {
 	return c.Load(nil)
 }

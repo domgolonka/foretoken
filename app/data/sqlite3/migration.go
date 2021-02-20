@@ -25,8 +25,10 @@ func createVpn(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS vpn (
             id INTEGER PRIMARY KEY,
-            url TEXT NOT NULL UNIQUE,
-            source TEXT,
+            ip TEXT NOT NULL UNIQUE,
+            prefix TEXT,
+            type TEXT NOT NULL,
+            Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -75,7 +77,7 @@ func createSpam(db *sqlx.DB) error {
         CREATE TABLE IF NOT EXISTS spamip (
             id INTEGER PRIMARY KEY,
             ip TEXT NOT NULL UNIQUE,
-            prefix INTEGER,
+            prefix TEXT,
             type TEXT NOT NULL,
             Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
@@ -101,9 +103,11 @@ func createProxy(db *sqlx.DB) error {
 
 func createTor(db *sqlx.DB) error {
 	_, err := db.Exec(`
-        CREATE TABLE IF NOT EXISTS tor (
+       CREATE TABLE IF NOT EXISTS tor (
             id INTEGER PRIMARY KEY,
             ip TEXT NOT NULL UNIQUE,
+            prefix TEXT,
+            Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )

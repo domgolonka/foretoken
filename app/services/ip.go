@@ -27,7 +27,7 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 	if tor != nil {
 		ipresponse.Tor = true
 	}
-	vpn, err := app.VpnStore.FindByURL(ipaddress)
+	vpn, err := app.VpnStore.FindByIP(ipaddress)
 	if err != nil {
 		app.Logger.Error(err)
 	}

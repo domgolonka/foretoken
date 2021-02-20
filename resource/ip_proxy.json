@@ -1,0 +1,101 @@
+[
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4sock5"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4sock4"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4http"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4http"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4http"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4http"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "sock5"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4http"
+      }
+    ]
+  },
+  {
+    "name": "speedX",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4https"
+      }
+    ]
+  }
+]

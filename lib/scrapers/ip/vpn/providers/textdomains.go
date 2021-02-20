@@ -2,79 +2,102 @@ package providers
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/domgolonka/threatdefender/app/models"
 
-	"github.com/domgolonka/threatdefender/pkg/utils/ip"
-
 	"github.com/domgolonka/threatdefender/app/entity"
+
 	"github.com/sirupsen/logrus"
 )
 
-//var ervsfreevps = []string{"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",
-//	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"}
-
 type TxtDomains struct {
-	hosts      []models.Vpn
+	iplist     []models.Vpn
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
-	logger.Debug("starting VPN TxtDomains")
+	logger.Debug("starting TxtDomains")
 	return &TxtDomains{
 		logger: logger,
 	}
 }
 func (*TxtDomains) Name() string {
-	return "vpn_txt_domains"
+	return "text_domain"
 }
 
 func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
+
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.hosts = make([]models.Vpn, 0)
+		c.iplist = make([]models.Vpn, 0)
 	}
 
 	f := entity.Feed{}
-	feed, err := f.ReadFile("ip_vpn.json")
+	feed, err := f.ReadFile("ip_tor.json")
 	if err != nil {
 		return nil, err
 	}
-
-	if len(c.hosts) != 0 {
-		return c.hosts, nil
-	}
-	if body == nil {
-		for i := 0; i < len(feed); i++ {
-			expressions, err := feed[i].GetExpressions()
-			if err != nil {
-				return nil, err
-			}
-			if body, err = c.MakeRequest(feed[i].URL); err == nil {
-
-				ips := ip.ParseIPs(body, expressions)
-				for _, a := range ips {
-					vpn := models.Vpn{
-						URL:    a,
-						Source: feed[i].Name,
-					}
-					c.hosts = append(c.hosts, vpn)
+	ips := make(map[string]entity.IPAnalysis)
+	subnets := make(map[string]entity.SUBNETAnalysis)
+	for _, activeFeed := range feed {
+		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
+		feedResultsIPs, feedResultsSubnets, err := activeFeed.Fetch()
+		if err == nil {
+			for k, e := range feedResultsIPs { // k is the ip string,  e is the
+				if _, ok := ips[k]; ok {
+					ip := ips[k]
+					ip.Type = e.Type
+					ip.Score = ip.Score + e.Score
+					ip.Lists = append(ip.Lists, e.Lists[0])
+					ips[k] = ip
+				} else {
+					ips[k] = e
 				}
+
+				spam := models.Vpn{
+					IP:    ips[k].IP,
+					Score: ips[k].Score,
+					Type:  ips[k].Type,
+				}
+				c.iplist = append(c.iplist, spam)
+
 			}
+			for k, e := range feedResultsSubnets {
+				if _, ok := subnets[k]; ok {
+					subnet := subnets[k]
+					subnet.Type = e.Type
+					subnet.Score = subnet.Score + e.Score
+					subnet.Lists = append(subnet.Lists, e.Lists[0])
+					subnets[k] = subnet
+				} else {
+					subnets[k] = e
+				}
+				spam := models.Vpn{
+					IP:     subnets[k].IP,
+					Prefix: subnets[k].PrefixLength,
+					Score:  subnets[k].Score,
+					Type:   subnets[k].Type,
+				}
+				c.iplist = append(c.iplist, spam)
+			}
+			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %s\n", len(feedResultsIPs),
+				len(feedResultsSubnets), activeFeed.Name)
+		} else {
+			c.logger.Printf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)
 		}
 	}
+
 	c.lastUpdate = time.Now()
-	return c.hosts, nil
+	return c.iplist, nil
 
 }
-func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
+func (c *TxtDomains) MakeRequest(urlList string) ([]byte, error) {
 	var body bytes.Buffer
 
-	req, err := http.NewRequest(http.MethodGet, urllist, nil)
+	req, err := http.NewRequest(http.MethodGet, urlList, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -95,28 +118,7 @@ func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
 		return nil, err
 	}
 
-	cut, ok := skip(body.Bytes(), 2)
-	if !ok {
-		return nil, fmt.Errorf("less than %d lines", 2)
-	}
-
-	return cut, err
-}
-
-func skip(b []byte, n int) ([]byte, bool) {
-	for ; n > 0; n-- {
-		if len(b) == 0 {
-			return nil, false
-		}
-		x := bytes.IndexByte(b, '\n')
-		if x < 0 {
-			x = len(b)
-		} else {
-			x++
-		}
-		b = b[x:]
-	}
-	return b, true
+	return body.Bytes(), err
 }
 
 func (c *TxtDomains) List() ([]models.Vpn, error) {

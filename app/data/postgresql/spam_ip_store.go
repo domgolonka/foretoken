@@ -81,7 +81,7 @@ func (db *SpamStore) Create(ip string, prefix byte, score int, iptype string) (*
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO spamip (ip, prefix,  score, type, created_at, updated_at) VALUES (:url, :prefix, :score, :type, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO spamip (ip, prefix,  score, type, created_at, updated_at) VALUES (:ip, :prefix, :score, :type, :created_at, :updated_at)",
 		spam,
 	)
 	if err != nil {

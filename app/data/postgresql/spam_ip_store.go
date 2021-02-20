@@ -14,7 +14,7 @@ type SpamStore struct {
 
 func (db *SpamStore) FindByIP(ipaddress string) (*models.Spam, error) {
 	spam := models.Spam{}
-	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE url = ?", ipaddress)
+	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE ip = ?", ipaddress)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -36,7 +36,19 @@ func (db *SpamStore) Find(id int) (*models.Spam, error) {
 	return &spam, nil
 }
 
-func (db *SpamStore) FindAll() (*[]string, error) {
+func (db *SpamStore) FindAll() (*[]models.Spam, error) {
+	spam := []models.Spam{}
+	err := sqlx.Select(db, &spam, "SELECT * FROM spam")
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &spam, nil
+}
+
+func (db *SpamStore) FindAllIPs() (*[]string, error) {
 	spam := []models.Spam{}
 	err := sqlx.Select(db, &spam, "SELECT * FROM spam")
 	if err == sql.ErrNoRows {
@@ -46,23 +58,29 @@ func (db *SpamStore) FindAll() (*[]string, error) {
 	}
 	strings := make([]string, 0, len(spam))
 	for i := 0; i < len(spam); i++ {
-		strings = append(strings, spam[i].URL)
+		if spam[i].Prefix > 0 {
+			strings = append(strings, spam[i].IP+"/"+string(spam[i].Prefix))
+		} else {
+			strings = append(strings, spam[i].IP)
+		}
+
 	}
 	return &strings, nil
 }
 
-func (db *SpamStore) Create(url string, sub string) (*models.Spam, error) {
+func (db *SpamStore) Create(ip string, prefix uint8, score int) (*models.Spam, error) {
 	now := time.Now()
 
 	spam := &models.Spam{
-		URL:       url,
-		Subnet:    sub,
+		IP:        ip,
+		Prefix:    prefix,
+		Score:     score,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO spam (url, subnet, created_at, updated_at) VALUES (:url, :subnet, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO spam (url, prefix,  score, created_at, updated_at) VALUES (:url, :prefix, :score, :created_at, :updated_at)",
 		spam,
 	)
 	if err != nil {

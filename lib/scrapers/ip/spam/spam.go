@@ -45,15 +45,19 @@ func (p *Spam) load() {
 
 		p.logger.Println(provider.Name(), len(iplist))
 		p.logger.Println(provider.Name(), len(subnetlist))
-		//p.hosts = append(p.hosts, iplist...)
-		////p.hosts <- hosts
-		//for _, s := range p.hosts {
-		//	p.createOrIgnore(s, subnetlist)
-		//}
+		//p.hosts <- hosts
+		for _, s := range iplist {
+			p.createOrIgnore(s.IP, 0, s.Score)
+			p.hosts = append(p.hosts, s.ToString())
+		}
+		for _, s := range subnetlist {
+			p.createOrIgnore(s.IP, s.Prefix, s.Score)
+			p.hosts = append(p.hosts, s.ToString())
+		}
 	}
 }
-func (p *Spam) createOrIgnore(dis string, sub string) bool {
-	_, err := p.store.Create(dis, sub)
+func (p *Spam) createOrIgnore(ip string, prefix uint8, score int) bool {
+	_, err := p.store.Create(ip, prefix, score)
 	return err == nil
 }
 

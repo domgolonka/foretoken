@@ -71,12 +71,13 @@ func createFreeEmail(db *sqlx.DB) error {
 
 func createSpam(db *sqlx.DB) error {
 	_, err := db.Exec(`
-        CREATE TABLE IF NOT EXISTS spam (
+       CREATE TABLE IF NOT EXISTS spam (
             id INTEGER PRIMARY KEY,
-            url TEXT NOT NULL CONSTRAINT uniq UNIQUE,
-              subnet BOOLEAN,
+            ip TEXT CONSTRAINT uniq UNIQUE,
+            prefix INT,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
+        )
         )
     `)
 	return err

@@ -54,8 +54,9 @@ func NewVpnStore(db sqlx.Ext) (VpnStore, error) {
 type SpamStore interface {
 	FindByIP(ipaddress string) (*models.Spam, error)
 	Find(id int) (*models.Spam, error)
-	FindAll() (*[]string, error)
-	Create(url string, sub string) (*models.Spam, error)
+	FindAll() (*[]models.Spam, error)
+	FindAllIPs() (*[]string, error)
+	Create(ip string, prefix uint8, score int) (*models.Spam, error)
 	Delete(id int) (bool, error)
 }
 

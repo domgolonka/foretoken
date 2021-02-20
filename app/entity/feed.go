@@ -16,14 +16,15 @@ import (
 type IPAnalysis struct {
 	IP    string
 	Score int
-	Lists []string
+	Lists []string // list of websites where it was found
 }
 
 type SUBNETAnalysis struct {
+	IP           string
 	SUBNET       string
 	PrefixLength byte
 	Score        int
-	Lists        []string
+	Lists        []string // list of websites where it was found
 }
 
 type FeedAnalyzer struct {
@@ -144,7 +145,7 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 						} else if len(findings) == 3 {
 							subnet := findings[1] + "/" + findings[2]
 							prefixLength, _ := strconv.Atoi(findings[2])
-							resultSubnets[subnet] = SUBNETAnalysis{subnet, byte(prefixLength),
+							resultSubnets[subnet] = SUBNETAnalysis{findings[1], subnet, byte(prefixLength),
 								fa.Score, []string{feed.Name}}
 							match = true
 						}

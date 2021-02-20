@@ -2,9 +2,10 @@ package providers
 
 import (
 	"bytes"
-	"github.com/domgolonka/threatdefender/app/models"
 	"net/http"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
 
 	"github.com/domgolonka/threatdefender/app/entity"
 
@@ -29,8 +30,6 @@ func (*TxtDomains) Name() string {
 }
 
 func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
-	iplist := []models.Spam{}
-	sublist := []models.Spam{}
 
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
@@ -115,27 +114,37 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
 		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
 		feedResultsIPs, feedResultsSubnets, err := activeFeed.Fetch()
 		if err == nil {
-			for k, e := range feedResultsIPs {
+			for k, e := range feedResultsIPs { // k is the ip string,  e is the
 				if _, ok := ips[k]; ok {
 					ip := ips[k]
-					iplist = append(iplist, ip.IP)
 					ip.Score = ip.Score + e.Score
 					ip.Lists = append(ip.Lists, e.Lists[0])
 					ips[k] = ip
 				} else {
 					ips[k] = e
 				}
+				spam := models.Spam{
+					IP:    ips[k].IP,
+					Score: ips[k].Score,
+				}
+				c.iplist = append(c.iplist, spam)
+
 			}
 			for k, e := range feedResultsSubnets {
 				if _, ok := subnets[k]; ok {
 					subnet := subnets[k]
-					sublist = append(sublist, subnet.SUBNET)
 					subnet.Score = subnet.Score + e.Score
 					subnet.Lists = append(subnet.Lists, e.Lists[0])
 					subnets[k] = subnet
 				} else {
 					subnets[k] = e
 				}
+				spam := models.Spam{
+					IP:     subnets[k].IP,
+					Prefix: subnets[k].PrefixLength,
+					Score:  subnets[k].Score,
+				}
+				c.sublist = append(c.iplist, spam)
 			}
 			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %s\n", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)
@@ -144,27 +153,8 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, []models.Spam, error) {
 		}
 	}
 
-	//if len(c.hosts) != 0 {
-	//	return c.hosts, nil
-	//}
-	//allbody := make([]byte, 0, len(domains))
-	//if body == nil {
-	//	var err error
-	//	for i := 0; i < len(domains); i++ {
-	//		c.logger.Debug(domains[i])
-	//		if body, err = c.MakeRequest(domains[i]); err == nil {
-	//			allbody = append(allbody, body...)
-	//		}
-	//
-	//	}
-	//}
-	//
-	//c.hosts = strings.Split(string(allbody), "\n")
-
 	c.lastUpdate = time.Now()
-	c.iplist = iplist
-	c.sublist = sublist
-	return iplist, sublist, nil
+	return c.iplist, c.sublist, nil
 
 }
 func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {

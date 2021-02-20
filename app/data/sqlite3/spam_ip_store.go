@@ -14,7 +14,7 @@ type SpamStore struct {
 
 func (db *SpamStore) FindByIP(ipaddress string) (*models.Spam, error) {
 	spam := models.Spam{}
-	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE ip = ?", ipaddress)
+	err := sqlx.Get(db, &spam, "SELECT * FROM spamip WHERE ip = ?", ipaddress)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -26,7 +26,7 @@ func (db *SpamStore) FindByIP(ipaddress string) (*models.Spam, error) {
 
 func (db *SpamStore) Find(id int) (*models.Spam, error) {
 	spam := models.Spam{}
-	err := sqlx.Get(db, &spam, "SELECT * FROM spam WHERE id = ?", id)
+	err := sqlx.Get(db, &spam, "SELECT * FROM spamip WHERE id = ?", id)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -38,7 +38,7 @@ func (db *SpamStore) Find(id int) (*models.Spam, error) {
 
 func (db *SpamStore) FindAll() (*[]models.Spam, error) {
 	spam := []models.Spam{}
-	err := sqlx.Select(db, &spam, "SELECT * FROM spam")
+	err := sqlx.Select(db, &spam, "SELECT * FROM spamip")
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -50,7 +50,7 @@ func (db *SpamStore) FindAll() (*[]models.Spam, error) {
 
 func (db *SpamStore) FindAllIPs() (*[]string, error) {
 	spam := []models.Spam{}
-	err := sqlx.Select(db, &spam, "SELECT * FROM spam")
+	err := sqlx.Select(db, &spam, "SELECT * FROM spamip")
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -67,19 +67,20 @@ func (db *SpamStore) FindAllIPs() (*[]string, error) {
 	return &strings, nil
 }
 
-func (db *SpamStore) Create(ip string, prefix uint8, score int) (*models.Spam, error) {
+func (db *SpamStore) Create(ip string, prefix byte, score int, iptype string) (*models.Spam, error) {
 	now := time.Now()
 
 	spam := &models.Spam{
 		IP:        ip,
 		Prefix:    prefix,
 		Score:     score,
+		Type:      iptype,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO spam (ip, prefix, score, created_at, updated_at) VALUES (:ip, :prefix, :score, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO spamip (ip, prefix, score, type, created_at, updated_at) VALUES (:ip, :prefix, :score, :type, :created_at, :updated_at)",
 		spam,
 	)
 	if err != nil {
@@ -97,6 +98,6 @@ func (db *SpamStore) Create(ip string, prefix uint8, score int) (*models.Spam, e
 }
 
 func (db *SpamStore) Delete(id int) (bool, error) {
-	result, err := db.Exec("DELETE FROM spam WHERE id = ?", id)
+	result, err := db.Exec("DELETE FROM spamip WHERE id = ?", id)
 	return ok(result, err)
 }

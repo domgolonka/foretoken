@@ -47,17 +47,20 @@ func (p *Spam) load() {
 		p.logger.Println(provider.Name(), len(subnetlist))
 		//p.hosts <- hosts
 		for _, s := range iplist {
-			p.createOrIgnore(s.IP, 0, s.Score)
+			p.createOrIgnore(s.IP, 0, s.Score, s.Type)
 			p.hosts = append(p.hosts, s.ToString())
 		}
 		for _, s := range subnetlist {
-			p.createOrIgnore(s.IP, s.Prefix, s.Score)
+			p.createOrIgnore(s.IP, s.Prefix, s.Score, s.Type)
 			p.hosts = append(p.hosts, s.ToString())
 		}
 	}
 }
-func (p *Spam) createOrIgnore(ip string, prefix uint8, score int) bool {
-	_, err := p.store.Create(ip, prefix, score)
+func (p *Spam) createOrIgnore(ip string, prefix uint8, score int, iptype string) bool {
+	_, err := p.store.Create(ip, prefix, score, iptype)
+	if err != nil {
+		p.logger.Error(err)
+	}
 	return err == nil
 }
 
@@ -75,7 +78,7 @@ func NewSpam(store data.SpamStore, logger logrus.FieldLogger) *Spam {
 			logger: logger,
 			store:  store,
 		}
-		logger.Debug("starting Spam")
+		logger.Debug("starting IP Spam")
 		instance.AddProvider(providers.NewTxtDomains(logger))
 		go instance.run()
 	})

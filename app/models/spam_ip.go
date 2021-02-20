@@ -5,7 +5,8 @@ import "time"
 type Spam struct {
 	ID        uint
 	IP        string     `db:"ip"`
-	Prefix    uint8      `db:"prefix"`
+	Prefix    byte       `db:"prefix"`
+	Type      string     `db:"type"`
 	Score     int        `db:"score"`
 	CreatedAt time.Time  `db:"created_at"`
 	UpdatedAt time.Time  `db:"updated_at"`

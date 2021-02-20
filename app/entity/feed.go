@@ -16,13 +16,15 @@ import (
 type IPAnalysis struct {
 	IP    string
 	Score int
+	Type  string
 	Lists []string // list of websites where it was found
 }
 
 type SUBNETAnalysis struct {
 	IP           string
 	SUBNET       string
-	PrefixLength byte
+	Type         string
+	PrefixLength uint8
 	Score        int
 	Lists        []string // list of websites where it was found
 }
@@ -35,6 +37,7 @@ type FeedAnalyzer struct {
 type Expression struct {
 	Name       string `json:"name"`
 	Expression string `json:"expression"`
+	Type       string `json:"type"`
 }
 
 type Feed struct {
@@ -140,12 +143,12 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 					var findings = regex.FindStringSubmatch(line)
 					if !match {
 						if len(findings) == 2 {
-							resultIps[findings[1]] = IPAnalysis{findings[1], fa.Score, []string{feed.Name}}
+							resultIps[findings[1]] = IPAnalysis{findings[1], fa.Score, a.Type, []string{feed.Name}}
 							match = true
 						} else if len(findings) == 3 {
 							subnet := findings[1] + "/" + findings[2]
 							prefixLength, _ := strconv.Atoi(findings[2])
-							resultSubnets[subnet] = SUBNETAnalysis{findings[1], subnet, byte(prefixLength),
+							resultSubnets[subnet] = SUBNETAnalysis{findings[1], subnet, a.Type, uint8(prefixLength),
 								fa.Score, []string{feed.Name}}
 							match = true
 						}

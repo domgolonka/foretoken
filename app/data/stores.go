@@ -56,7 +56,7 @@ type SpamStore interface {
 	Find(id int) (*models.Spam, error)
 	FindAll() (*[]models.Spam, error)
 	FindAllIPs() (*[]string, error)
-	Create(ip string, prefix uint8, score int) (*models.Spam, error)
+	Create(ip string, prefix byte, score int, iptype string) (*models.Spam, error)
 	Delete(id int) (bool, error)
 }
 

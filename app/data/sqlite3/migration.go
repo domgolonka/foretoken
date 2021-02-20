@@ -25,7 +25,7 @@ func createVpn(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS vpn (
             id INTEGER PRIMARY KEY,
-            url TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            url TEXT NOT NULL UNIQUE,
             source TEXT,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
@@ -38,7 +38,7 @@ func createDisposable(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS disposable (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            email TEXT NOT NULL UNIQUE,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -50,7 +50,7 @@ func createSpamEmail(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS spamemail (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            email TEXT NOT NULL UNIQUE,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -62,7 +62,7 @@ func createFreeEmail(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS freeemail (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            email TEXT NOT NULL UNIQUE,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -72,10 +72,12 @@ func createFreeEmail(db *sqlx.DB) error {
 
 func createSpam(db *sqlx.DB) error {
 	_, err := db.Exec(`
-        CREATE TABLE IF NOT EXISTS spam (
+        CREATE TABLE IF NOT EXISTS spamip (
             id INTEGER PRIMARY KEY,
-            ip TEXT CONSTRAINT uniq UNIQUE,
-            prefix INT,
+            ip TEXT NOT NULL UNIQUE,
+            prefix INTEGER,
+            type TEXT NOT NULL,
+            Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -87,7 +89,7 @@ func createProxy(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS proxy (
             id INTEGER PRIMARY KEY,
-            ip TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            ip TEXT NOT NULL UNIQUE,
              port TEXT  NOT NULL,
               type TEXT NOT NULL,
             created_at DATETIME NOT NULL,
@@ -101,7 +103,7 @@ func createTor(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS tor (
             id INTEGER PRIMARY KEY,
-            ip TEXT NOT NULL CONSTRAINT uniq UNIQUE,
+            ip TEXT NOT NULL UNIQUE,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )

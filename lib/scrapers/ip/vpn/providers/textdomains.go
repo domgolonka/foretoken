@@ -3,36 +3,40 @@ package providers
 import (
 	"bytes"
 	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
+
+	"github.com/domgolonka/threatdefender/pkg/utils/ip"
+
 	"github.com/domgolonka/threatdefender/app/entity"
 	"github.com/sirupsen/logrus"
-	"net/http"
-	"strings"
-	"time"
 )
 
 //var ervsfreevps = []string{"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",
 //	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"}
 
 type TxtDomains struct {
-	hosts      []string
+	hosts      []models.Vpn
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
-	logger.Debug("starting TxtDomains")
+	logger.Debug("starting VPN TxtDomains")
 	return &TxtDomains{
 		logger: logger,
 	}
 }
 func (*TxtDomains) Name() string {
-	return "ervs_free_vps"
+	return "vpn_txt_domains"
 }
 
-func (c *TxtDomains) Load(body []byte) ([]string, error) {
+func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.hosts = make([]string, 0)
+		c.hosts = make([]models.Vpn, 0)
 	}
 
 	f := entity.Feed{}
@@ -44,22 +48,26 @@ func (c *TxtDomains) Load(body []byte) ([]string, error) {
 	if len(c.hosts) != 0 {
 		return c.hosts, nil
 	}
-	allbody := make([]byte, 0, len(feed))
 	if body == nil {
-		var err error
 		for i := 0; i < len(feed); i++ {
-			c.logger.Debug(feed[i].URL)
-			if body, err = c.MakeRequest(feed[i].URL); err != nil {
-				allbody = append(allbody, body...)
+			expressions, err := feed[i].GetExpressions()
+			if err != nil {
+				return nil, err
 			}
+			if body, err = c.MakeRequest(feed[i].URL); err == nil {
 
+				ips := ip.ParseIPs(body, expressions)
+				for _, a := range ips {
+					vpn := models.Vpn{
+						URL:    a,
+						Source: feed[i].Name,
+					}
+					c.hosts = append(c.hosts, vpn)
+				}
+			}
 		}
 	}
-
-	c.hosts = strings.Split(string(allbody), "\n")
-
 	c.lastUpdate = time.Now()
-
 	return c.hosts, nil
 
 }
@@ -111,6 +119,6 @@ func skip(b []byte, n int) ([]byte, bool) {
 	return b, true
 }
 
-func (c *TxtDomains) List() ([]string, error) {
+func (c *TxtDomains) List() ([]models.Vpn, error) {
 	return c.Load(nil)
 }

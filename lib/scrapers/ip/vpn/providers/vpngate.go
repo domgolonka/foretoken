@@ -7,11 +7,13 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/domgolonka/threatdefender/app/models"
+
 	"github.com/sirupsen/logrus"
 )
 
 type VPNGate struct {
-	hosts      []string
+	hosts      []models.Vpn
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
@@ -28,10 +30,10 @@ func (*VPNGate) Name() string {
 	return "vpngate"
 }
 
-func (c *VPNGate) Load(body []byte) ([]string, error) {
+func (c *VPNGate) Load(body []byte) ([]models.Vpn, error) {
 	// don't need to update this more than once a day!
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
-		c.hosts = make([]string, 0)
+		c.hosts = make([]models.Vpn, 0)
 	}
 
 	if len(c.hosts) != 0 {
@@ -46,7 +48,14 @@ func (c *VPNGate) Load(body []byte) ([]string, error) {
 			return nil, err
 		}
 
-		c.hosts = re.FindAllString(string(body), -1)
+		ips := re.FindAllString(string(body), -1)
+		for _, ip := range ips {
+			vpn := models.Vpn{
+				URL:    ip,
+				Source: c.Name(),
+			}
+			c.hosts = append(c.hosts, vpn)
+		}
 
 	}
 
@@ -86,6 +95,6 @@ func (c *VPNGate) MakeRequest(urllist string) ([]byte, error) {
 	return cut, err
 }
 
-func (c *VPNGate) List() ([]string, error) {
+func (c *VPNGate) List() ([]models.Vpn, error) {
 	return c.Load(nil)
 }

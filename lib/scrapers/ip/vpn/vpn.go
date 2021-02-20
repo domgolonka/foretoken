@@ -44,12 +44,12 @@ func (p *VPN) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 		//p.hosts <- hosts
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i], provider.Name())
+			p.createOrIgnore(hosts[i].URL, hosts[i].Subnet, hosts[i].Source)
 		}
 	}
 }
-func (p *VPN) createOrIgnore(url, source string) bool {
-	_, err := p.store.Create(url, source)
+func (p *VPN) createOrIgnore(url, subnet, source string) bool {
+	_, err := p.store.Create(url, subnet, source)
 	return err == nil
 }
 
@@ -68,9 +68,9 @@ func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {
 			store:  store,
 		}
 		logger.Debug("starting VPN")
-		instance.AddProvider(providers.NewOpenVpn(logger))
+		//instance.AddProvider(providers.NewOpenVpn(logger))
 		instance.AddProvider(providers.NewTxtDomains(logger))
-		instance.AddProvider(providers.NewVPNGate(logger))
+		//instance.AddProvider(providers.NewVPNGate(logger))
 		//instance.AddProvider(providers.NewVPNBook(logger))
 		go instance.run()
 	})

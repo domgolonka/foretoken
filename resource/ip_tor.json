@@ -1,7 +1,7 @@
 [
   {
     "name": "secops",
-    "url": "https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lstt",
+    "url": "https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
     "type": "ipv4",
     "feed": [
       {
@@ -39,7 +39,7 @@
     "feed": [
       {
         "score": 3,
-        "expression": "torproject"
+        "expression": "ipv4"
       }
     ]
   }

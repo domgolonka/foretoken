@@ -51,7 +51,7 @@ func (db *SpamStore) FindAll() (*[]string, error) {
 	return &strings, nil
 }
 
-func (db *SpamStore) Create(url string, sub bool) (*models.Spam, error) {
+func (db *SpamStore) Create(url string, sub string) (*models.Spam, error) {
 	now := time.Now()
 
 	spam := &models.Spam{

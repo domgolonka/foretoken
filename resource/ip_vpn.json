@@ -2,12 +2,28 @@
   {
     "name": "ejrvipv4",
     "url": "https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt",
-    "type": "ipv4"
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      },
+      {
+        "score": 3,
+        "expression": "ipv4Subnet"
+      }
+    ]
   },
   {
     "name": "ejrvipv6",
     "url": "https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt",
-    "type": "ipv6"
+    "type": "ipv6",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv6subnet"
+      }
+    ]
   }
 ]
 

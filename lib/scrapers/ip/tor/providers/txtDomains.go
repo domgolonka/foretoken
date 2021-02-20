@@ -47,7 +47,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	}
 
 	f := entity.Feed{}
-	feed, err := f.ReadFile("ip_vpn.json")
+	feed, err := f.ReadFile("ip_tor.json")
 	if err != nil {
 		return nil, err
 	}
@@ -55,12 +55,12 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	if body == nil {
 		for i := 0; i < len(feed); i++ {
 			expressions, err := feed[i].GetExpressions()
-			c.logger.Error(expressions)
 			if err != nil {
 				return nil, err
 			}
 			if body, err = c.MakeRequest(feed[i].URL); err != nil {
-				return nil, err
+				c.logger.Error("cannot load %", feed[i].Name)
+				break
 			}
 
 			ipv4 := ip.ParseIPs(body, expressions)

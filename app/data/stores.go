@@ -36,7 +36,7 @@ type VpnStore interface {
 	FindByURL(url string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
 	FindAll() (*[]string, error)
-	Create(url, source string) (*models.Vpn, error)
+	Create(url, subnet, source string) (*models.Vpn, error)
 	Delete(id int) (bool, error)
 }
 
@@ -55,7 +55,7 @@ type SpamStore interface {
 	FindByIP(ipaddress string) (*models.Spam, error)
 	Find(id int) (*models.Spam, error)
 	FindAll() (*[]string, error)
-	Create(url string, sub bool) (*models.Spam, error)
+	Create(url string, sub string) (*models.Spam, error)
 	Delete(id int) (bool, error)
 }
 

@@ -44,15 +44,15 @@ func (p *Spam) load() {
 		}
 
 		p.logger.Println(provider.Name(), len(iplist))
-
-		p.hosts = append(p.hosts, subnetlist...)
-		//p.hosts <- hosts
-		for _, s := range p.hosts {
-			p.createOrIgnore(s, true)
-		}
+		p.logger.Println(provider.Name(), len(subnetlist))
+		//p.hosts = append(p.hosts, iplist...)
+		////p.hosts <- hosts
+		//for _, s := range p.hosts {
+		//	p.createOrIgnore(s, subnetlist)
+		//}
 	}
 }
-func (p *Spam) createOrIgnore(dis string, sub bool) bool {
+func (p *Spam) createOrIgnore(dis string, sub string) bool {
 	_, err := p.store.Create(dis, sub)
 	return err == nil
 }

@@ -3,14 +3,17 @@ package providers
 import (
 	"archive/zip"
 	"bytes"
-	"github.com/domgolonka/threatdefender/app/entity"
-	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/domgolonka/threatdefender/app/models"
+
+	"github.com/domgolonka/threatdefender/app/entity"
+	"github.com/sirupsen/logrus"
 )
 
 //var OpenVPNURLs = []URLs{
@@ -56,8 +59,8 @@ func (*OpenVpn) Name() string {
 	return "openvpn"
 }
 
-func (c *OpenVpn) Download(src *entity.Feed) ([]string, error) {
-	hosts := []string{}
+func (c *OpenVpn) Download(src *entity.Feed) ([]models.Vpn, error) {
+	hosts := []models.Vpn{}
 	c.logger.Debug("starting Download for " + src.URL)
 
 	if src.Format == "OPENVPN" {
@@ -76,11 +79,9 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]string, error) {
 			c.logger.Error(err)
 		}
 
-		var filenames []string
-
 		r, err := zip.NewReader(bytes.NewReader(d), int64(len(d)))
 		if err != nil {
-			return filenames, err
+			return nil, err
 		}
 
 		for _, f := range r.File {
@@ -101,9 +102,11 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]string, error) {
 
 				rc.Close()
 				domainTmp := reRemote.FindStringSubmatch(buf.String())
-				var domainName = domainTmp[1]
-
-				hosts = append(hosts, domainName)
+				vpn := models.Vpn{
+					URL:    domainTmp[1],
+					Source: "openvpn",
+				}
+				hosts = append(hosts, vpn)
 			}
 		}
 	}
@@ -112,8 +115,8 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]string, error) {
 
 }
 
-func (c *OpenVpn) List() ([]string, error) {
-	hosts := []string{}
+func (c *OpenVpn) List() ([]models.Vpn, error) {
+	hosts := []models.Vpn{}
 	f := entity.Feed{}
 	feed, err := f.ReadFile("ip_openvpn.json")
 	if err != nil {

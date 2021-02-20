@@ -1,0 +1,300 @@
+[
+  {
+    "name": "spamhaus",
+    "url": "https://www.spamhaus.org/drop/drop.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4Subnet"
+      },
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "firehol",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4Subnet"
+      },
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "alienvault.com",
+    "url": "https://reputation.alienvault.com/reputation.generic",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4Scan"
+      },
+      {
+        "score": 3,
+        "expression": "ipv4Host"
+      }
+    ]
+  },
+  {
+    "name": "team-cymru.org",
+    "url": "https://www.team-cymru.org/Services/Bogons/fullbogons-ipv4.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4Subnet"
+      }
+    ]
+  },
+  {
+    "name": "stopforumspam.com",
+    "url": "https://www.stopforumspam.com/downloads/toxic_ip_cidr.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 2,
+        "expression": "ipv4Subnet"
+      }
+    ]
+  },
+  {
+    "name": "greensnow.co",
+    "url": "https://blocklist.greensnow.co/greensnow.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 2,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "binarydefense.com",
+    "url": "https://www.binarydefense.com/banlist.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "the-haleys.org",
+    "url": "http://charles.the-haleys.org/ssh_dico_attack_with_timestamps.php?days=7",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "^ALL : ((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)).*"
+      }
+    ]
+  },
+  {
+    "name": "the-haleys.org",
+    "url": "http://charles.the-haleys.org/wp_attack_with_timestamps.php?days=7",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "the-haleys.org",
+    "url": "http://charles.the-haleys.org/smtp_dico_attack_with_timestamps.php?days=7",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "blocklist.de",
+    "url": "http://lists.blocklist.de/lists/all.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "botscout",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/botscout_1d.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "bruteforceblocker",
+    "url": "http://danger.rulez.sk/projects/bruteforceblocker/blist.php",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "cinsscore.com",
+    "url": "http://cinsscore.com/list/ci-badguys.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "cruzit",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/cruzit_web_attacks.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "dshield.org",
+    "url": "http://feeds.dshield.org/top10-2.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "emergingthreats.net",
+    "url": "http://rules.emergingthreats.net/open/suricata/rules/compromised-ips.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "malwaredomainlist",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/malwaredomainlist.ipset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "myip",
+    "url": "https://myip.ms/files/blacklist/htaccess/latest_blacklist.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "blacklist"
+      }
+    ]
+  },
+  {
+    "name": "sslbl",
+    "url": "https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "rutgers.edu",
+    "url": "http://report.cs.rutgers.edu/DROP/attackers",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "sblam.com",
+    "url": "http://sblam.com/blacklist.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "talosintelligence.com",
+    "url": "http://www.talosintelligence.com/feeds/ip-filter.blf",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "turris.cz",
+    "url": "https://www.turris.cz/greylist-data/greylist-latest.csv",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "feodotracker",
+    "url": "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "boyscout1d",
+    "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_abusers_1d.netset",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 1,
+        "expression": "ipv4"
+      }
+    ]
+  }
+]

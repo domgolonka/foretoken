@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
-	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -76,14 +75,12 @@ func (feed Feed) GetExpressions() ([]string, error) {
 	}
 	err = json.Unmarshal(file, &f)
 	if err != nil {
-		logrus.Error(err)
 		return nil, err
 	}
-	logrus.Error(len(feed.FeedAnalyzers))
 
 	for _, s := range feed.FeedAnalyzers {
 		for _, a := range f {
-			if strings.ToLower(s.Expression) == strings.ToLower(a.Name) {
+			if strings.EqualFold(s.Expression, a.Name) {
 				expressions = append(expressions, a.Expression)
 			}
 		}
@@ -106,6 +103,20 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 		err = response.Body.Close()
 	}()
 
+	workingdir, err := os.Getwd()
+	if err != nil {
+		return nil, nil, err
+	}
+	var expfile []*Expression
+	file, err := ioutil.ReadFile(workingdir + "/resource/expressions.json")
+	if err != nil {
+		return nil, nil, err
+	}
+	err = json.Unmarshal(file, &expfile)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	scanner := bufio.NewScanner(response.Body)
 	scanner.Split(bufio.ScanRunes)
 	var buf bytes.Buffer
@@ -121,18 +132,23 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 
 		match := false
 		for _, fa := range feed.FeedAnalyzers {
-			regex, _ := regexp.Compile(fa.Expression)
-			var findings = regex.FindStringSubmatch(line)
-			if !match {
-				if len(findings) == 2 {
-					resultIps[findings[1]] = IPAnalysis{findings[1], fa.Score, []string{feed.Name}}
-					match = true
-				} else if len(findings) == 3 {
-					subnet := findings[1] + "/" + findings[2]
-					prefixLength, _ := strconv.Atoi(findings[2])
-					resultSubnets[subnet] = SUBNETAnalysis{subnet, byte(prefixLength),
-						fa.Score, []string{feed.Name}}
-					match = true
+			for _, a := range expfile {
+				if strings.EqualFold(fa.Expression, a.Name) {
+
+					regex, _ := regexp.Compile(`` + a.Expression + ``)
+					var findings = regex.FindStringSubmatch(line)
+					if !match {
+						if len(findings) == 2 {
+							resultIps[findings[1]] = IPAnalysis{findings[1], fa.Score, []string{feed.Name}}
+							match = true
+						} else if len(findings) == 3 {
+							subnet := findings[1] + "/" + findings[2]
+							prefixLength, _ := strconv.Atoi(findings[2])
+							resultSubnets[subnet] = SUBNETAnalysis{subnet, byte(prefixLength),
+								fa.Score, []string{feed.Name}}
+							match = true
+						}
+					}
 				}
 			}
 		}

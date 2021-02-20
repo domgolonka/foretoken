@@ -1,8 +1,6 @@
 package config
 
 type Config struct {
-	Appname       string
-	Appversion    string
 	Rooturl       string
 	PublicPort    int
 	ServerPort    int

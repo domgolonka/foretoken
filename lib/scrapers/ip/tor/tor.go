@@ -16,9 +16,8 @@ var (
 
 type Tor struct {
 	providers []Provider
-	//hosts     chan []string
-	store  data.TorStore
-	logger logrus.FieldLogger
+	store     data.TorStore
+	logger    logrus.FieldLogger
 }
 
 func (p *Tor) isProvider(provider Provider) bool {
@@ -43,12 +42,12 @@ func (p *Tor) load() {
 		}
 		p.logger.Println(provider.Name(), len(hosts))
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i].IP)
+			p.createOrIgnore(hosts[i].IP, hosts[i].Prefix, hosts[i].Type, hosts[i].Score)
 		}
 	}
 }
-func (p *Tor) createOrIgnore(ip string) bool {
-	_, err := p.store.Create(ip)
+func (p *Tor) createOrIgnore(ip string, prefix byte, iptype string, score int) bool {
+	_, err := p.store.Create(ip, prefix, iptype, score)
 	return err == nil
 }
 
@@ -67,7 +66,6 @@ func NewTor(store data.TorStore, logger logrus.FieldLogger) *Tor {
 			store:  store,
 		}
 		logger.Debug("starting Tor")
-		instance.AddProvider(providers.NewTorIps(logger))
 		instance.AddProvider(providers.NewTxtDomains(logger))
 		go instance.run()
 	})

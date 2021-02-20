@@ -1,5 +1,3 @@
-appname: "ThreatDefender"
-appversion: "0.2.0"
 rooturl: "localhost:8080"
 publicport: 8080
 serverport: 8081
@@ -9,6 +7,9 @@ autotls: false
 debug: true
 databasename: "sqlite3"
 pwnedkey: ""
+email:
+  score:
+
 smtp:
   hostname: ""
   mailaddress: ""

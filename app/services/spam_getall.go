@@ -10,5 +10,5 @@ func SpamGetCacheAll(app *app.App) []string {
 }
 
 func SpamGetDBAll(app *app.App) (*[]string, error) {
-	return app.SpamStore.FindAll()
+	return app.SpamStore.FindAllIPs()
 }

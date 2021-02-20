@@ -163,10 +163,8 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 		instance.AddProvider(providers.NewXseoIn())
 		instance.AddProvider(providers.NewProxyList())
 		instance.AddProvider(providers.NewTxtDomains(logger))
-
 		instance.AddProvider(providers.NewHidemyName())
-		//instance.AddProvider(providers.NewCoolProxy())
-		//instance.AddProvider(providers.NewProxyTech())
+		instance.AddProvider(providers.NewCoolProxy())
 		instance.AddProvider(providers.NewPubProxy())
 		//run workers
 		go instance.run(workers)

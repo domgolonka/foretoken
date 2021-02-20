@@ -92,11 +92,11 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
 	vpngen := vpn.NewVPN(vpnStore, logger)
-	disgen := disposable.NewDisposable(disposableStore, logger)
-	spamgen := spam.NewSpam(spamStore, logger)
-	spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger)
 	torgen := tor.NewTor(torStore, logger)
+	spamgen := spam.NewSpam(spamStore, logger)
 	freeEmailGen := free.NewFreeEmail(freeEmailStore, logger)
+	disgen := disposable.NewDisposable(disposableStore, logger)
+	spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger)
 
 	return &App{
 		// Provide access to root DB - useful when extending AccountStore functionality
@@ -112,10 +112,10 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		TorStore:            torStore,
 		ProxyGenerator:      proxygen,
 		VPNGenerator:        vpngen,
-		DisposableGenerator: disgen,
-		SpamGenerator:       spamgen,
-		SpamEmailGenerator:  spamemailgen,
 		TorGenerator:        torgen,
+		SpamGenerator:       spamgen,
+		DisposableGenerator: disgen,
+		SpamEmailGenerator:  spamemailgen,
 		FreeEmailGenerator:  freeEmailGen,
 	}, nil
 }

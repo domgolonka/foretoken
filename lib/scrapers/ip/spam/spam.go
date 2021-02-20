@@ -36,7 +36,7 @@ func (p *Spam) AddProvider(provider Provider) {
 }
 func (p *Spam) load() {
 	for _, provider := range p.providers {
-		iplist, subnetlist, err := provider.List()
+		iplist, err := provider.List()
 
 		if err != nil {
 			p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
@@ -44,16 +44,15 @@ func (p *Spam) load() {
 		}
 
 		p.logger.Println(provider.Name(), len(iplist))
-
-		p.hosts = append(p.hosts, subnetlist...)
 		//p.hosts <- hosts
-		for _, s := range p.hosts {
-			p.createOrIgnore(s, true)
+		for _, s := range iplist {
+			p.createOrIgnore(s.IP, s.Prefix, s.Score, s.Type)
+			p.hosts = append(p.hosts, s.ToString())
 		}
 	}
 }
-func (p *Spam) createOrIgnore(dis string, sub bool) bool {
-	_, err := p.store.Create(dis, sub)
+func (p *Spam) createOrIgnore(ip string, prefix uint8, score int, iptype string) bool {
+	_, err := p.store.Create(ip, prefix, score, iptype)
 	return err == nil
 }
 
@@ -71,7 +70,7 @@ func NewSpam(store data.SpamStore, logger logrus.FieldLogger) *Spam {
 			logger: logger,
 			store:  store,
 		}
-		logger.Debug("starting Spam")
+		logger.Debug("starting IP Spam")
 		instance.AddProvider(providers.NewTxtDomains(logger))
 		go instance.run()
 	})

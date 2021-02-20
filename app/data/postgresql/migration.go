@@ -26,7 +26,7 @@ func createVpn(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             ip TEXT NOT NULL UNIQUE,
             prefix TEXT,
-            type TEXT NOT NULL,
+              type TEXT,
             Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
@@ -107,6 +107,7 @@ func createTor(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             ip TEXT NOT NULL UNIQUE,
             prefix TEXT,
+              type TEXT,
             Score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL

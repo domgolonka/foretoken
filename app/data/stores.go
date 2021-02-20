@@ -36,7 +36,7 @@ type VpnStore interface {
 	FindByIP(ip string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
 	FindAll() (*[]string, error)
-	Create(ip string, prefix byte, source int) (*models.Vpn, error)
+	Create(ip string, prefix byte, iptype string, source int) (*models.Vpn, error)
 	Delete(id int) (bool, error)
 }
 
@@ -75,7 +75,7 @@ type TorStore interface {
 	FindByIP(ip string) (*models.Tor, error)
 	Find(id int) (*models.Tor, error)
 	FindAll() (*[]string, error)
-	Create(ip string, prefix byte, source int) (*models.Tor, error)
+	Create(ip string, prefix byte, iptype string, source int) (*models.Tor, error)
 	Delete(id int) (bool, error)
 }
 

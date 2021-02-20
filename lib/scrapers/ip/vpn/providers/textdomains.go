@@ -36,7 +36,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 	}
 
 	f := entity.Feed{}
-	feed, err := f.ReadFile("ip_tor.json")
+	feed, err := f.ReadFile("ip_vpn.json")
 	if err != nil {
 		return nil, err
 	}
@@ -57,12 +57,12 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 					ips[k] = e
 				}
 
-				spam := models.Vpn{
+				vpn := models.Vpn{
 					IP:    ips[k].IP,
 					Score: ips[k].Score,
 					Type:  ips[k].Type,
 				}
-				c.iplist = append(c.iplist, spam)
+				c.iplist = append(c.iplist, vpn)
 
 			}
 			for k, e := range feedResultsSubnets {
@@ -75,13 +75,13 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 				} else {
 					subnets[k] = e
 				}
-				spam := models.Vpn{
+				vpn := models.Vpn{
 					IP:     subnets[k].IP,
 					Prefix: subnets[k].PrefixLength,
 					Score:  subnets[k].Score,
 					Type:   subnets[k].Type,
 				}
-				c.iplist = append(c.iplist, spam)
+				c.iplist = append(c.iplist, vpn)
 			}
 			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %s\n", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)

@@ -44,12 +44,12 @@ func (p *VPN) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 		//p.hosts <- hosts
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i].IP, hosts[i].Prefix, hosts[i].Score)
+			p.createOrIgnore(hosts[i].IP, hosts[i].Prefix, hosts[i].Type, hosts[i].Score)
 		}
 	}
 }
-func (p *VPN) createOrIgnore(ip string, prefix byte, score int) bool {
-	_, err := p.store.Create(ip, prefix, score)
+func (p *VPN) createOrIgnore(ip string, prefix byte, iptype string, score int) bool {
+	_, err := p.store.Create(ip, prefix, iptype, score)
 	if err != nil {
 		logrus.Error(err)
 	}

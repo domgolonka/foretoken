@@ -44,7 +44,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	subnets := make(map[string]entity.SUBNETAnalysis)
 	for _, activeFeed := range feed {
 		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
-		feedResultsIPs, feedResultsSubnets, err := activeFeed.Fetch()
+		feedResultsIPs, feedResultsSubnets, err := activeFeed.FetchIP()
 		if err == nil {
 			for k, e := range feedResultsIPs { // k is the ip string,  e is the
 				if _, ok := ips[k]; ok {

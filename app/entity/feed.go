@@ -93,7 +93,66 @@ func (feed Feed) GetExpressions() ([]string, error) {
 	return expressions, nil
 }
 
-func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {
+func (feed Feed) FetchString() (map[string]string, error) {
+	var netClient = &http.Client{
+		Timeout: time.Second * feed.Timeout,
+	}
+	response, err := netClient.Get(feed.URL)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		err = response.Body.Close()
+	}()
+
+	workingdir, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	var expfile []*Expression
+	file, err := ioutil.ReadFile(workingdir + "/resource/expressions.json")
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(file, &expfile)
+	if err != nil {
+		return nil, err
+	}
+
+	scanner := bufio.NewScanner(response.Body)
+	scanner.Split(bufio.ScanRunes)
+	var buf bytes.Buffer
+	for scanner.Scan() {
+		buf.WriteString(scanner.Text())
+	}
+	var httpResult = buf.String()
+	resultString := make(map[string]string)
+	for _, element := range strings.Split(httpResult, "\n") {
+		line := strings.Trim(element, " ")
+
+		match := false
+		for _, fa := range feed.FeedAnalyzers {
+			for _, a := range expfile {
+				if strings.EqualFold(fa.Expression, a.Name) {
+
+					regex, _ := regexp.Compile(`` + a.Expression + ``)
+					var findings = regex.FindStringSubmatch(line)
+					if !match {
+						if len(findings) == 2 {
+							resultString[findings[1]] = findings[1]
+							match = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return resultString, nil
+}
+
+func (feed Feed) FetchIP() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * feed.Timeout,
 	}

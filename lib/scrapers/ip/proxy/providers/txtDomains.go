@@ -65,16 +65,16 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 		return c.proxyList, nil
 	}
 	if body == nil {
-		var err error
 		for i := 0; i < len(feed); i++ {
+			expressions, err := feed[i].GetExpressions()
+			if err != nil {
+				return nil, err
+			}
 			if body, err = c.MakeRequest(feed[i].URL); err != nil {
 				return nil, err
 			}
 
-			ipv4, err := ip.ParseIps(body)
-			if err != nil {
-				return nil, err
-			}
+			ipv4 := ip.ParseIPs(body, expressions)
 			for _, s := range ipv4 {
 				var prox models.Proxy
 				if strings.Contains(s, ":") {

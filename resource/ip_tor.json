@@ -1,0 +1,47 @@
+[
+  {
+    "name": "secops",
+    "url": "https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lstt",
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "danme",
+    "url": "https://www.dan.me.uk/torlist/",
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "bm_tor",
+    "url": "https://iplists.firehol.org/files/bm_tor.ipset",
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "ipv4"
+      }
+    ]
+  },
+  {
+    "name": "torproject",
+    "url": "https://check.torproject.org/exit-addresses",
+    "type": "ipv4",
+    "feed": [
+      {
+        "score": 3,
+        "expression": "torproject"
+      }
+    ]
+  }
+]
+

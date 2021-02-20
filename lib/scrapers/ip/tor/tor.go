@@ -67,7 +67,7 @@ func NewTor(store data.TorStore, logger logrus.FieldLogger) *Tor {
 			store:  store,
 		}
 		logger.Debug("starting Tor")
-		instance.AddProvider(providers.NewTorIps(logger))
+		//instance.AddProvider(providers.NewTorIps(logger))
 		instance.AddProvider(providers.NewTxtDomains(logger))
 		go instance.run()
 	})

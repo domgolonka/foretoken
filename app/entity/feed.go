@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -27,17 +28,22 @@ type SUBNETAnalysis struct {
 }
 
 type FeedAnalyzer struct {
-	Score      int
-	Expression string
+	Score      int    `json:"score"`
+	Expression string `json:"expression"`
+}
+
+type Expression struct {
+	Name       string `json:"name"`
+	Expression string `json:"expression"`
 }
 
 type Feed struct {
-	Name          string
-	URL           string
-	Type          string
-	Format        string
-	Timeout       time.Duration
-	FeedAnalyzers []FeedAnalyzer
+	Name          string         `json:"name"`
+	URL           string         `json:"url"`
+	Type          string         `json:"type"`
+	Format        string         `json:"format"`
+	Timeout       time.Duration  `json:"timeout"`
+	FeedAnalyzers []FeedAnalyzer `json:"feed"`
 }
 
 func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
@@ -55,6 +61,35 @@ func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
 		return nil, err
 	}
 	return f, nil
+}
+
+func (feed Feed) GetExpressions() ([]string, error) {
+	var expressions []string
+	workingdir, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	var f []*Expression
+	file, err := ioutil.ReadFile(workingdir + "/resource/expressions.json")
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(file, &f)
+	if err != nil {
+		logrus.Error(err)
+		return nil, err
+	}
+	logrus.Error(len(feed.FeedAnalyzers))
+
+	for _, s := range feed.FeedAnalyzers {
+		for _, a := range f {
+			if strings.ToLower(s.Expression) == strings.ToLower(a.Name) {
+				expressions = append(expressions, a.Expression)
+			}
+		}
+
+	}
+	return expressions, nil
 }
 
 func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {

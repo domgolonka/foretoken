@@ -10,6 +10,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
+	"github.com/domgolonka/threatdefender/app/entity"
 	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
@@ -20,9 +21,9 @@ type TxtDomains struct {
 	lastUpdate time.Time
 }
 
-var torList = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
-	"https://www.dan.me.uk/torlist/",
-	"https://iplists.firehol.org/files/bm_tor.ipset"}
+//var torList = []string{"https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst",
+//	"https://www.dan.me.uk/torlist/",
+//	"https://iplists.firehol.org/files/bm_tor.ipset"}
 
 func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
 	return &TxtDomains{logger: logger}
@@ -44,26 +45,32 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 	if len(c.torList) != 0 {
 		return c.torList, nil
 	}
-	allbody := make([]string, 0, len(torList))
-	if body == nil {
-		var err error
-		for i := 0; i < len(torList); i++ {
-			if body, err = c.MakeRequest(torList[i]); err != nil {
-				return nil, err
-			}
 
-			ipv4, err := ip.ParseIps(body)
+	f := entity.Feed{}
+	feed, err := f.ReadFile("ip_vpn.json")
+	if err != nil {
+		return nil, err
+	}
+
+	if body == nil {
+		for i := 0; i < len(feed); i++ {
+			expressions, err := feed[i].GetExpressions()
+			c.logger.Error(expressions)
 			if err != nil {
 				return nil, err
 			}
-			allbody = append(allbody, ipv4...)
+			if body, err = c.MakeRequest(feed[i].URL); err != nil {
+				return nil, err
+			}
+
+			ipv4 := ip.ParseIPs(body, expressions)
+			for _, s := range ipv4 {
+				tor := models.Tor{
+					IP: s,
+				}
+				c.torList = append(c.torList, tor)
+			}
 		}
-	}
-	for _, s := range allbody {
-		tor := models.Tor{
-			IP: s,
-		}
-		c.torList = append(c.torList, tor)
 	}
 
 	c.lastUpdate = time.Now()

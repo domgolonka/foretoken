@@ -1,28 +1,132 @@
 [
-  {"URL": "https://www.ipvanish.com/software/configs/configs.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://torguard.net/downloads/OpenVPN-UDP.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://torguard.net/downloads/OpenVPN-TCP.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://support.vyprvpn.com/hc/article_attachments/360052617332/Vypr_OpenVPN_20200320.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://s3-us-west-1.amazonaws.com/heartbleed/windows/New+OVPN+Files.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "http://www.digibit.tv/certs/Certificates.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://www.limevpn.com/downloads/OpenVPN-Config-1194.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/Windscribe.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/VPNUnlimited.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartDNSProxy.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ProtonVPN.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartyDNS.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ExpressVPN.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ibVPN.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/AirVPN.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://monstervpn.tech/ovpn_configuration.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://freevpnme.b-cdn.net/FreeVPN.me-OpenVPN-Bundle-July-2020.zip", "Type": "OpenVPN", "Format": "OPENVPN"},
-  {"URL": "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip", "Type": "OpenVPN", "Format": "OPENVPN"}
+  {
+    "url": "https://www.ipvanish.com/software/configs/configs.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://torguard.net/downloads/OpenVPN-UDP.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://torguard.net/downloads/OpenVPN-TCP.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://support.vyprvpn.com/hc/article_attachments/360052617332/Vypr_OpenVPN_20200320.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://s3-us-west-1.amazonaws.com/heartbleed/windows/New+OVPN+Files.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "http://www.digibit.tv/certs/Certificates.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://www.limevpn.com/downloads/OpenVPN-Config-1194.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/Windscribe.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/VPNUnlimited.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartDNSProxy.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ProtonVPN.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartyDNS.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ExpressVPN.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ibVPN.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/AirVPN.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://monstervpn.tech/ovpn_configuration.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://freevpnme.b-cdn.net/FreeVPN.me-OpenVPN-Bundle-July-2020.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  },
+  {
+    "url": "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip",
+    "type": "OpenVPN",
+    "format": "OPENVPN"
+  }
 ]

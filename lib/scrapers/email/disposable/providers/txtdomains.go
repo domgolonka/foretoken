@@ -3,22 +3,17 @@ package providers
 import (
 	"bytes"
 	"net/http"
-	"strings"
 	"time"
+
+	"github.com/domgolonka/threatdefender/app/models"
+
+	"github.com/domgolonka/threatdefender/app/entity"
 
 	"github.com/sirupsen/logrus"
 )
 
-var domains = []string{"https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt",
-	"https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blocklist.conf",
-	"https://raw.githubusercontent.com/oosalt/disposable-email-domain-list/master/domains.txt",
-	"https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt",
-	"https://raw.githubusercontent.com/SoftCreatR/dead-letter-dump/master/blacklist_unhashed.txt",
-	"https://raw.githubusercontent.com/Xyborg/disposable-burner-email-providers/master/disposable-domains.txt",
-	"https://raw.githubusercontent.com/edwin-zvs/email-providers/master/email-providers.csv"}
-
 type TxtDomains struct {
-	hosts      []string
+	iplist     []models.DisposableEmail
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
 }
@@ -33,38 +28,58 @@ func (*TxtDomains) Name() string {
 	return "text_domain"
 }
 
-func (c *TxtDomains) Load(body []byte) ([]string, error) {
+func (c *TxtDomains) Load(body []byte) ([]models.DisposableEmail, error) {
+
 	// don't need to update this more than once a day!
-	if time.Now().Unix() >= c.lastUpdate.Unix()+(43200) {
-		c.hosts = make([]string, 0)
+	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
+		c.iplist = make([]models.DisposableEmail, 0)
 	}
 
-	if len(c.hosts) != 0 {
-		return c.hosts, nil
+	f := entity.Feed{
+		Logger: c.logger,
 	}
-	allbody := make([]byte, 0, len(domains))
-	if body == nil {
-		var err error
-		for i := 0; i < len(domains); i++ {
-			c.logger.Debug(domains[i])
-			if body, err = c.MakeRequest(domains[i]); err == nil {
-				allbody = append(allbody, body...)
+	feed, err := f.ReadFile("email_disposable.json")
+	if err != nil {
+		return nil, err
+	}
+	ips := make(map[string]entity.DomainAnalysis)
+	for _, activeFeed := range feed {
+		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
+		feedResultsDomains, err := activeFeed.FetchString()
+		if err == nil {
+			for k, e := range feedResultsDomains { // k is the ip string,  e is the
+				if _, ok := ips[k]; ok {
+					ip := ips[k]
+					ip.Type = e.Type
+					ip.Score = ip.Score + e.Score
+					ip.Lists = append(ip.Lists, e.Lists[0])
+					ips[k] = ip
+				} else {
+					ips[k] = e
+				}
+
+				disposableEmail := models.DisposableEmail{
+					Domain: ips[k].Domain,
+				}
+				c.iplist = append(c.iplist, disposableEmail)
+
 			}
 
+			c.logger.Printf("[INFO] Imported %d domains from data feed %s\n", len(feedResultsDomains),
+				len(feedResultsDomains), activeFeed.Name)
+		} else {
+			c.logger.Printf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)
 		}
 	}
 
-	c.hosts = strings.Split(string(allbody), "\n")
-
 	c.lastUpdate = time.Now()
-
-	return c.hosts, nil
+	return c.iplist, nil
 
 }
-func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
+func (c *TxtDomains) MakeRequest(urlList string) ([]byte, error) {
 	var body bytes.Buffer
 
-	req, err := http.NewRequest(http.MethodGet, urllist, nil)
+	req, err := http.NewRequest(http.MethodGet, urlList, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -88,6 +103,6 @@ func (c *TxtDomains) MakeRequest(urllist string) ([]byte, error) {
 	return body.Bytes(), err
 }
 
-func (c *TxtDomains) List() ([]string, error) {
+func (c *TxtDomains) List() ([]models.DisposableEmail, error) {
 	return c.Load(nil)
 }

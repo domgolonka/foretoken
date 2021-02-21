@@ -39,7 +39,8 @@ func createDisposable(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS disposable (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL UNIQUE,
+            domain TEXT NOT NULL UNIQUE,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -51,7 +52,8 @@ func createSpamEmail(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS spamemail (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL UNIQUE,
+            domain TEXT NOT NULL UNIQUE,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -63,7 +65,8 @@ func createFreeEmail(db *sqlx.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS freeemail (
             id INTEGER PRIMARY KEY,
-            email TEXT NOT NULL UNIQUE,
+            domain TEXT NOT NULL UNIQUE,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )

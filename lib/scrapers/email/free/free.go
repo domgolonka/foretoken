@@ -2,7 +2,7 @@ package free
 
 import (
 	"github.com/domgolonka/threatdefender/app/data"
-	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable/providers"
+	"github.com/domgolonka/threatdefender/lib/scrapers/email/free/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"
@@ -43,12 +43,12 @@ func (p *Free) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i])
+			p.createOrIgnore(hosts[i].Domain, hosts[i].Score)
 		}
 	}
 }
-func (p *Free) createOrIgnore(dis string) bool {
-	_, err := p.store.Create(dis)
+func (p *Free) createOrIgnore(domain string, score int) bool {
+	_, err := p.store.Create(domain, score)
 	return err == nil
 }
 

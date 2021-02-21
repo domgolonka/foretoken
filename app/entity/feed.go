@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -29,6 +30,13 @@ type SUBNETAnalysis struct {
 	Lists        []string // list of websites where it was found
 }
 
+type DomainAnalysis struct {
+	Domain string
+	Type   string
+	Score  int
+	Lists  []string // list of websites where it was found
+}
+
 type FeedAnalyzer struct {
 	Score      int    `json:"score"`
 	Expression string `json:"expression"`
@@ -47,6 +55,7 @@ type Feed struct {
 	Format        string         `json:"format"`
 	Timeout       time.Duration  `json:"timeout"`
 	FeedAnalyzers []FeedAnalyzer `json:"feed"`
+	Logger        logrus.FieldLogger
 }
 
 func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
@@ -93,7 +102,7 @@ func (feed Feed) GetExpressions() ([]string, error) {
 	return expressions, nil
 }
 
-func (feed Feed) FetchString() (map[string]string, error) {
+func (feed Feed) FetchString() (map[string]DomainAnalysis, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * feed.Timeout,
 	}
@@ -128,7 +137,10 @@ func (feed Feed) FetchString() (map[string]string, error) {
 		buf.WriteString(scanner.Text())
 	}
 	var httpResult = buf.String()
-	resultString := make(map[string]string)
+	resultString := make(map[string]DomainAnalysis)
+	if len(strings.Split(httpResult, "\n")) == 0 {
+		return nil, err
+	}
 	for _, element := range strings.Split(httpResult, "\n") {
 		line := strings.Trim(element, " ")
 
@@ -136,12 +148,16 @@ func (feed Feed) FetchString() (map[string]string, error) {
 		for _, fa := range feed.FeedAnalyzers {
 			for _, a := range expfile {
 				if strings.EqualFold(fa.Expression, a.Name) {
-
-					regex, _ := regexp.Compile(`` + a.Expression + ``)
+					regex, err := regexp.Compile(`` + a.Expression + ``)
+					if err != nil {
+						feed.Logger.Error(err)
+					}
 					var findings = regex.FindStringSubmatch(line)
 					if !match {
+
 						if len(findings) == 2 {
-							resultString[findings[1]] = findings[1]
+							logrus.Errorf(findings[1], a.Type, fa.Score, []string{feed.Name})
+							resultString[findings[1]] = DomainAnalysis{findings[1], a.Type, fa.Score, []string{feed.Name}}
 							match = true
 						}
 					}
@@ -198,7 +214,10 @@ func (feed Feed) FetchIP() (map[string]IPAnalysis, map[string]SUBNETAnalysis, er
 			for _, a := range expfile {
 				if strings.EqualFold(fa.Expression, a.Name) {
 
-					regex, _ := regexp.Compile(`` + a.Expression + ``)
+					regex, err := regexp.Compile(`` + a.Expression + ``)
+					if err != nil {
+						feed.Logger.Error(err)
+					}
 					var findings = regex.FindStringSubmatch(line)
 					if !match {
 						if len(findings) == 2 {

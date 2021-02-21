@@ -35,7 +35,9 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 		c.iplist = make([]models.Vpn, 0)
 	}
 
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_vpn.json")
 	if err != nil {
 		return nil, err

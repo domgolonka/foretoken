@@ -1,0 +1,101 @@
+[
+  {
+    "name": "Artistan",
+    "url": "https://gist.githubusercontent.com/Artistan/9662757/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "agarstang",
+    "url": "https://gist.githubusercontent.com/agarstang/0d87cae417f25a0b90f3/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "cyriac",
+    "url": "https://gist.githubusercontent.com/cyriac/f89634a28f4d441719d8/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "cnsaturn",
+    "url": "https://gist.githubusercontent.com/cnsaturn/9919758/raw/3rd_party_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "defeated",
+    "url": "https://gist.githubusercontent.com/defeated/6500068/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "jpadilla",
+    "url": "https://gist.githubusercontent.com/jpadilla/8459489/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "rasmussvanejensen",
+    "url": "https://gist.githubusercontent.com/rasmussvanejensen/3a361d113864ef35eafb/raw/free_email_provider_domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "adamloving",
+    "url": "https://gist.githubusercontent.com/adamloving/4677212/raw/common-email-providers.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "tarr11",
+    "url": "https://raw.githubusercontent.com/tarr11/Webmail-Domains/master/domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  }
+]

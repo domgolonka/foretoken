@@ -35,7 +35,9 @@ func (c *TxtDomains) Load(body []byte) ([]models.Tor, error) {
 		c.iplist = make([]models.Tor, 0)
 	}
 
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_tor.json")
 	if err != nil {
 		return nil, err

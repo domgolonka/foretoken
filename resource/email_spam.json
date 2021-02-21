@@ -1,0 +1,13 @@
+[
+  {
+    "name": "stopforumspam",
+    "url": "https://www.stopforumspam.com/downloads/toxic_domains_whole.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  }
+]

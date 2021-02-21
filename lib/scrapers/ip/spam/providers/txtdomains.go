@@ -36,7 +36,9 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 
 	}
 
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_spam.json")
 	if err != nil {
 		return nil, err

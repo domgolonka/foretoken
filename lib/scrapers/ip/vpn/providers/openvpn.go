@@ -117,7 +117,9 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]models.Vpn, error) {
 
 func (c *OpenVpn) List() ([]models.Vpn, error) {
 	hosts := []models.Vpn{}
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_openvpn.json")
 	if err != nil {
 		return nil, err

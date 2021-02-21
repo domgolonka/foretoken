@@ -12,9 +12,9 @@ type FreeEmailStore struct {
 	sqlx.Ext
 }
 
-func (db *FreeEmailStore) FindByEmail(email string) (*models.FreeEmail, error) {
+func (db *FreeEmailStore) FindByDomain(domain string) (*models.FreeEmail, error) {
 	freeEmail := models.FreeEmail{}
-	err := sqlx.Get(db, &freeEmail, "SELECT * FROM freeemail WHERE email = ?", email)
+	err := sqlx.Get(db, &freeEmail, "SELECT * FROM freeemail WHERE domain = ?", domain)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -46,22 +46,23 @@ func (db *FreeEmailStore) FindAll() (*[]string, error) {
 	}
 	strings := make([]string, 0, len(freeEmail))
 	for i := 0; i < len(freeEmail); i++ {
-		strings = append(strings, freeEmail[i].Email)
+		strings = append(strings, freeEmail[i].Domain)
 	}
 	return &strings, nil
 }
 
-func (db *FreeEmailStore) Create(email string) (*models.FreeEmail, error) {
+func (db *FreeEmailStore) Create(domain string, score int) (*models.FreeEmail, error) {
 	now := time.Now()
 
 	freeEmail := &models.FreeEmail{
-		Email:     email,
+		Domain:    domain,
+		Score:     score,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO freeemail (email,  created_at, updated_at) VALUES (:email, :created_at, :updated_at)",
+		"INSERT OR IGNORE INTO freeemail (domain, score, created_at, updated_at) VALUES (:domain, :score, :created_at, :updated_at)",
 		freeEmail,
 	)
 	if err != nil {

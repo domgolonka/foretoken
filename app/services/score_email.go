@@ -8,17 +8,17 @@ import (
 func ScoreEmail(app *app.App, email string) (uint8, error) {
 	var score uint8
 	score = 0
-	disposableEmail, err := app.DisableStore.FindByEmail(email)
+	disposableEmail, err := app.DisableStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	spamEmail, err := app.SpamEmailStore.FindByEmail(email)
+	spamEmail, err := app.SpamEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	freeEmail, err := app.FreeEmailStore.FindByEmail(email)
+	freeEmail, err := app.FreeEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err

@@ -5,6 +5,8 @@ import (
 )
 
 func ScoreIP(app *app.App, ip string) (uint8, error) {
+	scoreCfg := app.Config.IP.Score
+
 	var score uint8
 	score = 0
 	proxyIP, err := app.ProxyStore.FindByIP(ip)
@@ -29,16 +31,24 @@ func ScoreIP(app *app.App, ip string) (uint8, error) {
 		return score, err
 	}
 	if proxyIP != nil {
-		score += 30
+		score += scoreCfg.Proxy.Yes
+	} else {
+		score += scoreCfg.Proxy.No
 	}
 	if spamIP != nil {
-		score += 50
+		score += scoreCfg.Spam.Yes
+	} else {
+		score += scoreCfg.Spam.No
 	}
 	if torIP != nil {
-		score += 15
+		score += scoreCfg.Tor.Yes
+	} else {
+		score += scoreCfg.Tor.No
 	}
 	if vpnIP != nil {
-		score += 10
+		score += scoreCfg.VPN.Yes
+	} else {
+		score += scoreCfg.VPN.No
 	}
 	if score > 100 {
 		score = 100

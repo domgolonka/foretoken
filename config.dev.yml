@@ -9,7 +9,38 @@ databasename: "sqlite3"
 pwnedkey: ""
 email:
   score:
-
+    disposable:
+      yes: 20
+      no: 0
+    free:
+      yes: 20
+      no: 0
+    spam:
+      yes: 30
+      no: 0
+    valid:
+      yes: 0
+      no: 40
+    generic:
+      yes: 12
+      no: 0
+    catchall:
+      yes: 10
+      no: 0
+ip:
+  score:
+    proxy:
+      yes: 40
+      no: 0
+    spam:
+      yes: 40
+      no: 0
+    tor:
+      yes: 20
+      no: 0
+    vpn:
+      yes: 15
+      no: 0
 smtp:
   hostname: ""
   mailaddress: ""

@@ -85,7 +85,7 @@ func serve(cfg config.Config) {
 
 func migrate(cfg config.Config) {
 	logrus.Info("Running migrations.")
-	err := data.MigrateDB(cfg)
+	err := data.MigrateDB(cfg, nil)
 	if err != nil {
 		logrus.Error(err)
 	} else {

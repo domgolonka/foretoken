@@ -52,7 +52,7 @@ proxy:
 database:
   type: "sqlite3"
   Name: ""
-  host: "database"
+  host: "db.sqlite3"
   port: 0
   username: ""
   password: ""

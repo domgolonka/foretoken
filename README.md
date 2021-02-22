@@ -46,7 +46,7 @@ highly customizable tools for companies and individuals to use to counter threat
 
 ## Migrate
 
-**BEFORE YOU RUN THIS**, You need to migrate the database:
+**If using NON-MEMORY SQLITE or PostgreSQL, DO THIS BEFORE YOU RUN**, You need to migrate the database:
 
 `make migrate`
 

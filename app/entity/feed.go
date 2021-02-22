@@ -155,10 +155,8 @@ func (feed Feed) FetchString() (map[string]DomainAnalysis, error) {
 					}
 					var findings = regex.FindStringSubmatch(line)
 					if !match {
-
-						if len(findings) == 2 {
-							logrus.Errorf(findings[1], a.Type, fa.Score, []string{feed.Name})
-							resultString[findings[1]] = DomainAnalysis{findings[1], a.Type, fa.Score, []string{feed.Name}}
+						if len(findings) == 1 {
+							resultString[findings[0]] = DomainAnalysis{findings[0], a.Type, fa.Score, []string{feed.Name}}
 							match = true
 						}
 					}

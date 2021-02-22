@@ -55,6 +55,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	}
 
 	db, err := data.NewDB(cfg)
+
 	if err != nil {
 		return nil, errors.Wrap(err, "data.NewDB")
 	}

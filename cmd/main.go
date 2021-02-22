@@ -23,7 +23,7 @@ var VERSION string
 func main() {
 	var cmd string
 	var appPath, _ = os.Getwd()
-	configFilePath := appPath + "/config.dev.yml"
+	configFilePath := appPath + "/config.yml"
 	var cfg config.Config
 	configFlag := flag.String("config", configFilePath, "the config file.")
 	flag.Parse()
@@ -33,7 +33,7 @@ func main() {
 	}
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {
-		logrus.Info("\nsee: https://github.com/domgolonka/threatdefender/blob/master/docs/config.md")
+		logrus.Info("\nsee: https://threatdefender.domgolonka.com/docs/config/")
 		logrus.Fatal(err)
 	}
 

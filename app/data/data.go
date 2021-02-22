@@ -2,7 +2,6 @@ package data
 
 import (
 	"fmt"
-
 	"github.com/domgolonka/threatdefender/app/data/postgresql"
 	"github.com/domgolonka/threatdefender/app/data/sqlite3"
 	"github.com/domgolonka/threatdefender/config"
@@ -11,20 +10,21 @@ import (
 )
 
 func NewDB(cfg config.Config) (*sqlx.DB, error) {
-	switch cfg.DatabaseName {
+	switch cfg.Database.Type {
 	case "sqlite3":
 		return sqlite3.NewDB(cfg)
 	case "postgres":
 		return postgresql.NewDB(cfg)
 	default:
-		return nil, fmt.Errorf("unsupported database: %s", cfg.DatabaseName)
+		return nil, fmt.Errorf("unsupported database: %s", cfg.Database.Type)
 	}
 }
 
 func MigrateDB(cfg config.Config) error {
-	switch cfg.DatabaseName {
+	switch cfg.Database.Type {
 	case "sqlite3":
 		db, err := sqlite3.NewDB(cfg)
+
 		if err != nil {
 			return err
 		}
@@ -47,7 +47,7 @@ func MigrateDB(cfg config.Config) error {
 			return err
 		}
 	default:
-		return fmt.Errorf("unsupported database")
+		return fmt.Errorf("unsupported database: %s", cfg.Database.Type)
 	}
 	return nil
 }

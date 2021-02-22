@@ -5,7 +5,6 @@ grpcport: 8082
 env: "dev"
 autotls: false
 debug: true
-databasename: "sqlite3"
 pwnedkey: ""
 email:
   score:
@@ -51,10 +50,11 @@ proxy:
   cachedurationminutes: 120
   workers: 40
 database:
-  host: ""
+  type: "sqlite3"
+  Name: ""
+  host: "database"
   port: 0
   username: ""
   password: ""
-  dbname: ""
   timezone: "America/Vancouver"
-  ssl: true
+  ssl: false

@@ -3,8 +3,9 @@ package sqlite3
 import (
 	"database/sql"
 	"fmt"
-	"github.com/domgolonka/threatdefender/config"
 	"strings"
+
+	"github.com/domgolonka/threatdefender/config"
 
 	"github.com/jmoiron/sqlx"
 
@@ -18,12 +19,10 @@ func NewDB(cfg config.Config) (*sqlx.DB, error) {
 	// under sustained load, but helpful during short bursts.
 
 	// this block used to keep backward compatibility
-
-	if !strings.Contains(cfg.Database.DBName, ".db") {
-		env := "./" + cfg.Database.DBName
+	if strings.Contains(cfg.Database.Host, ".sqlite3") {
+		env := "./" + cfg.Database.Host
 		return sqlx.Connect("sqlite3", fmt.Sprintf("%v?cache=shared&&_busy_timeout=200", env))
 	}
-
 	return sqlx.Connect("sqlite3", "file::memory:?cache=shared")
 
 }

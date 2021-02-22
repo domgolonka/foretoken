@@ -78,10 +78,12 @@ At this moment, Threat Defender only supports SQLite and PostgreSQL. You can cha
 either `postgresql` or `sqlite3`
 
 By Default, the SQLite driver is set to "in memory". To use a file, you need to
-specify that the `host` to a `.db` extension, example: `YOURNAME.db`. This will create a
+specify that the `host` to a `.sqlite3` extension, example: `YOURNAME.sqlite3`. This will create a
 new SQLite file  in the root directory.
 
 For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/).
+
+***PostgreSQL is not yet tested***
 
 ## Score
 

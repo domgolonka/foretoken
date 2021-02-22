@@ -11,7 +11,6 @@ type Config struct {
 	PwnedKey      string
 	SMTP          SMTP
 	Debug         bool
-	DatabaseName  string
 	Database      Database
 	ErrorReporter ErrorReporter
 	Email         Email
@@ -61,11 +60,12 @@ type ErrorReporter struct {
 }
 
 type Database struct {
+	Type     string
 	Host     string
 	Port     int
 	Username string
 	Password string
-	DBName   string
+	Name     string
 	TimeZone string
 	SSL      bool
 }

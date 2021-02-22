@@ -7,7 +7,6 @@ func MigrateDB(db *sqlx.DB) error {
 		createVpn,
 		createDisposable,
 		createFreeEmail,
-		//createGenericName,
 		createSpam,
 		createSpamEmail,
 		createProxy,

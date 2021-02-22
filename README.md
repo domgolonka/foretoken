@@ -8,6 +8,9 @@
     ·
     <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Request Feature</a>
 </p>
+
+<p align="center"><a href="https://threatdefender.domgolonka.com">https://threatdefender.domgolonka.com</a></p>
+
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
 <p align="center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </p>
@@ -67,10 +70,16 @@ example:
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
+For full configuration examples, check out [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
+
 ## Change the databases
 
 At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with
 either `postgresql` or `sqlite3`
+
+By Default, the SQLite driver is set to "in memory". To use a file, you need to
+specify that the `host` to a `.db` extension, example: `YOURNAME.db`. This will create a
+new SQLite file  in the root directory.
 
 For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/).
 
@@ -127,7 +136,7 @@ The ip files are stored in the `./resource` directory and start with `ip_` such 
 
 # APIs
 
-REST API & gRPC is enabled.
+REST API & gRPC is enabled. For more API examples: [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
 
 ### gRPC
 

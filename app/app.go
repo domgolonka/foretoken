@@ -58,7 +58,10 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "data.NewDB")
 	}
-
+	err = db.Ping()
+	if err != nil {
+		return nil, errors.Wrap(err, "error cannot ping to database")
+	}
 	proxyStore, err := data.NewProxyStore(db)
 	if err != nil {
 		return nil, errors.Wrap(err, "NewProxyStore")

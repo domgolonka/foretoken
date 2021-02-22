@@ -20,7 +20,7 @@ proxy:
   cachedurationminutes: 120
   workers: 40
 database:
-  host: "db.sqlite3"
+  host: ""
   port: 0
   username: ""
   password: ""

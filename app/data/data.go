@@ -13,7 +13,7 @@ import (
 func NewDB(cfg config.Config) (*sqlx.DB, error) {
 	switch cfg.DatabaseName {
 	case "sqlite3":
-		return sqlite3.NewDB(cfg.Database.Host)
+		return sqlite3.NewDB(cfg)
 	case "postgres":
 		return postgresql.NewDB(cfg)
 	default:
@@ -24,7 +24,7 @@ func NewDB(cfg config.Config) (*sqlx.DB, error) {
 func MigrateDB(cfg config.Config) error {
 	switch cfg.DatabaseName {
 	case "sqlite3":
-		db, err := sqlite3.NewDB(cfg.Database.Host)
+		db, err := sqlite3.NewDB(cfg)
 		if err != nil {
 			return err
 		}

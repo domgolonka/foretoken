@@ -27,7 +27,7 @@ func createVpn(db *sqlx.DB) error {
             ip TEXT NOT NULL UNIQUE,
             prefix TEXT,
             type TEXT,
-            Score INTEGER NOT NULL,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -105,7 +105,7 @@ func createSpam(db *sqlx.DB) error {
             ip TEXT NOT NULL UNIQUE,
             prefix TEXT,
             type TEXT NOT NULL,
-            Score INTEGER NOT NULL,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )
@@ -146,7 +146,7 @@ func createTor(db *sqlx.DB) error {
             ip TEXT NOT NULL UNIQUE,
             prefix TEXT,
               type TEXT,
-            Score INTEGER NOT NULL,
+            score INTEGER NOT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL
         )

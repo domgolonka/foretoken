@@ -3,10 +3,10 @@ package models
 import "time"
 
 type DisposableEmail struct {
-	ID        uint
-	Domain    string     `db:"domain"`
-	Score     int        `db:"score"`
-	CreatedAt time.Time  `db:"created_at"`
-	UpdatedAt time.Time  `db:"updated_at"`
-	DeletedAt *time.Time `db:"deleted_at"`
+	ID        uint       `json:"-"`
+	Domain    string     `json:"domain" db:"domain"`
+	Score     int        `json:"score" db:"score"`
+	CreatedAt time.Time  `json:"-" db:"created_at"`
+	UpdatedAt time.Time  `json:"-" db:"updated_at"`
+	DeletedAt *time.Time `json:"-" db:"deleted_at"`
 }

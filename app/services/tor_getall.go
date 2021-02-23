@@ -10,5 +10,5 @@ func TorGetCacheAll(app *app.App) (*[]string, error) {
 }
 
 func TorGetDBAll(app *app.App) (*[]string, error) {
-	return app.TorStore.FindAll()
+	return app.TorStore.FindAllIPs()
 }

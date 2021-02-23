@@ -58,7 +58,7 @@ func (p *VPN) run() {
 }
 
 func (p *VPN) Get() (*[]string, error) {
-	return p.store.FindAll()
+	return p.store.FindAllIPs()
 
 }
 func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {

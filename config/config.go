@@ -11,11 +11,39 @@ type Config struct {
 	PwnedKey      string
 	SMTP          SMTP
 	Debug         bool
-	DatabaseName  string
 	Database      Database
 	ErrorReporter ErrorReporter
+	Email         Email
+	IP            IP
 }
 
+type Email struct {
+	Score EmailScore
+}
+type IP struct {
+	Score IPScore
+}
+
+type EmailScore struct {
+	Disposable Statement
+	Free       Statement
+	Spam       Statement
+	Valid      Statement
+	Generic    Statement
+	CatchAll   Statement
+}
+
+type IPScore struct {
+	Proxy Statement
+	Spam  Statement
+	Tor   Statement
+	VPN   Statement
+}
+
+type Statement struct {
+	Yes uint8
+	No  uint8
+}
 type SMTP struct {
 	Hostname    string
 	MailAddress string
@@ -32,11 +60,12 @@ type ErrorReporter struct {
 }
 
 type Database struct {
+	Type     string
 	Host     string
 	Port     int
 	Username string
 	Password string
-	DBName   string
+	Name     string
 	TimeZone string
 	SSL      bool
 }

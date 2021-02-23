@@ -56,7 +56,7 @@ func (p *Tor) run() {
 }
 
 func (p *Tor) Get() (*[]string, error) {
-	return p.store.FindAll()
+	return p.store.FindAllIPs()
 
 }
 func NewTor(store data.TorStore, logger logrus.FieldLogger) *Tor {

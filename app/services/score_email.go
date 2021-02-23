@@ -7,18 +7,19 @@ import (
 
 func ScoreEmail(app *app.App, email string) (uint8, error) {
 	var score uint8
+	scoreCfg := app.Config.Email.Score
 	score = 0
-	disposableEmail, err := app.DisableStore.FindByEmail(email)
+	disposableEmail, err := app.DisableStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	spamEmail, err := app.SpamEmailStore.FindByEmail(email)
+	spamEmail, err := app.SpamEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
 	}
-	freeEmail, err := app.FreeEmailStore.FindByEmail(email)
+	freeEmail, err := app.FreeEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
@@ -27,12 +28,16 @@ func ScoreEmail(app *app.App, email string) (uint8, error) {
 	err = utils.ValidateEmail(app, email)
 	// is not a valid email
 	if err != nil {
-		score += 8
+		score += scoreCfg.Valid.Yes
+	} else {
+		score += scoreCfg.Valid.No
 	}
 	// only use catch all if smtp is enabled
 	used, err := utils.CatchAll(app, email)
 	if err != nil && used {
-		score += 30
+		score += scoreCfg.CatchAll.Yes
+	} else {
+		score += scoreCfg.CatchAll.No
 	}
 
 	isGeneric, err := GenericGetEmail(app, email)
@@ -41,16 +46,24 @@ func ScoreEmail(app *app.App, email string) (uint8, error) {
 		return score, err
 	}
 	if disposableEmail != nil {
-		score += 30
+		score += scoreCfg.Disposable.Yes
+	} else {
+		score += scoreCfg.Disposable.No
 	}
 	if spamEmail != nil {
-		score += 50
+		score += scoreCfg.Spam.Yes
+	} else {
+		score += scoreCfg.Spam.No
 	}
 	if freeEmail != nil {
-		score += 15
+		score += scoreCfg.Free.Yes
+	} else {
+		score += scoreCfg.Free.No
 	}
 	if *isGeneric {
-		score += 10
+		score += scoreCfg.Generic.Yes
+	} else {
+		score += scoreCfg.Generic.No
 	}
 	if score > 100 {
 		score = 100

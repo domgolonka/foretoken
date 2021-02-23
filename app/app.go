@@ -3,12 +3,11 @@ package app
 import (
 	"time"
 
-	spamemail "github.com/domgolonka/threatdefender/lib/scrapers/email/spam"
-
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
 	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable"
 	"github.com/domgolonka/threatdefender/lib/scrapers/email/free"
+	spamemail "github.com/domgolonka/threatdefender/lib/scrapers/email/spam"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/spam"
 	"github.com/domgolonka/threatdefender/lib/scrapers/ip/tor"
@@ -57,10 +56,14 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	}
 
 	db, err := data.NewDB(cfg)
+
 	if err != nil {
 		return nil, errors.Wrap(err, "data.NewDB")
 	}
-
+	err = db.Ping()
+	if err != nil {
+		return nil, errors.Wrap(err, "error cannot ping to database")
+	}
 	proxyStore, err := data.NewProxyStore(db)
 	if err != nil {
 		return nil, errors.Wrap(err, "NewProxyStore")
@@ -100,16 +103,18 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	return &App{
 		// Provide access to root DB - useful when extending AccountStore functionality
-		Config:              cfg,
-		Reporter:            errorReporter,
-		Logger:              logger,
-		ProxyStore:          proxyStore,
-		VpnStore:            vpnStore,
-		DisableStore:        disposableStore,
-		FreeEmailStore:      freeEmailStore,
-		SpamStore:           spamStore,
-		SpamEmailStore:      spamEmailStore,
-		TorStore:            torStore,
+		Config:   cfg,
+		Reporter: errorReporter,
+		Logger:   logger,
+		// store
+		ProxyStore:     proxyStore,
+		VpnStore:       vpnStore,
+		DisableStore:   disposableStore,
+		FreeEmailStore: freeEmailStore,
+		SpamStore:      spamStore,
+		SpamEmailStore: spamEmailStore,
+		TorStore:       torStore,
+		// generator
 		ProxyGenerator:      proxygen,
 		VPNGenerator:        vpngen,
 		TorGenerator:        torgen,

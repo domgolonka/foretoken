@@ -2,7 +2,7 @@ package spamemail
 
 import (
 	"github.com/domgolonka/threatdefender/app/data"
-	"github.com/domgolonka/threatdefender/lib/scrapers/email/disposable/providers"
+	"github.com/domgolonka/threatdefender/lib/scrapers/email/spam/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"
@@ -43,12 +43,12 @@ func (p *SpamEmail) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i])
+			p.createOrIgnore(hosts[i].Domain, hosts[i].Score)
 		}
 	}
 }
-func (p *SpamEmail) createOrIgnore(dis string) bool {
-	_, err := p.store.Create(dis)
+func (p *SpamEmail) createOrIgnore(domain string, score int) bool {
+	_, err := p.store.Create(domain, score)
 	return err == nil
 }
 

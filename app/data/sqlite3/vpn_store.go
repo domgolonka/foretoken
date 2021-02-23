@@ -36,7 +36,18 @@ func (db *VpnStore) Find(id int) (*models.Vpn, error) {
 	return &vpn, nil
 }
 
-func (db *VpnStore) FindAll() (*[]string, error) {
+func (db *VpnStore) FindAll() (*[]models.Vpn, error) {
+	vpn := []models.Vpn{}
+	err := sqlx.Select(db, &vpn, "SELECT * FROM vpn")
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &vpn, nil
+}
+func (db *VpnStore) FindAllIPs() (*[]string, error) {
 	vpn := []models.Vpn{}
 	err := sqlx.Select(db, &vpn, "SELECT * FROM vpn")
 	if err == sql.ErrNoRows {

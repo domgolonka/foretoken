@@ -43,12 +43,12 @@ func (p *Disposable) load() {
 		p.logger.Println(provider.Name(), len(hosts))
 
 		for i := 0; i < len(hosts); i++ {
-			p.createOrIgnore(hosts[i])
+			p.createOrIgnore(hosts[i].Domain, hosts[i].Score)
 		}
 	}
 }
-func (p *Disposable) createOrIgnore(dis string) bool {
-	_, err := p.store.Create(dis)
+func (p *Disposable) createOrIgnore(dis string, score int) bool {
+	_, err := p.store.Create(dis, score)
 	return err == nil
 }
 

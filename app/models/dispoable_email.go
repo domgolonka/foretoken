@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type FreeEmail struct {
+type DisposableEmail struct {
 	ID        uint       `json:"-"`
 	Domain    string     `json:"domain" db:"domain"`
 	Score     int        `json:"score" db:"score"`

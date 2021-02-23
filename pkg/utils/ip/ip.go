@@ -1,7 +1,9 @@
 package ip
 
 import (
+	"net"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -29,6 +31,14 @@ func parseIps(str string, expression string) bool {
 	ipv4WithPortCidrRegex := regexp.MustCompile(`` + expression + ``)
 	return ipv4WithPortCidrRegex.MatchString(str)
 
+}
+
+func ParseSubnet(ip, ipSub string, subnet byte) bool {
+	ipstr := ipSub + "/" + strconv.Itoa(int(subnet))
+	singleIP := ip + "/32"
+	_, ipnetA, _ := net.ParseCIDR(ipstr)
+	ipB, _, _ := net.ParseCIDR(singleIP)
+	return ipnetA.Contains(ipB)
 }
 
 //func ParseIps(body []byte) ([]string, error) {

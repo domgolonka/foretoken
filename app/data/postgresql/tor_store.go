@@ -36,7 +36,19 @@ func (db *TorStore) Find(id int) (*models.Tor, error) {
 	return &tor, nil
 }
 
-func (db *TorStore) FindAll() (*[]string, error) {
+func (db *TorStore) FindAll() (*[]models.Tor, error) {
+	tor := []models.Tor{}
+	err := sqlx.Select(db, &tor, "SELECT * FROM tor")
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &tor, nil
+}
+
+func (db *TorStore) FindAllIPs() (*[]string, error) {
 	tor := []models.Tor{}
 	err := sqlx.Select(db, &tor, "SELECT * FROM tor")
 	if err == sql.ErrNoRows {

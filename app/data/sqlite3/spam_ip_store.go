@@ -2,6 +2,7 @@ package sqlite3
 
 import (
 	"database/sql"
+	"strconv"
 	"time"
 
 	"github.com/domgolonka/threatdefender/app/models"
@@ -59,7 +60,7 @@ func (db *SpamStore) FindAllIPs() (*[]string, error) {
 	strings := make([]string, 0, len(spam))
 	for i := 0; i < len(spam); i++ {
 		if spam[i].Prefix > 0 {
-			strings = append(strings, spam[i].IP+"/"+string(spam[i].Prefix))
+			strings = append(strings, spam[i].IP+"/"+strconv.Itoa(int(spam[i].Prefix)))
 		} else {
 			strings = append(strings, spam[i].IP)
 		}

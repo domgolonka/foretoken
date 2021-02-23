@@ -10,6 +10,6 @@ func VpnGetCacheAll(app *app.App) (*[]string, error) {
 }
 
 func VpnGetDBAll(app *app.App) (*[]string, error) {
-	return app.VpnStore.FindAll()
+	return app.VpnStore.FindAllIPs()
 
 }

@@ -1,0 +1,79 @@
+[
+  {
+    "name": "andreis",
+    "url": "https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "martenson",
+    "url": "https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blocklist.conf",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "oosalt",
+    "url": "https://raw.githubusercontent.com/oosalt/disposable-email-domain-list/master/domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "disposable",
+    "url": "https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "SoftCreatR",
+    "url": "https://raw.githubusercontent.com/SoftCreatR/dead-letter-dump/master/blacklist_unhashed.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "Xyborg",
+    "url": "https://raw.githubusercontent.com/Xyborg/disposable-burner-email-providers/master/disposable-domains.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  },
+  {
+    "name": "edwin-zvs",
+    "url": "https://raw.githubusercontent.com/edwin-zvs/email-providers/master/email-providers.csv",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
+  }
+]

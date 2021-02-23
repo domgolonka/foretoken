@@ -8,6 +8,9 @@
     ·
     <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Request Feature</a>
 </p>
+
+<p align="center"><a href="https://threatdefender.domgolonka.com">https://threatdefender.domgolonka.com</a></p>
+
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
 <p align="center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </p>
@@ -43,7 +46,7 @@ highly customizable tools for companies and individuals to use to counter threat
 
 ## Migrate
 
-**BEFORE YOU RUN THIS**, You need to migrate the database:
+**If using NON-MEMORY SQLITE or PostgreSQL, DO THIS BEFORE YOU RUN**, You need to migrate the database:
 
 `make migrate`
 
@@ -67,12 +70,20 @@ example:
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
+For full configuration examples, check out [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
+
 ## Change the databases
 
 At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with
 either `postgresql` or `sqlite3`
 
+By Default, the SQLite driver is set to "in memory". To use a file, you need to
+specify that the `host` to a `.sqlite3` extension, example: `YOURNAME.sqlite3`. This will create a
+new SQLite file  in the root directory.
+
 For Postgresql, I would advise using a quick read/write database like [timescale](https://www.timescale.com/).
+
+***PostgreSQL is not yet tested***
 
 ## Score
 
@@ -127,7 +138,7 @@ The ip files are stored in the `./resource` directory and start with `ip_` such 
 
 # APIs
 
-REST API & gRPC is enabled.
+REST API & gRPC is enabled. For more API examples: [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
 
 ### gRPC
 

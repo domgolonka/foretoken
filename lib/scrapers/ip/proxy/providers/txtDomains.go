@@ -45,7 +45,9 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	if time.Now().Unix() >= c.lastUpdate.Unix()+(82800) {
 		c.proxyList = make([]models.Proxy, 0)
 	}
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_proxy.json")
 	if err != nil {
 		return nil, err

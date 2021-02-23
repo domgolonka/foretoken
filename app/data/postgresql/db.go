@@ -14,7 +14,7 @@ import (
 func NewDB(cfg config.Config) (*sqlx.DB, error) {
 	return sqlx.Connect("postgres",
 		fmt.Sprintf("host=%s, port=%s, user=%s password=%s dbname=%s sslmode=disable",
-			cfg.Database.Host, string(rune(cfg.Database.Port)), cfg.Database.Username, cfg.Database.Password, cfg.Database.DBName))
+			cfg.Database.Host, string(rune(cfg.Database.Port)), cfg.Database.Username, cfg.Database.Password, cfg.Database.Name))
 
 }
 

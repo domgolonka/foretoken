@@ -50,9 +50,6 @@ func (p *VPN) load() {
 }
 func (p *VPN) createOrIgnore(ip string, prefix byte, iptype string, score int) bool {
 	_, err := p.store.Create(ip, prefix, iptype, score)
-	if err != nil {
-		logrus.Error(err)
-	}
 	return err == nil
 }
 
@@ -61,7 +58,7 @@ func (p *VPN) run() {
 }
 
 func (p *VPN) Get() (*[]string, error) {
-	return p.store.FindAll()
+	return p.store.FindAllIPs()
 
 }
 func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {

@@ -36,7 +36,9 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 
 	}
 
-	f := entity.Feed{}
+	f := entity.Feed{
+		Logger: c.logger,
+	}
 	feed, err := f.ReadFile("ip_spam.json")
 	if err != nil {
 		return nil, err
@@ -45,7 +47,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 	subnets := make(map[string]entity.SUBNETAnalysis)
 	for _, activeFeed := range feed {
 		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
-		feedResultsIPs, feedResultsSubnets, err := activeFeed.Fetch()
+		feedResultsIPs, feedResultsSubnets, err := activeFeed.FetchIP()
 		if err == nil {
 			for k, e := range feedResultsIPs { // k is the ip string,  e is the
 				if _, ok := ips[k]; ok {
@@ -84,7 +86,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 				}
 				c.iplist = append(c.iplist, spam)
 			}
-			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %s\n", len(feedResultsIPs),
+			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %d", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)
 		} else {
 			c.logger.Printf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)

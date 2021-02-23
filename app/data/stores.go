@@ -35,7 +35,8 @@ func NewProxyStore(db sqlx.Ext) (ProxyStore, error) {
 type VpnStore interface {
 	FindByIP(ip string) (*models.Vpn, error)
 	Find(id int) (*models.Vpn, error)
-	FindAll() (*[]string, error)
+	FindAll() (*[]models.Vpn, error)
+	FindAllIPs() (*[]string, error)
 	Create(ip string, prefix byte, iptype string, source int) (*models.Vpn, error)
 	Delete(id int) (bool, error)
 }
@@ -74,7 +75,8 @@ func NewSpamStore(db sqlx.Ext) (SpamStore, error) {
 type TorStore interface {
 	FindByIP(ip string) (*models.Tor, error)
 	Find(id int) (*models.Tor, error)
-	FindAll() (*[]string, error)
+	FindAll() (*[]models.Tor, error)
+	FindAllIPs() (*[]string, error)
 	Create(ip string, prefix byte, iptype string, source int) (*models.Tor, error)
 	Delete(id int) (bool, error)
 }
@@ -94,10 +96,10 @@ func NewTorStore(db sqlx.Ext) (TorStore, error) {
 /// email
 ///////////////////////////
 type DisposableStore interface {
-	FindByEmail(email string) (*models.DisposableEmail, error)
+	FindByDomain(domain string) (*models.DisposableEmail, error)
 	Find(id int) (*models.DisposableEmail, error)
 	FindAll() (*[]string, error)
-	Create(email string) (*models.DisposableEmail, error)
+	Create(domain string, score int) (*models.DisposableEmail, error)
 	Delete(id int) (bool, error)
 }
 
@@ -113,10 +115,10 @@ func NewDisposableStore(db sqlx.Ext) (DisposableStore, error) {
 }
 
 type FreeEmailStore interface {
-	FindByEmail(email string) (*models.FreeEmail, error)
+	FindByDomain(domain string) (*models.FreeEmail, error)
 	Find(id int) (*models.FreeEmail, error)
 	FindAll() (*[]string, error)
-	Create(email string) (*models.FreeEmail, error)
+	Create(domain string, score int) (*models.FreeEmail, error)
 	Delete(id int) (bool, error)
 }
 
@@ -132,10 +134,10 @@ func NewFreeEmailStore(db sqlx.Ext) (FreeEmailStore, error) {
 }
 
 type SpamEmailStore interface {
-	FindByEmail(email string) (*models.SpamEmail, error)
+	FindByDomain(domain string) (*models.SpamEmail, error)
 	Find(id int) (*models.SpamEmail, error)
 	FindAll() (*[]string, error)
-	Create(email string) (*models.SpamEmail, error)
+	Create(domain string, score int) (*models.SpamEmail, error)
 	Delete(id int) (bool, error)
 }
 

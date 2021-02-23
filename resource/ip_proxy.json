@@ -1,6 +1,6 @@
 [
   {
-    "name": "speedX",
+    "name": "speedXsock5",
     "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
     "timeout": 10,
     "feed": [
@@ -11,7 +11,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "speedXSocks4",
     "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
     "timeout": 10,
     "feed": [
@@ -22,7 +22,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "speedXhttp",
     "url": "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt",
     "timeout": 10,
     "feed": [
@@ -33,7 +33,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "fireholhttp",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_1d.ipset",
     "timeout": 10,
     "feed": [
@@ -44,7 +44,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "proxyrss",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyrss_1d.ipset",
     "timeout": 10,
     "feed": [
@@ -55,7 +55,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "proxyspy",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxyspy_1d.ipset",
     "timeout": 10,
     "feed": [
@@ -66,7 +66,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "socks_proxy_7d",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/socks_proxy_7d.ipset",
     "timeout": 10,
     "feed": [
@@ -77,7 +77,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "ri_web_proxies_30d",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ri_web_proxies_30d.ipset",
     "timeout": 10,
     "feed": [
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "name": "speedX",
+    "name": "sslproxies_1d",
     "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/sslproxies_1d.ipset",
     "timeout": 10,
     "feed": [

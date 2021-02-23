@@ -13,21 +13,21 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 		RecentSpam: false,
 		Valid:      true,
 	}
-	disposable, err := app.DisableStore.FindByEmail(email)
+	disposable, err := app.DisableStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 	}
 	if disposable != nil {
 		emailsrv.Disposable = true
 	}
-	freeEmail, err := app.FreeEmailStore.FindByEmail(email)
+	freeEmail, err := app.FreeEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 	}
 	if freeEmail != nil {
 		emailsrv.Free = true
 	}
-	spamEmail, err := app.SpamEmailStore.FindByEmail(email)
+	spamEmail, err := app.SpamEmailStore.FindByDomain(email)
 	if err != nil {
 		app.Logger.Error(err)
 	}

@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type IPAnalysis struct {
@@ -27,6 +29,13 @@ type SUBNETAnalysis struct {
 	PrefixLength uint8
 	Score        int
 	Lists        []string // list of websites where it was found
+}
+
+type DomainAnalysis struct {
+	Domain string
+	Type   string
+	Score  int
+	Lists  []string // list of websites where it was found
 }
 
 type FeedAnalyzer struct {
@@ -47,6 +56,7 @@ type Feed struct {
 	Format        string         `json:"format"`
 	Timeout       time.Duration  `json:"timeout"`
 	FeedAnalyzers []FeedAnalyzer `json:"feed"`
+	Logger        logrus.FieldLogger
 }
 
 func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
@@ -93,7 +103,71 @@ func (feed Feed) GetExpressions() ([]string, error) {
 	return expressions, nil
 }
 
-func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {
+func (feed Feed) FetchString() (map[string]DomainAnalysis, error) {
+	var netClient = &http.Client{
+		Timeout: time.Second * feed.Timeout,
+	}
+	response, err := netClient.Get(feed.URL)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		err = response.Body.Close()
+	}()
+
+	workingdir, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	var expfile []*Expression
+	file, err := ioutil.ReadFile(workingdir + "/resource/expressions.json")
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(file, &expfile)
+	if err != nil {
+		return nil, err
+	}
+
+	scanner := bufio.NewScanner(response.Body)
+	scanner.Split(bufio.ScanRunes)
+	var buf bytes.Buffer
+	for scanner.Scan() {
+		buf.WriteString(scanner.Text())
+	}
+	var httpResult = buf.String()
+	resultString := make(map[string]DomainAnalysis)
+	if len(strings.Split(httpResult, "\n")) == 0 {
+		return nil, err
+	}
+	for _, element := range strings.Split(httpResult, "\n") {
+		line := strings.Trim(element, " ")
+
+		match := false
+		for _, fa := range feed.FeedAnalyzers {
+			for _, a := range expfile {
+				if strings.EqualFold(fa.Expression, a.Name) {
+					regex, err := regexp.Compile(`` + a.Expression + ``)
+					if err != nil {
+						feed.Logger.Error(err)
+					}
+					var findings = regex.FindStringSubmatch(line)
+					if !match {
+						if len(findings) == 1 {
+							resultString[findings[0]] = DomainAnalysis{findings[0], a.Type, fa.Score, []string{feed.Name}}
+							match = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return resultString, nil
+}
+
+func (feed Feed) FetchIP() (map[string]IPAnalysis, map[string]SUBNETAnalysis, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * feed.Timeout,
 	}
@@ -139,7 +213,10 @@ func (feed Feed) Fetch() (map[string]IPAnalysis, map[string]SUBNETAnalysis, erro
 			for _, a := range expfile {
 				if strings.EqualFold(fa.Expression, a.Name) {
 
-					regex, _ := regexp.Compile(`` + a.Expression + ``)
+					regex, err := regexp.Compile(`` + a.Expression + ``)
+					if err != nil {
+						feed.Logger.Error(err)
+					}
 					var findings = regex.FindStringSubmatch(line)
 					if !match {
 						if len(findings) == 2 {

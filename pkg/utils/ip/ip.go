@@ -38,10 +38,7 @@ func ParseSubnet(ip, ipSub string, subnet byte) bool {
 	singleIP := ip + "/32"
 	_, ipnetA, _ := net.ParseCIDR(ipstr)
 	ipB, _, _ := net.ParseCIDR(singleIP)
-	if ipnetA.Contains(ipB) {
-		return true
-	}
-	return false
+	return ipnetA.Contains(ipB)
 }
 
 //func ParseIps(body []byte) ([]string, error) {

@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/entity"
+	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
 func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error) {
@@ -39,7 +40,14 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 		app.Logger.Error(err)
 	}
 	if spam != nil {
-		ipresponse.RecentAbuse = true
+		if spam.Prefix > 0 {
+			if iputils.ParseSubnet(ipaddress, spam.IP, spam.Prefix) {
+				ipresponse.RecentAbuse = true
+			}
+		} else {
+			ipresponse.RecentAbuse = true
+		}
+
 	}
 	score, err := ScoreIP(app, ipaddress)
 	if err != nil {

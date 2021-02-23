@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/domgolonka/threatdefender/app"
+	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
 func ScoreIP(app *app.App, ip string) (uint8, error) {
@@ -36,7 +37,14 @@ func ScoreIP(app *app.App, ip string) (uint8, error) {
 		score += scoreCfg.Proxy.No
 	}
 	if spamIP != nil {
-		score += scoreCfg.Spam.Yes
+		if spamIP.Prefix > 0 {
+			if iputils.ParseSubnet(ip, spamIP.IP, spamIP.Prefix) {
+				score += scoreCfg.Spam.Yes
+			}
+		} else {
+			score += scoreCfg.Spam.Yes
+		}
+
 	} else {
 		score += scoreCfg.Spam.No
 	}

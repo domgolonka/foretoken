@@ -11,11 +11,9 @@ require (
 	github.com/felixge/httpsnoop v1.0.1
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1
-	github.com/gocolly/colly/v2 v2.1.0
 	github.com/gofiber/fiber/v2 v2.5.0
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.4.3
-	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/schema v1.2.0
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jbowtie/gokogiri v0.0.0-20190301021639-37f655d3078f

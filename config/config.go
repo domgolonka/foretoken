@@ -2,19 +2,23 @@ package config
 
 type Config struct {
 	Rooturl       string
-	PublicPort    int
-	ServerPort    int
-	GRPCPort      int
+	PublicPort    string
+	GRPCPort      string
 	Env           string
 	AutoTLS       bool
 	Proxy         Proxy
-	PwnedKey      string
+	APIKeys       APIKeys
 	SMTP          SMTP
 	Debug         bool
 	Database      Database
 	ErrorReporter ErrorReporter
 	Email         Email
 	IP            IP
+}
+
+type APIKeys struct {
+	PwnedKey    string
+	IP2location string
 }
 
 type Email struct {
@@ -31,6 +35,7 @@ type EmailScore struct {
 	Valid      Statement
 	Generic    Statement
 	CatchAll   Statement
+	Leaked     Statement
 }
 
 type IPScore struct {
@@ -41,8 +46,8 @@ type IPScore struct {
 }
 
 type Statement struct {
-	Yes uint8
-	No  uint8
+	Yes int8
+	No  int8
 }
 type SMTP struct {
 	Hostname    string

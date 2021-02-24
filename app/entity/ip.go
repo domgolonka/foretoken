@@ -21,7 +21,7 @@ type IPAddressResponse struct {
 	AbuseVelocity   string  `json:"abuse_velocity"`
 	BotStatus       bool    `json:"bot_status"`
 	Mobile          bool    `json:"mobile"`
-	Score           uint8   `json:"score"`
+	Score           int8    `json:"score"`
 	OperatingSystem string  `json:"operating_system"`
 	Browser         string  `json:"browser"`
 	DeviceModel     string  `json:"device_model"`

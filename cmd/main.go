@@ -17,11 +17,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// VERSION is a value injected at build time with ldflags
-var VERSION string
-
 func main() {
 	var cmd string
+
 	var appPath, _ = os.Getwd()
 	configFilePath := appPath + "/config.yml"
 	var cfg config.Config
@@ -36,6 +34,12 @@ func main() {
 		logrus.Info("\nsee: https://threatdefender.domgolonka.com/docs/config/")
 		logrus.Fatal(err)
 	}
+	// Default logger
+	logger := logrus.New()
+	logger.Formatter = &logrus.TextFormatter{}
+	if cfg.Debug {
+		logger.Level = logrus.DebugLevel
+	}
 
 	if len(os.Args) == 1 {
 		cmd = "server"
@@ -44,31 +48,23 @@ func main() {
 	}
 
 	if cmd == "server" {
-		serve(cfg)
+		serve(cfg, logger)
 	} else if cmd == "migrate" {
-		migrate(cfg)
+		migrate(cfg, logger)
 	} else {
 		os.Stderr.WriteString("unexpected invocation\n")
-		usage()
+		usage(logger)
 		os.Exit(2)
 	}
 }
 
-func serve(cfg config.Config) {
+func serve(cfg config.Config, logger logrus.FieldLogger) {
 
 	var (
 		ch = make(chan bool)
 	)
 
-	// Default logger
-	logger := logrus.New()
-	logger.Formatter = &logrus.JSONFormatter{}
-	if cfg.Debug {
-		logger.Level = logrus.DebugLevel
-	}
-	logger.Out = os.Stdout
-
-	logger.Infof(fmt.Sprintf("~*~ ThreatDefender v%s ~*~", VERSION))
+	logger.Infof("~*~ ThreatDefender ~*~")
 
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {
@@ -83,19 +79,19 @@ func serve(cfg config.Config) {
 	<-ch
 }
 
-func migrate(cfg config.Config) {
-	logrus.Info("Running migrations.")
+func migrate(cfg config.Config, logger logrus.FieldLogger) {
+	logger.Info("Running migrations.")
 	err := data.MigrateDB(cfg, nil)
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(err)
 	} else {
-		logrus.Info("Migrations complete.")
+		logger.Info("Migrations complete.")
 	}
 }
 
-func usage() {
+func usage(logger logrus.FieldLogger) {
 	exe := path.Base(os.Args[0])
-	logrus.Info(fmt.Sprintf(`
+	logger.Infof(fmt.Sprintf(`
 Usage:
 %s server  - run the server (default)
 %s migrate - run migrations

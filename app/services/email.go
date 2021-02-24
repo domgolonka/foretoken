@@ -62,7 +62,7 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 		emailsrv.Domain = dom
 	}
 
-	if app.Config.PwnedKey != "" {
+	if app.Config.APIKeys.PwnedKey != "" {
 		leaked, err := utils.Leaked(app, email, "")
 		if err != nil {
 			app.Logger.Error(err)

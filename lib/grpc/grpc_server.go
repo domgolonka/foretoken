@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"net"
 
 	"github.com/domgolonka/threatdefender/app"
@@ -10,10 +9,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-func ServeRPC(app *app.App, ch chan bool, port int) {
+func ServeRPC(app *app.App, ch chan bool, address string) {
 	s := grpc.NewServer()
 
-	l, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	l, err := net.Listen("tcp", address)
 	if err != nil {
 		app.Logger.Panic(err)
 	}

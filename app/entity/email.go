@@ -8,7 +8,7 @@ type EmailResponse struct {
 	CatchAll   bool    `json:"catch_all,omitempty"`
 	SMTPScore  uint8   `json:"smtp_score,omitempty"`
 	Generic    bool    `json:"generic"`
-	Score      uint8   `json:"score"`
+	Score      int8    `json:"score"`
 	Leaked     bool    `json:"leaked,omitempty"`
 	Domain     *Domain `json:"domain,omitempty"`
 	DNSValid   bool    `json:"dns_valid,omitempty"`

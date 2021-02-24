@@ -2,7 +2,6 @@ package server
 
 import (
 	"crypto/tls"
-	"fmt"
 
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/gofiber/fiber/v2"
@@ -36,13 +35,13 @@ func Server(app *app.App) {
 	})
 	routers(srv, app)
 	if app.Config.AutoTLS {
-		ln, err := tls.Listen("tcp", fmt.Sprintf(":%d", app.Config.PublicPort), cfg)
+		ln, err := tls.Listen("tcp", app.Config.PublicPort, cfg)
 		if err != nil {
 			panic(err)
 		}
 		app.Logger.Fatal(srv.Listener(ln))
 	} else {
-		app.Logger.Fatal(srv.Listen(fmt.Sprintf(":%d", app.Config.PublicPort)))
+		app.Logger.Fatal(srv.Listen(app.Config.PublicPort))
 	}
 
 }

@@ -1,11 +1,16 @@
+---
 rooturl: "localhost:8080"
-publicport: 8080
-serverport: 8081
-grpcport: 8082
+publicport: ":8080"
+grpcport: ":8082"
 env: "dev"
 autotls: false
 debug: true
-pwnedkey: ""
+##### External Services
+apikeys:
+  pwnedkey: ""
+  ip2location: ""
+
+#### SCORE
 email:
   score:
     disposable:
@@ -26,6 +31,9 @@ email:
     catchall:
       yes: 10
       no: 0
+    leaked:
+      yes: 25
+      no: -10
 ip:
   score:
     proxy:
@@ -40,6 +48,8 @@ ip:
     vpn:
       yes: 15
       no: 0
+
+### SMTP
 smtp:
   hostname: ""
   mailaddress: ""
@@ -49,10 +59,12 @@ errorreporter:
 proxy:
   cachedurationminutes: 120
   workers: 40
+
+### Database: sqlite3 or postgresql. For Non-Memory SQLite, change host: "db.sqlite3"
 database:
   type: "sqlite3"
   Name: ""
-  host: "db.sqlite3"
+  host: "db"
   port: 0
   username: ""
   password: ""

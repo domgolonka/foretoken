@@ -5,10 +5,10 @@ import (
 	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
-func ScoreIP(app *app.App, ip string) (uint8, error) {
+func ScoreIP(app *app.App, ip string) (int8, error) {
 	scoreCfg := app.Config.IP.Score
 
-	var score uint8
+	var score int8
 	score = 0
 	proxyIP, err := app.ProxyStore.FindByIP(ip)
 	if err != nil {
@@ -60,6 +60,8 @@ func ScoreIP(app *app.App, ip string) (uint8, error) {
 	}
 	if score > 100 {
 		score = 100
+	} else if score < 0 {
+		score = 0
 	}
 
 	return score, nil

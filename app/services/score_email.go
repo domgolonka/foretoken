@@ -5,8 +5,8 @@ import (
 	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
 )
 
-func ScoreEmail(app *app.App, email string) (uint8, error) {
-	var score uint8
+func ScoreEmail(app *app.App, email string) (int8, error) {
+	var score int8
 	scoreCfg := app.Config.Email.Score
 	score = 0
 	disposableEmail, err := app.DisableStore.FindByDomain(email)
@@ -40,6 +40,18 @@ func ScoreEmail(app *app.App, email string) (uint8, error) {
 		score += scoreCfg.CatchAll.No
 	}
 
+	// only use catch all if smtp is enabled
+	leaked, err := utils.Leaked(app, email, "")
+	if err != nil {
+		app.Logger.Error(err)
+		return score, err
+	}
+	if *leaked {
+		score += scoreCfg.Leaked.Yes
+	} else {
+		score += scoreCfg.Leaked.No
+	}
+
 	isGeneric, err := GenericGetEmail(app, email)
 	if err != nil {
 		app.Logger.Error(err)
@@ -67,6 +79,8 @@ func ScoreEmail(app *app.App, email string) (uint8, error) {
 	}
 	if score > 100 {
 		score = 100
+	} else if score < 0 {
+		score = 0
 	}
 
 	return score, nil

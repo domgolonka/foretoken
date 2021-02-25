@@ -9,3 +9,4 @@ main
 *.sqlite3
 docker-compose.yml
 *.sqlite3-journal
+config.local.yml

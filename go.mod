@@ -5,14 +5,12 @@ go 1.15
 require (
 	github.com/Boostport/address v0.6.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
-	github.com/antchfx/xmlquery v1.3.4 // indirect
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
 	github.com/felixge/httpsnoop v1.0.1
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gofiber/fiber/v2 v2.5.0
-	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.4.3
 	github.com/gorilla/schema v1.2.0
 	github.com/hashicorp/go-multierror v1.1.0
@@ -25,6 +23,7 @@ require (
 	github.com/likexian/whois-parser-go v1.15.2
 	github.com/mattn/go-sqlite3 v1.14.6
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+	github.com/oschwald/geoip2-golang v1.5.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.9.0

@@ -1,12 +1,18 @@
 package services
 
 import (
+	"errors"
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/entity"
 	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
+	"net"
 )
 
 func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error) {
+	ip, _, err := net.ParseCIDR(ipaddress)
+	if err != nil {
+		return nil, errors.New("not a real IP address")
+	}
 	ipresponse := &entity.IPAddressResponse{
 		Proxy:       false,
 		Tor:         false,
@@ -14,6 +20,11 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 		RecentAbuse: false,
 		Score:       0,
 	}
+
+	if app.Maxmind != nil {
+		app.Maxmind.GetIPdata(ip)
+	}
+
 	proxy, err := app.ProxyStore.FindByIP(ipaddress)
 	if err != nil {
 		app.Logger.Error(err)

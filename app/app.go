@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 	"time"
 
 	"github.com/domgolonka/threatdefender/app/data"
@@ -41,6 +42,7 @@ type App struct {
 	SpamEmailGenerator  *spamemail.SpamEmail
 	TorGenerator        *tor.Tor
 	FreeEmailGenerator  *free.Free
+	Maxmind             *ip.Maxmind
 }
 
 func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
@@ -93,6 +95,11 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		return nil, errors.Wrap(err, "NewSpamStore")
 	}
 
+	var maxmind *ip.Maxmind
+	if cfg.APIKeys.Maxmind != "" {
+		maxmind = ip.NewMaxmind(cfg.APIKeys.Maxmind)
+	}
+
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
 	vpngen := vpn.NewVPN(vpnStore, logger)
 	torgen := tor.NewTor(torStore, logger)
@@ -122,5 +129,6 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		DisposableGenerator: disgen,
 		SpamEmailGenerator:  spamemailgen,
 		FreeEmailGenerator:  freeEmailGen,
+		Maxmind:             maxmind,
 	}, nil
 }

@@ -19,6 +19,7 @@ type Config struct {
 type APIKeys struct {
 	PwnedKey    string
 	IP2location string
+	Maxmind     string
 }
 
 type Email struct {

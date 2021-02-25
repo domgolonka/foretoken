@@ -9,6 +9,7 @@ debug: true
 apikeys:
   pwnedkey: ""
   ip2location: ""
+  maxmind: ""
 
 #### SCORE
 email:

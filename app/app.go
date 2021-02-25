@@ -1,8 +1,9 @@
 package app
 
 import (
-	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 	"time"
+
+	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
@@ -97,7 +98,11 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	var maxmind *ip.Maxmind
 	if cfg.APIKeys.Maxmind != "" {
-		maxmind = ip.NewMaxmind(cfg.APIKeys.Maxmind)
+		maxmind = ip.NewMaxmind(cfg, logger)
+		err = maxmind.DownloadAndUpdate()
+		if err != nil {
+			logger.Fatalln(err)
+		}
 	}
 
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)

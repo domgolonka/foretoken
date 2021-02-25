@@ -10,7 +10,7 @@ apikeys:
   pwnedkey: ""
   ip2location: ""
   maxmind: ""
-  maxminddest: "assets/Maxmind/current/"
+  maxminddest: "assets/Maxmind/"
 
 #### SCORE
 email:

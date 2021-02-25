@@ -2,10 +2,11 @@ package services
 
 import (
 	"errors"
+	"net"
+
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/entity"
 	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
-	"net"
 )
 
 func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error) {
@@ -22,7 +23,10 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 	}
 
 	if app.Maxmind != nil {
-		app.Maxmind.GetIPdata(ip)
+		err = app.Maxmind.GetIPdata(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
 	}
 
 	proxy, err := app.ProxyStore.FindByIP(ipaddress)

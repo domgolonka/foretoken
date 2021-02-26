@@ -1,7 +1,10 @@
 package app
 
 import (
+	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 
 	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 
@@ -44,9 +47,19 @@ type App struct {
 	TorGenerator        *tor.Tor
 	FreeEmailGenerator  *free.Free
 	Maxmind             *ip.Maxmind
+	PwnedKey            string
 }
 
 func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
+
+	err := godotenv.Load()
+	if err != nil {
+		logger.Fatal("Error loading .env file")
+
+	}
+	maxmindkey := os.Getenv("MAXMIND")
+
+	pwnedKey := os.Getenv("PWNEDKEY")
 	reporter := ops.Log
 	if cfg.ErrorReporter.Default == "airbreak" {
 		reporter = ops.Airbrake
@@ -97,8 +110,8 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 	}
 
 	var maxmind *ip.Maxmind
-	if cfg.APIKeys.Maxmind != "" {
-		maxmind = ip.NewMaxmind(cfg, logger)
+	if maxmindkey != "" {
+		maxmind = ip.NewMaxmind(cfg, maxmindkey, logger)
 		err = maxmind.DownloadAndUpdate()
 		if err != nil {
 			logger.Fatalln(err)
@@ -135,5 +148,6 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		SpamEmailGenerator:  spamemailgen,
 		FreeEmailGenerator:  freeEmailGen,
 		Maxmind:             maxmind,
+		PwnedKey:            pwnedKey,
 	}, nil
 }

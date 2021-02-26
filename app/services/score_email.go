@@ -41,15 +41,17 @@ func ScoreEmail(app *app.App, email string) (int8, error) {
 	}
 
 	// only use catch all if smtp is enabled
-	leaked, err := utils.Leaked(app, email, "")
-	if err != nil {
-		app.Logger.Error(err)
-		return score, err
-	}
-	if *leaked {
-		score += scoreCfg.Leaked.Yes
-	} else {
-		score += scoreCfg.Leaked.No
+	if app.PwnedKey != "" {
+		leaked, err := utils.Leaked(app, email, "")
+		if err != nil {
+			app.Logger.Error(err)
+			return score, err
+		}
+		if *leaked {
+			score += scoreCfg.Leaked.Yes
+		} else {
+			score += scoreCfg.Leaked.No
+		}
 	}
 
 	isGeneric, err := GenericGetEmail(app, email)

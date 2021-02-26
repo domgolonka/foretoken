@@ -1,13 +1,8 @@
 package ip
 
 import (
-	"archive/tar"
-	"compress/gzip"
-	"crypto/md5" //nolint
-	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
@@ -41,49 +36,58 @@ var maxmindDownloadInfo = []struct {
 		url:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&suffix=tar.gz&license_key=",
 		md5:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&suffix=tar.gz.md5&license_key=",
 		filename: "assets/Maxmind/GeoLite2-ASN.mmdb",
-		file:     "assets/Maxmind/GeoLite2-ASN.tar.gz",
-		filemd5:  "assets/Maxmind/GeoLite2-ASN.tar.gz.md5",
+		file:     "assets/Maxmind/download/GeoLite2-ASN.tar.gz",
+		filemd5:  "assets/Maxmind/download/GeoLite2-ASN.tar.gz.md5",
 	},
 	{
 		url:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=",
 		md5:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz.md5&license_key=",
 		filename: "assets/Maxmind/GeoLite2-City.mmdb",
-		file:     "assets/Maxmind/GeoLite2-City.tar.gz",
-		filemd5:  "assets/Maxmind/GeoLite2-City.tar.gz.md5",
+		file:     "assets/Maxmind/download/GeoLite2-City.tar.gz",
+		filemd5:  "assets/Maxmind/download/GeoLite2-City.tar.gz.md5",
 	},
 
 	{
 		url:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz&license_key=",
 		md5:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz.md5&license_key=",
 		filename: "assets/Maxmind/GeoLite2-Country.mmdb",
-		file:     "assets/Maxmind/GeoLite2-Country.tar.gz",
-		filemd5:  "assets/Maxmind/GeoLite2-Country.tar.gz.md5",
+		file:     "assets/Maxmind/download/GeoLite2-Country.tar.gz",
+		filemd5:  "assets/Maxmind/download/GeoLite2-Country.tar.gz.md5",
 	},
 }
 
-func NewMaxmind(cfg config.Config, logger logrus.FieldLogger) *Maxmind {
+func NewMaxmind(cfg config.Config, license string, logger logrus.FieldLogger) *Maxmind {
 	return &Maxmind{
 		logger:  logger,
-		license: cfg.APIKeys.Maxmind,
+		license: license,
 		cfg:     cfg,
 	}
 }
 
-func (m *Maxmind) GetIPdata(IP net.IP) error {
+func (m *Maxmind) GetCountry(IP net.IP) (country string, err error) {
 
-	//asn, err := m.asn.ASN(IP)
-	//if err != nil {
-	//
-	//}
-	//city, err := m.city.City(IP)
-	//if err != nil {
-	//
-	//}
-	//country, err := m.country.Country(IP)
-	//if err != nil {
-	//
-	//}
-	return nil
+	count, err := m.country.Country(IP)
+	if err != nil {
+		return "", err
+	}
+	return count.Country.IsoCode, err
+}
+
+func (m *Maxmind) GetCityData(IP net.IP) (postalcode string, timezone string, city string, latitude, longitude float64, err error) {
+	fmtStr := "en-US"
+	data, err := m.city.City(IP)
+	if err != nil {
+		return "", "", "", 0, 0, err
+	}
+	return data.Postal.Code, data.Location.TimeZone, data.City.Names[fmtStr], data.Location.Latitude, data.Location.Longitude, err
+}
+
+func (m *Maxmind) GetASN(IP net.IP) (company string, err error) {
+	data, err := m.asn.ASN(IP)
+	if err != nil {
+		return "", err
+	}
+	return data.AutonomousSystemOrganization, err
 }
 
 // Download a file
@@ -119,16 +123,25 @@ func (m *Maxmind) download(url, dest string, wg *sync.WaitGroup) error {
 
 func (m *Maxmind) DownloadAndUpdate() error {
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(6)
+	err := os.MkdirAll(m.cfg.External.MaxmindDest, os.ModePerm)
+	if err != nil {
+		return err
+	}
 	for _, d := range maxmindDownloadInfo {
+		dd := d
 		go func() {
-			err := m.download(d.url, d.file, &wg)
+			err := m.download(dd.url, dd.file, &wg)
+			if err != nil {
+				m.logger.Error(err)
+				return
+			}
+			err = m.download(dd.md5, dd.filemd5, &wg)
 			if err != nil {
 				m.logger.Error(err)
 				return
 			}
 		}()
-		go m.download(d.md5, d.filemd5, &wg) //nolint
 	}
 	wg.Wait()
 
@@ -140,8 +153,18 @@ func (m *Maxmind) DownloadAndUpdate() error {
 		if err != nil {
 			return err
 		}
-		err = ExtractTarGz(r, m.cfg.APIKeys.MaxmindDest)
+		err = ExtractTarGz(r, m.cfg.External.MaxmindDest)
 		if err != nil {
+			return err
+		}
+
+		// Move mmdb to MAXMIND_DB_LOCATION
+		geoCityDBPath, _, err := FindFile(m.cfg.External.MaxmindDest, "mmdb$")
+		if err != nil {
+			return err
+		}
+
+		if err = MoveFile(geoCityDBPath, d.filename); err != nil {
 			return err
 		}
 
@@ -153,14 +176,14 @@ func (m *Maxmind) DownloadAndUpdate() error {
 			m.country = db
 		} else if strings.Contains(d.filename, "City") {
 			m.city = db
-		} else if strings.Contains(d.filename, "Asn") {
+		} else if strings.Contains(d.filename, "ASN") {
 			m.asn = db
 		} else {
 			return fmt.Errorf("cannot match maxmind filename: %s with db", d.filename)
 		}
 	}
 
-	matches, err := filepath.Glob(m.cfg.APIKeys.MaxmindDest + "*.tar.gz")
+	matches, err := filepath.Glob(m.cfg.External.MaxmindDest + "*")
 	if err != nil {
 		return err
 	}
@@ -172,91 +195,4 @@ func (m *Maxmind) DownloadAndUpdate() error {
 
 	return nil
 
-}
-
-// ExtractTarGz extracts a gzipped stream to dest
-func ExtractTarGz(r io.Reader, dest string) error {
-	zr, err := gzip.NewReader(r)
-	if err != nil {
-		return fmt.Errorf("stream requires gzip-compressed body: %v", err)
-	}
-
-	tr := tar.NewReader(zr)
-
-	for {
-		f, err := tr.Next()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return fmt.Errorf("tar error: %v", err)
-		}
-
-		switch f.Typeflag {
-		case tar.TypeDir:
-			if err := os.Mkdir(dest+f.Name, 0750); err != nil {
-				return fmt.Errorf("extractTarGz: Mkdir() failed: %v", err)
-			}
-		case tar.TypeReg:
-			outFile, err := os.Create(dest + f.Name)
-			if err != nil {
-				return fmt.Errorf("extractTarGz: Create() failed: %v", err)
-			}
-			// For our purposes, we don't expect any files larger than 100MiB
-			limited := &io.LimitedReader{R: tr, N: 100 << 20}
-			if _, err := io.Copy(outFile, limited); err != nil {
-				return fmt.Errorf("extractTarGz: Copy() failed: %v", err)
-			}
-			if err := outFile.Close(); err != nil {
-				return err
-			}
-		default:
-			return fmt.Errorf(
-				"extractTarGz: %s has uknown type: %v",
-				f.Name,
-				f.Typeflag)
-		}
-	}
-
-	return nil
-}
-func md5Hash(file string) ([]byte, error) {
-	filePath := filepath.Clean(file)
-
-	// We know exactly where this file and path is
-	// #nosec G304
-	f, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-
-	// #nosec G401
-	h := md5.New()
-	if _, err := io.Copy(h, f); err != nil {
-		return nil, err
-	}
-
-	return h.Sum(nil), f.Close()
-}
-
-func VerifyMD5HashFromFile(file, md5sumFile string) error {
-	actual, err := md5Hash(file)
-	if err != nil {
-		return err
-	}
-
-	cleanMD5SumFile := filepath.Clean(md5sumFile)
-
-	// We know exactly where this file and path is
-	// #nosec G304
-	expected, err := ioutil.ReadFile(cleanMD5SumFile)
-	if err != nil {
-		return err
-	}
-
-	if fmt.Sprintf("%x", actual) != fmt.Sprintf("%s", expected) {
-		return errors.New("checksum error")
-	}
-
-	return nil
 }

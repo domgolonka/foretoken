@@ -1,7 +1,6 @@
 package services
 
 import (
-	"errors"
 	"net"
 
 	"github.com/domgolonka/threatdefender/app"
@@ -10,23 +9,41 @@ import (
 )
 
 func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error) {
-	ip, _, err := net.ParseCIDR(ipaddress)
-	if err != nil {
-		return nil, errors.New("not a real IP address")
-	}
+
 	ipresponse := &entity.IPAddressResponse{
 		Proxy:       false,
 		Tor:         false,
 		Vpn:         false,
 		RecentAbuse: false,
+		CountryCode: "",
+		Timezone:    "",
+		City:        "",
+		PostalCode:  "",
 		Score:       0,
 	}
 
 	if app.Maxmind != nil {
-		err = app.Maxmind.GetIPdata(ip)
+		ip := net.ParseIP(ipaddress)
+		// country
+		country, err := app.Maxmind.GetCountry(ip)
 		if err != nil {
 			app.Logger.Error(err)
 		}
+		ipresponse.CountryCode = country
+		postal, timezone, city, lat, long, err := app.Maxmind.GetCityData(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		ipresponse.PostalCode = postal
+		ipresponse.City = city
+		ipresponse.Timezone = timezone
+		ipresponse.Longitude = long
+		ipresponse.Latitude = lat
+		asn, err := app.Maxmind.GetASN(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		ipresponse.ASN = asn
 	}
 
 	proxy, err := app.ProxyStore.FindByIP(ipaddress)

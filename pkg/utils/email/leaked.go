@@ -37,7 +37,7 @@ func Leaked(app *app.App, email, since string) (*bool, error) {
 	}
 
 	request.Header.Set("User-Agent", userAgent)
-	request.Header.Set("hibp-api-key", app.Config.APIKeys.PwnedKey)
+	request.Header.Set("hibp-api-key", app.PwnedKey)
 
 	response, err := hibpClient.Do(request)
 	if err != nil {

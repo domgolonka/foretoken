@@ -17,6 +17,7 @@ require (
 	github.com/jbowtie/gokogiri v0.0.0-20190301021639-37f655d3078f
 	github.com/jinzhu/configor v1.2.1
 	github.com/jmoiron/sqlx v1.3.1
+	github.com/joho/godotenv v1.3.0
 	github.com/kr/text v0.2.0 // indirect
 	github.com/leesper/go_rng v0.0.0-20190531154944-a612b043e353 // indirect
 	github.com/lib/pq v1.9.0

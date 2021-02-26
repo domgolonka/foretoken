@@ -6,11 +6,9 @@ env: "dev"
 autotls: false
 debug: true
 ##### External Services
-apikeys:
-  pwnedkey: ""
-  ip2location: ""
-  maxmind: ""
-  maxminddest: "assets/Maxmind/"
+external:
+  maxminddest: "assets/Maxmind/download/"
+  ip2location: "assets/IP2Location/download/"
 
 #### SCORE
 email:

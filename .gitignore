@@ -10,3 +10,5 @@ main
 docker-compose.yml
 *.sqlite3-journal
 config.local.yml
+assets/Maxmind/
+assets/Ip2location/

@@ -70,6 +70,21 @@ example:
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.
 
+## External APIs
+
+The application is improved if you sign up for external APIs. Leaked is paid, but all other services are free to sign up!
+
+- [haveibeenpwned.com](https://haveibeenpwned.com/) - Check if email/password is leaked.
+- [maxmind.com](https://www.maxmind.com/en/home) - IP Geolocation
+- [ip2location.com](https://www.ip2location.com/) - IP Geolocation
+
+Change the file `changeme.env` to `.env` and save any External API Keys.
+
+
+    PWNEDKEY=
+    IP2LOCATION=
+    MAXMIND=
+
 For full configuration examples, check out [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
 
 ## Change the databases

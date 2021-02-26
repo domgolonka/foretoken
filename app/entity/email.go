@@ -1,6 +1,7 @@
 package entity
 
 type EmailResponse struct {
+	Success    bool    `json:"success"`
 	Valid      bool    `json:"valid"`
 	Disposable bool    `json:"disposable"`
 	RecentSpam bool    `json:"recent_spam"`

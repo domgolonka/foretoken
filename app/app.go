@@ -1,7 +1,12 @@
 package app
 
 import (
+	"os"
 	"time"
+
+	"github.com/joho/godotenv"
+
+	"github.com/domgolonka/threatdefender/pkg/utils/ip"
 
 	"github.com/domgolonka/threatdefender/app/data"
 	"github.com/domgolonka/threatdefender/config"
@@ -41,9 +46,20 @@ type App struct {
 	SpamEmailGenerator  *spamemail.SpamEmail
 	TorGenerator        *tor.Tor
 	FreeEmailGenerator  *free.Free
+	Maxmind             *ip.Maxmind
+	PwnedKey            string
 }
 
 func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
+
+	err := godotenv.Load()
+	if err != nil {
+		logger.Fatal("Error loading .env file")
+
+	}
+	maxmindkey := os.Getenv("MAXMIND")
+
+	pwnedKey := os.Getenv("PWNEDKEY")
 	reporter := ops.Log
 	if cfg.ErrorReporter.Default == "airbreak" {
 		reporter = ops.Airbrake
@@ -93,6 +109,15 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		return nil, errors.Wrap(err, "NewSpamStore")
 	}
 
+	var maxmind *ip.Maxmind
+	if maxmindkey != "" {
+		maxmind = ip.NewMaxmind(cfg, maxmindkey, logger)
+		err = maxmind.DownloadAndUpdate()
+		if err != nil {
+			logger.Fatalln(err)
+		}
+	}
+
 	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), logger)
 	vpngen := vpn.NewVPN(vpnStore, logger)
 	torgen := tor.NewTor(torStore, logger)
@@ -122,5 +147,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		DisposableGenerator: disgen,
 		SpamEmailGenerator:  spamemailgen,
 		FreeEmailGenerator:  freeEmailGen,
+		Maxmind:             maxmind,
+		PwnedKey:            pwnedKey,
 	}, nil
 }

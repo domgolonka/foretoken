@@ -1,19 +1,51 @@
 package services
 
 import (
+	"net"
+
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/entity"
 	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
 )
 
 func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error) {
+
 	ipresponse := &entity.IPAddressResponse{
 		Proxy:       false,
 		Tor:         false,
 		Vpn:         false,
 		RecentAbuse: false,
+		CountryCode: "",
+		Timezone:    "",
+		City:        "",
+		PostalCode:  "",
 		Score:       0,
 	}
+
+	if app.Maxmind != nil {
+		ip := net.ParseIP(ipaddress)
+		// country
+		country, err := app.Maxmind.GetCountry(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		ipresponse.CountryCode = country
+		postal, timezone, city, lat, long, err := app.Maxmind.GetCityData(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		ipresponse.PostalCode = postal
+		ipresponse.City = city
+		ipresponse.Timezone = timezone
+		ipresponse.Longitude = long
+		ipresponse.Latitude = lat
+		asn, err := app.Maxmind.GetASN(ip)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+		ipresponse.ASN = asn
+	}
+
 	proxy, err := app.ProxyStore.FindByIP(ipaddress)
 	if err != nil {
 		app.Logger.Error(err)
@@ -55,6 +87,7 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 	} else {
 		ipresponse.Score = score
 	}
+	ipresponse.Success = true
 	return ipresponse, nil
 
 }

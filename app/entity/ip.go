@@ -5,11 +5,11 @@ type IPAddressResponse struct {
 	Proxy           bool    `json:"proxy"`
 	ISP             string  `json:"ISP"`
 	Organization    string  `json:"organization"`
-	ASN             int     `json:"ASN"`
+	ASN             string  `json:"ASN"`
 	Host            string  `json:"host"`
 	CountryCode     string  `json:"country_code"`
 	City            string  `json:"city"`
-	Region          string  `json:"region"`
+	PostalCode      string  `json:"postal_code"`
 	IsCrawler       bool    `json:"is_crawler"`
 	ConnectionType  string  `json:"connection_type"`
 	Latitude        float64 `json:"latitude"`

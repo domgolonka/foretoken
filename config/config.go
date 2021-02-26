@@ -7,7 +7,7 @@ type Config struct {
 	Env           string
 	AutoTLS       bool
 	Proxy         Proxy
-	APIKeys       APIKeys
+	External      External
 	SMTP          SMTP
 	Debug         bool
 	Database      Database
@@ -16,10 +16,9 @@ type Config struct {
 	IP            IP
 }
 
-type APIKeys struct {
-	PwnedKey    string
-	IP2location string
-	Maxmind     string
+type External struct {
+	MaxmindDest string
+	IP2Location string
 }
 
 type Email struct {

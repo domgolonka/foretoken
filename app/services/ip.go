@@ -87,6 +87,7 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 	} else {
 		ipresponse.Score = score
 	}
+	ipresponse.Success = true
 	return ipresponse, nil
 
 }

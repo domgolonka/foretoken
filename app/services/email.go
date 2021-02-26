@@ -69,5 +69,7 @@ func EmailService(app *app.App, email string) (*entity.EmailResponse, error) {
 		}
 		emailsrv.Leaked = *leaked
 	}
+
+	emailsrv.Success = true
 	return emailsrv, nil
 }

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/lib/route"
+	"github.com/domgolonka/threatdefender/lib/metrics"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"golang.org/x/crypto/acme/autocert"

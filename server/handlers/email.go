@@ -8,8 +8,9 @@ import (
 
 func GetEmail(app *app.App) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-
-		response, err := services.EmailService(app, c.Params("email"))
+		emailSrv := services.Email{}
+		emailSrv.Calculate(app, c.Params("email"))
+		response, err := emailSrv.EmailService()
 		if err != nil {
 			return err
 		}

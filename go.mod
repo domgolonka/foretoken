@@ -23,6 +23,7 @@ require (
 	github.com/lib/pq v1.9.0
 	github.com/likexian/whois-parser-go v1.15.2
 	github.com/mattn/go-sqlite3 v1.14.6
+	github.com/micro/go-micro/v2 v2.9.1
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/oschwald/geoip2-golang v1.5.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible

@@ -1,41 +1,20 @@
 package services
 
 import (
-	"github.com/domgolonka/threatdefender/app"
-	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
 	"time"
 )
 
-func ScoreEmail(app *app.App, email string) (int8, error) {
+func (e *Email) ScoreEmail() (int8, error) {
 	var score int8
-	scoreCfg := app.Config.Email.Score
+	scoreCfg := e.app.Config.Email.Score
 	score = 0
-	disposableEmail, err := app.DisableStore.FindByDomain(email)
-	if err != nil {
-		app.Logger.Error(err)
-		return score, err
-	}
-	spamEmail, err := app.SpamEmailStore.FindByDomain(email)
-	if err != nil {
-		app.Logger.Error(err)
-		return score, err
-	}
-	freeEmail, err := app.FreeEmailStore.FindByDomain(email)
-	if err != nil {
-		app.Logger.Error(err)
-		return score, err
-	}
-	_, domain := utils.Split(email)
-	dom, err := utils.DomainAge(domain)
-	if err != nil {
-		app.Logger.Error(err)
-	} else {
-		// only display if domain age is accurate
-		t1, err := time.Parse("1995-08-13T04:00:00Z", dom.CreatedDate)
-		if err != nil {
-			app.Logger.Error(err)
-		}
 
+	if e.Domain != nil {
+		// only display if domain age is accurate
+		t1, err := time.Parse("1996-03-27T05:00:00Z", e.Domain.CreatedDate)
+		if err != nil {
+			e.app.Logger.Error(err)
+		}
 		t2 := time.Now()
 		days := t2.Sub(t1).Hours() / 24
 		if days < 7 { // less than a week
@@ -49,56 +28,44 @@ func ScoreEmail(app *app.App, email string) (int8, error) {
 		}
 	}
 
-	err = utils.ValidateEmail(app, email)
 	// is not a valid email
-	if err != nil {
+	if e.Valid {
 		score += scoreCfg.Valid.Yes
 	} else {
 		score += scoreCfg.Valid.No
 	}
-	// only use catch all if smtp is enabled
-	used, err := utils.CatchAll(app, email)
-	if err != nil && used {
+
+	if e.CatchAll {
 		score += scoreCfg.CatchAll.Yes
 	} else {
 		score += scoreCfg.CatchAll.No
 	}
 
-	// only use catch all if smtp is enabled
-	if app.PwnedKey != "" {
-		leaked, err := utils.Leaked(app, email, "")
-		if err != nil {
-			app.Logger.Error(err)
-			return score, err
-		}
-		if *leaked {
+	// only use Pwned if key is set
+	if e.app.PwnedKey != "" {
+		if e.Leaked {
 			score += scoreCfg.Leaked.Yes
 		} else {
 			score += scoreCfg.Leaked.No
 		}
 	}
 
-	isGeneric, err := GenericGetEmail(app, email)
-	if err != nil {
-		app.Logger.Error(err)
-		return score, err
-	}
-	if disposableEmail != nil {
+	if e.Disposable {
 		score += scoreCfg.Disposable.Yes
 	} else {
 		score += scoreCfg.Disposable.No
 	}
-	if spamEmail != nil {
+	if e.Spam {
 		score += scoreCfg.Spam.Yes
 	} else {
 		score += scoreCfg.Spam.No
 	}
-	if freeEmail != nil {
+	if e.Free {
 		score += scoreCfg.Free.Yes
 	} else {
 		score += scoreCfg.Free.No
 	}
-	if *isGeneric {
+	if e.Generic {
 		score += scoreCfg.Generic.Yes
 	} else {
 		score += scoreCfg.Generic.No

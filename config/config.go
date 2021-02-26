@@ -52,6 +52,14 @@ type EmailScore struct {
 	Generic    Statement
 	CatchAll   Statement
 	Leaked     Statement
+	Domain     DomainStatement
+}
+
+type DomainStatement struct {
+	Week     int8
+	Month    int8
+	Year     int8
+	YearPlus int8
 }
 
 type IPScore struct {

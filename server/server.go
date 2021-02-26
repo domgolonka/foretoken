@@ -52,7 +52,7 @@ func Server(app *app.App) {
 		}))
 	}
 
-	srv := route.InitPrometheus(fapp)
+	srv := metrics.InitPrometheus(fapp)
 	routers(srv, app)
 	if app.Config.AutoTLS {
 		ln, err := tls.Listen("tcp", app.Config.PublicPort, cfg)

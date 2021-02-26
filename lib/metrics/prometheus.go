@@ -1,4 +1,4 @@
-package route
+package metrics
 
 import (
 	"github.com/ansrivas/fiberprometheus/v2"

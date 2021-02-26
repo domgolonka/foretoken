@@ -47,6 +47,11 @@ email:
     leaked:
       yes: 25
       no: -10
+    domain:
+      week: 30
+      month: 20
+      year: 10
+      yearplus: -10
 ip:
   score:
     proxy:

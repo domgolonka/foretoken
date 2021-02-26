@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/domgolonka/threatdefender/app"
 	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
+	"time"
 )
 
 func ScoreEmail(app *app.App, email string) (int8, error) {
@@ -23,6 +24,29 @@ func ScoreEmail(app *app.App, email string) (int8, error) {
 	if err != nil {
 		app.Logger.Error(err)
 		return score, err
+	}
+	_, domain := utils.Split(email)
+	dom, err := utils.DomainAge(domain)
+	if err != nil {
+		app.Logger.Error(err)
+	} else {
+		// only display if domain age is accurate
+		t1, err := time.Parse("1995-08-13T04:00:00Z", dom.CreatedDate)
+		if err != nil {
+			app.Logger.Error(err)
+		}
+
+		t2 := time.Now()
+		days := t2.Sub(t1).Hours() / 24
+		if days < 7 { // less than a week
+			score += scoreCfg.Domain.Week
+		} else if days < 30 {
+			score += scoreCfg.Domain.Month
+		} else if days < 365 {
+			score += scoreCfg.Domain.Year
+		} else if days >= 365 {
+			score += scoreCfg.Domain.YearPlus
+		}
 	}
 
 	err = utils.ValidateEmail(app, email)
@@ -79,6 +103,7 @@ func ScoreEmail(app *app.App, email string) (int8, error) {
 	} else {
 		score += scoreCfg.Generic.No
 	}
+
 	if score > 100 {
 		score = 100
 	} else if score < 0 {

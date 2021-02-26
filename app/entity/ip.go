@@ -5,8 +5,8 @@ type IPAddressResponse struct {
 	Proxy           bool    `json:"proxy"`
 	ISP             string  `json:"ISP"`
 	Organization    string  `json:"organization"`
-	ASN             string  `json:"ASN"`
-	Host            string  `json:"host"`
+	ASN             uint    `json:"ASN"`
+	Hostname        string  `json:"hostname"`
 	CountryCode     string  `json:"country_code"`
 	City            string  `json:"city"`
 	PostalCode      string  `json:"postal_code"`
@@ -18,8 +18,6 @@ type IPAddressResponse struct {
 	Vpn             bool    `json:"vpn"`
 	Tor             bool    `json:"tor"`
 	RecentAbuse     bool    `json:"recent_abuse"`
-	AbuseVelocity   string  `json:"abuse_velocity"`
-	BotStatus       bool    `json:"bot_status"`
 	Mobile          bool    `json:"mobile"`
 	Score           int8    `json:"score"`
 	OperatingSystem string  `json:"operating_system"`

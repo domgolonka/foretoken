@@ -39,11 +39,12 @@ func IPService(app *app.App, ipaddress string) (*entity.IPAddressResponse, error
 		ipresponse.Timezone = timezone
 		ipresponse.Longitude = long
 		ipresponse.Latitude = lat
-		asn, err := app.Maxmind.GetASN(ip)
+		organization, asn, err := app.Maxmind.GetASN(ip)
 		if err != nil {
 			app.Logger.Error(err)
 		}
 		ipresponse.ASN = asn
+		ipresponse.Organization = organization
 	}
 
 	proxy, err := app.ProxyStore.FindByIP(ipaddress)

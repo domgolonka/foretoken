@@ -82,12 +82,12 @@ func (m *Maxmind) GetCityData(IP net.IP) (postalcode string, timezone string, ci
 	return data.Postal.Code, data.Location.TimeZone, data.City.Names[fmtStr], data.Location.Latitude, data.Location.Longitude, err
 }
 
-func (m *Maxmind) GetASN(IP net.IP) (company string, err error) {
+func (m *Maxmind) GetASN(IP net.IP) (company string, asn uint, err error) {
 	data, err := m.asn.ASN(IP)
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
-	return data.AutonomousSystemOrganization, err
+	return data.AutonomousSystemOrganization, data.AutonomousSystemNumber, err
 }
 
 // Download a file

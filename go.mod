@@ -5,9 +5,9 @@ go 1.15
 require (
 	github.com/Boostport/address v0.6.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
+	github.com/ansrivas/fiberprometheus/v2 v2.1.1
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
-	github.com/felixge/httpsnoop v1.0.1
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gofiber/fiber/v2 v2.5.0
@@ -27,7 +27,7 @@ require (
 	github.com/oschwald/geoip2-golang v1.5.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.9.0
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.7.0
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614

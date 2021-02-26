@@ -53,25 +53,38 @@ func (p *VPN) createOrIgnore(ip string, prefix byte, iptype string, score int) b
 	return err == nil
 }
 
-func (p *VPN) run() {
+func (p *VPN) deleteOld(hour int) (bool, error) {
+	return p.store.DeleteOld(hour)
+}
+
+func (p *VPN) Run(hours int) {
+	go func() {
+		_, err := instance.deleteOld(hours + 12)
+		if err != nil {
+			p.logger.Error(err)
+		}
+	}()
 	go p.load()
+
 }
 
 func (p *VPN) Get() (*[]string, error) {
 	return p.store.FindAllIPs()
 
 }
-func NewVPN(store data.VpnStore, logger logrus.FieldLogger) *VPN {
+func NewVPN(store data.VpnStore, hours int, logger logrus.FieldLogger) *VPN {
 	once.Do(func() {
 		instance = &VPN{
 			logger: logger,
 			store:  store,
 		}
+
 		logger.Debug("starting VPN")
 		instance.AddProvider(providers.NewOpenVpn(logger))
 		instance.AddProvider(providers.NewTxtDomains(logger))
 		//instance.AddProvider(providers.NewVPNBook(logger))
-		go instance.run()
+		go instance.Run(hours)
+
 	})
 	return instance
 }

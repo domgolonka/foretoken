@@ -56,23 +56,36 @@ func (p *Spam) createOrIgnore(ip string, prefix uint8, score int, iptype string)
 	return err == nil
 }
 
-func (p *Spam) run() {
+func (p *Spam) deleteOld(hour int) (bool, error) {
+	return p.store.DeleteOld(hour)
+}
+
+func (p *Spam) Run(hours int) {
+	go func() {
+		_, err := instance.deleteOld(hours + 12)
+		if err != nil {
+			p.logger.Error(err)
+		}
+	}()
 	go p.load()
+
 }
 
 func (p *Spam) Get() []string {
 	return p.hosts
 
 }
-func NewSpam(store data.SpamStore, logger logrus.FieldLogger) *Spam {
+func NewSpam(store data.SpamStore, hours int, logger logrus.FieldLogger) *Spam {
 	once.Do(func() {
 		instance = &Spam{
 			logger: logger,
 			store:  store,
 		}
+
 		logger.Debug("starting IP Spam")
 		instance.AddProvider(providers.NewTxtDomains(logger))
-		go instance.run()
+		go instance.Run(hours)
+
 	})
 	return instance
 }

@@ -56,8 +56,7 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 	}
 
 	defer doc.Free()
-
-	ips, err := doc.Search(`//*[@id="main"]/table/tr/td[1][not(@colspan)]/script`)
+	ips, err := doc.Search(`//*[@id="main"]/table/tbody/tr/td[1]`)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +92,6 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 			Type: "http", // todo
 		}
 		c.proxyList = append(c.proxyList, prox)
-		//c.proxyList = append(c.proxyList, fmt.Sprintf("%s:%s", decoded, ports[i].Content()))
 	}
 	c.lastUpdate = time.Now()
 	return c.proxyList, nil

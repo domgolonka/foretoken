@@ -155,13 +155,26 @@ The ip files are stored in the `./resource` directory and start with `ip_` such 
 
 REST API & gRPC is enabled. For more API examples: [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
 
-### gRPC
+## gRPC
 
 The default gRPC port is 8082 (you can change in the config)
 
-### REST API
+## REST API
 
 The REST API to the example app is described below.
+
+### Rate Limiting
+
+You can enable the rate limiter for REST API in the `config.yml` file.
+
+    ratelimit:
+      enabled: true
+      max: 20 
+      expiration: 30 
+
+`Max` number of recent connections during `Duration` seconds before sending a 429 response
+ 
+`Expiration` is the time on how long to keep records of requests in memory per minute
 
 #### Request
 
@@ -425,6 +438,16 @@ The REST API to the example app is described below.
     "device_model": "",
     "device_brand": ""
     }
+
+# Metrics
+
+## Prometheus
+
+Prometheus is enabled. Following metrices are available by default:
+
+    http_requests_total
+    http_request_duration_seconds
+    http_requests_in_progress_total
 
 ## Work in progress
 

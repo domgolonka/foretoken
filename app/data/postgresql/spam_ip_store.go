@@ -102,3 +102,8 @@ func (db *SpamStore) Delete(id int) (bool, error) {
 	result, err := db.Exec("DELETE FROM spamip WHERE id = ?", id)
 	return ok(result, err)
 }
+
+func (db *SpamStore) DeleteOld(hour int) (bool, error) {
+	result, err := db.Exec("DELETE from spamip WHERE created_at <  (now() - INTERVAL '? hour' )", hour)
+	return ok(result, err)
+}

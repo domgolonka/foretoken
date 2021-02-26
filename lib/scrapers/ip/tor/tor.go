@@ -51,15 +51,26 @@ func (p *Tor) createOrIgnore(ip string, prefix byte, iptype string, score int) b
 	return err == nil
 }
 
-func (p *Tor) run() {
+func (p *Tor) Run(hours int) {
+	go func() {
+		_, err := instance.deleteOld(hours + 12)
+		if err != nil {
+			p.logger.Error(err)
+		}
+	}()
 	go p.load()
+
+}
+
+func (p *Tor) deleteOld(hour int) (bool, error) {
+	return p.store.DeleteOld(hour)
 }
 
 func (p *Tor) Get() (*[]string, error) {
 	return p.store.FindAllIPs()
 
 }
-func NewTor(store data.TorStore, logger logrus.FieldLogger) *Tor {
+func NewTor(store data.TorStore, hours int, logger logrus.FieldLogger) *Tor {
 	once.Do(func() {
 		instance = &Tor{
 			logger: logger,
@@ -67,7 +78,7 @@ func NewTor(store data.TorStore, logger logrus.FieldLogger) *Tor {
 		}
 		logger.Debug("starting Tor")
 		instance.AddProvider(providers.NewTxtDomains(logger))
-		go instance.run()
+		go instance.Run(hours)
 	})
 	return instance
 }

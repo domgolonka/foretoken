@@ -65,33 +65,31 @@ func (p *ProxyGenerator) createOrIgnore(ip, port, ptype string) bool {
 }
 
 func (p *ProxyGenerator) load() {
-	for {
-		for _, provider := range p.providers {
-			usedProxy.Store(p.lastValidProxy, time.Now().Hour())
-			provider.SetProxy(p.lastValidProxy)
+	for _, provider := range p.providers {
+		usedProxy.Store(p.lastValidProxy, time.Now().Hour())
+		provider.SetProxy(p.lastValidProxy)
 
-			ips, err := provider.List()
-			if err != nil {
-				p.lastValidProxy = models.Proxy{}
-				p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
-				continue
+		ips, err := provider.List()
+		if err != nil {
+			p.lastValidProxy = models.Proxy{}
+			p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
+			continue
+		}
+
+		//p.logger.Println(provider.Name(), len(ips))
+
+		usedProxy.Range(func(key, value interface{}) bool {
+			if value.(int) != time.Now().Hour() {
+				usedProxy.Delete(key)
 			}
+			return true
+		})
 
-			//p.logger.Println(provider.Name(), len(ips))
-
-			usedProxy.Range(func(key, value interface{}) bool {
-				if value.(int) != time.Now().Hour() {
-					usedProxy.Delete(key)
-				}
-				return true
-			})
-
-			//p.logger.Debugf("provider %s found ips %d", provider.Name(), len(ips))
-			shuffle(ips)
-			for _, proxy := range ips {
-				//p.job <- proxy
-				p.createOrIgnore(proxy.IP, proxy.Port, proxy.Type)
-			}
+		//p.logger.Debugf("provider %s found ips %d", provider.Name(), len(ips))
+		shuffle(ips)
+		for _, proxy := range ips {
+			//p.job <- proxy
+			p.createOrIgnore(proxy.IP, proxy.Port, proxy.Type)
 		}
 	}
 }
@@ -139,7 +137,17 @@ func (p *ProxyGenerator) worker() {
 	}
 }
 
-func (p *ProxyGenerator) run(workers int) {
+func (p *ProxyGenerator) deleteOld(hour int) (bool, error) {
+	return p.store.DeleteOld(hour)
+}
+
+func (p *ProxyGenerator) Run(workers int, hours int) {
+	go func() {
+		_, err := instance.deleteOld(hours + 12)
+		if err != nil {
+			p.logger.Error(err)
+		}
+	}()
 	go p.load()
 
 	for w := 1; w <= workers; w++ {
@@ -147,7 +155,7 @@ func (p *ProxyGenerator) run(workers int) {
 	}
 }
 
-func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger logrus.FieldLogger) *ProxyGenerator {
+func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours int, logger logrus.FieldLogger) *ProxyGenerator {
 	once.Do(func() {
 		instance = &ProxyGenerator{
 			cache:    cache.New(cacheminutes*time.Minute, 5*time.Minute),
@@ -157,7 +165,6 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 			logger:   logger,
 			job:      make(chan models.Proxy, 100),
 		}
-
 		//add providers to generator
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
@@ -167,7 +174,8 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, logger 
 		instance.AddProvider(providers.NewCoolProxy())
 		instance.AddProvider(providers.NewPubProxy())
 		//run workers
-		go instance.run(workers)
+		go instance.Run(workers, hours)
+
 	})
 	return instance
 }

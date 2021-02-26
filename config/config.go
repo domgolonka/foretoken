@@ -14,11 +14,27 @@ type Config struct {
 	ErrorReporter ErrorReporter
 	Email         Email
 	IP            IP
+	RateLimit     RateLimit
+	Crontab       Crontab
 }
 
 type External struct {
 	MaxmindDest string
 	IP2Location string
+}
+
+type Crontab struct {
+	VPN     int
+	Tor     int
+	Proxy   int
+	Spam    int
+	Maxmind int
+}
+
+type RateLimit struct {
+	Enabled    bool
+	Max        int
+	Expiration int
 }
 
 type Email struct {

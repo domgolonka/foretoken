@@ -10,6 +10,19 @@ external:
   maxminddest: "assets/Maxmind/download/"
   ip2location: "assets/IP2Location/download/"
 
+## Rate limit
+ratelimit:
+  enabled: false
+  max: 20 # Max number of recent connections during `Duration` seconds before sending a 429 response
+  expiration: 30 # Expiration is the time on how long to keep records of requests in memory per minute
+
+## Crontab (in hours)
+crontab:
+  vpn: 24
+  proxy: 24
+  tor: 12
+  spam: 24
+  maxmind: 24
 #### SCORE
 email:
   score:
@@ -53,9 +66,13 @@ ip:
 smtp:
   hostname: ""
   mailaddress: ""
+
+## error reporting
 errorreporter:
   default: ""
   airbrakecredentials: ""
+
+## Proxy Settings
 proxy:
   cachedurationminutes: 120
   workers: 40

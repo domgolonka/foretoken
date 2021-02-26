@@ -95,3 +95,8 @@ func (db *TorStore) Delete(id int) (bool, error) {
 	result, err := db.Exec("DELETE FROM tor WHERE id = ?", id)
 	return ok(result, err)
 }
+
+func (db *TorStore) DeleteOld(hour int) (bool, error) {
+	result, err := db.Exec("DELETE FROM tor WHERE created_at <= date('now','-? hour')", hour)
+	return ok(result, err)
+}

@@ -57,7 +57,7 @@ func validateHostAndEmail(serverHostName, serverMailAddress, email string) error
 	if err != nil {
 		return errors.New(ErrUnresolvableHost)
 	}
-	client, err := DialTimeout(fmt.Sprintf("%s:%d", mx[0].Host, 25), time.Second*5)
+	client, err := DialTimeout(fmt.Sprintf("%s:%d", mx[0].Host, 25), time.Second*1)
 	if err != nil {
 		return NewSMTPError(err)
 	}
@@ -81,10 +81,12 @@ func validateHostAndEmail(serverHostName, serverMailAddress, email string) error
 func validateHost(email string) error {
 	_, host := Split(email)
 	mx, err := net.LookupMX(host)
+
 	if err != nil {
 		return errors.New(ErrUnresolvableHost)
 	}
-	client, err := DialTimeout(fmt.Sprintf("%s:%d", mx[0].Host, 25), time.Second*5)
+
+	client, err := DialTimeout(fmt.Sprintf("%s:%d", mx[0].Host, 25), time.Second*1)
 	if err != nil {
 		return NewSMTPError(err)
 	}

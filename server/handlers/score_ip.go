@@ -8,8 +8,9 @@ import (
 
 func GetScoreIP(app *app.App) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-
-		items, err := services.ScoreIP(app, c.Params("ip"))
+		ipSrv := services.IP{}
+		ipSrv.Calculate(app, c.Params("ip"))
+		items, err := ipSrv.ScoreIP()
 		if err != nil {
 			return err
 		}

@@ -8,8 +8,10 @@ import (
 
 func GetIP(app *app.App) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ipSrv := services.IP{}
+		ipSrv.Calculate(app, c.Params("ip"))
 
-		response, err := services.IPService(app, c.Params("ip"))
+		response, err := ipSrv.IPService()
 		if err != nil {
 			return err
 		}

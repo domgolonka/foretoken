@@ -1,6 +1,6 @@
 package proxy
 
-import "github.com/domgolonka/threatdefender/app/models"
+import "github.com/domgolonka/foretoken/app/models"
 
 type Provider interface {
 	List() ([]models.Proxy, error)

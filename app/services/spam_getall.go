@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 )
 
 func SpamGetCacheAll(app *app.App) []string {

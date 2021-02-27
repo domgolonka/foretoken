@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 )
 
 var ErrUnresolvableHost = "UNRESOLVED_HOST"

@@ -1,9 +1,9 @@
 package services
 
 import (
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/app/entity"
-	utils "github.com/domgolonka/threatdefender/pkg/utils/email"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/app/entity"
+	utils "github.com/domgolonka/foretoken/pkg/utils/email"
 )
 
 type Email struct {

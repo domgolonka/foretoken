@@ -1,15 +1,15 @@
 <p align="center"> 
-  <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
-  <h2 align="center">Threat Defender</h2>
+  <img src="assets/img.png" width="300" height="300" alt="Foretoken" /></p>
+  <h2 align="center">Foretoken</h2>
   <p align="center">A blazing fast, highly customizable, modern-day defence tool using (in memory) SQL & REST/gRPC protocols.</p>
 
 <p align="center">
-    <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Report Bug</a>
+    <a href="https://github.com/domgolonka/foretoken/issues/new/choose">Report Bug</a>
     ·
-    <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Request Feature</a>
+    <a href="https://github.com/domgolonka/foretoken/issues/new/choose">Request Feature</a>
 </p>
 
-<p align="center"><a href="https://threatdefender.domgolonka.com">https://threatdefender.domgolonka.com</a></p>
+<p align="center"><a href="https://foretoken.domgolonka.com">https://foretoken.domgolonka.com</a></p>
 
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
@@ -18,7 +18,7 @@
 
 ## About
 
-ThreatDefender is a tool to scrape and defend against potential dangerous threats faced on the internet. It aims to be a
+Foretoken is a tool to scrape and defend against potential dangerous threats faced on the internet. It aims to be a
 highly customizable tools for companies and individuals to use to counter threats.
 
 ### Features
@@ -54,21 +54,21 @@ highly customizable tools for companies and individuals to use to counter threat
 
 To run it on your local computer:
 
-    git clone https://github.com/domgolonka/threatdefender
-    cd ./threatdefender
-    make build && ./bin/threatdefender
+    git clone https://github.com/domgolonka/foretoken
+    cd ./foretoken
+    make build && ./bin/foretoken
 
 The default config file is `config.yml`. 
 If you want to run it with a different config file (or add your own).
 
 
-`git clone https://github.com/domgolonka/threatdefender`
+`git clone https://github.com/domgolonka/foretoken`
 `make build` (make sure to build it first)
 
-`./bin/threatdefender --config=/PATH/TO/CONFIG`
+`./bin/foretoken --config=/PATH/TO/CONFIG`
 
 example:
-`./bin/threatdefender --config=./config.prod.yml`
+`./bin/foretoken --config=./config.prod.yml`
 
 # Configs
 
@@ -89,11 +89,11 @@ Change the file `changeme.env` to `.env` and save any External API Keys.
     IP2LOCATION=
     MAXMIND=
 
-For full configuration examples, check out [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
+For full configuration examples, check out [https://foretoken.domgolonka.com](https://foretoken.domgolonka.com)
 
 ## Change the databases
 
-At this moment, Threat Defender only supports SQLite and PostgreSQL. You can change the `databasename` field with
+At this moment, Foretoken only supports SQLite and PostgreSQL. You can change the `databasename` field with
 either `postgresql` or `sqlite3`
 
 By Default, the SQLite driver is set to "in memory". To use a file, you need to
@@ -157,7 +157,7 @@ The ip files are stored in the `./resource` directory and start with `ip_` such 
 
 # APIs
 
-REST API & gRPC is enabled. For more API examples: [https://threatdefender.domgolonka.com](https://threatdefender.domgolonka.com)
+REST API & gRPC is enabled. For more API examples: [https://foretoken.domgolonka.com](https://foretoken.domgolonka.com)
 
 ## gRPC
 

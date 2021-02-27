@@ -8,13 +8,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 )
 
 const (
 	apiURL            = "https://haveibeenpwned.com/api/v3/breachedaccount/"
 	clientTimeoutSecs = 2
-	userAgent         = "threatdefender"
+	userAgent         = "foretoken"
 )
 
 type respError struct {

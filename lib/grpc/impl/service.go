@@ -1,6 +1,6 @@
 package impl
 
-import "github.com/domgolonka/threatdefender/app"
+import "github.com/domgolonka/foretoken/app"
 
 var (
 	EmailService *emailService

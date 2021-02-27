@@ -3,11 +3,11 @@ package services
 import (
 	"net"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/app/entity"
-	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/app/entity"
+	iputils "github.com/domgolonka/foretoken/pkg/utils/ip"
 )
 
 type IP struct {

@@ -3,10 +3,10 @@ package impl
 import (
 	"context"
 
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/app/services"
 
-	"github.com/domgolonka/threatdefender/lib/grpc/proto"
+	"github.com/domgolonka/foretoken/lib/grpc/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 

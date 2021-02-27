@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 )
 
 func GenericGetAll(app *app.App) (*[]string, error) {

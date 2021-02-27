@@ -8,9 +8,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/domgolonka/threatdefender/lib/scrapers/ip/proxy/providers"
+	"github.com/domgolonka/foretoken/lib/scrapers/ip/proxy/providers"
 	"github.com/sirupsen/logrus"
 )
 

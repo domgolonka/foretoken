@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/pkg/utils/email"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/pkg/utils/email"
 	"github.com/gofiber/fiber/v2"
 )
 

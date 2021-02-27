@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/server/handlers"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/server/handlers"
 	"github.com/gofiber/fiber/v2"
 )
 

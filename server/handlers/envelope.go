@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/domgolonka/threatdefender/app/services"
-	"github.com/domgolonka/threatdefender/lib/parse"
+	"github.com/domgolonka/foretoken/app/services"
+	"github.com/domgolonka/foretoken/lib/parse"
 	"github.com/sirupsen/logrus"
 )
 

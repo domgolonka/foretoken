@@ -3,12 +3,12 @@ package impl
 import (
 	"context"
 
-	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/domgolonka/foretoken/app/services"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 
-	"github.com/domgolonka/threatdefender/lib/grpc/proto"
+	"github.com/domgolonka/foretoken/lib/grpc/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 

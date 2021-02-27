@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 )
 
 type ProxyList struct {

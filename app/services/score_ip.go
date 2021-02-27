@@ -1,7 +1,7 @@
 package services
 
 import (
-	iputils "github.com/domgolonka/threatdefender/pkg/utils/ip"
+	iputils "github.com/domgolonka/foretoken/pkg/utils/ip"
 )
 
 func (i *IP) ScoreIP() (int8, error) {

@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 
 	"github.com/jbowtie/gokogiri"
 )

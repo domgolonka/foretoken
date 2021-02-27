@@ -30,7 +30,7 @@ import (
 
 func InitPrometheus(app *fiber.App) fiber.Router {
 	// middleware
-	prom := fiberprometheus.New("threatdefender")
+	prom := fiberprometheus.New("foretoken")
 	prom.RegisterAt(app, "/metrics")
 	return app.Use(prom.Middleware)
 }

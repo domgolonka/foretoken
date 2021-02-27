@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/Boostport/address"
-	"github.com/domgolonka/threatdefender/app/entity"
+	"github.com/domgolonka/foretoken/app/entity"
 	"github.com/hashicorp/go-multierror"
 )
 

@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/domgolonka/threatdefender/app"
+	"github.com/domgolonka/foretoken/app"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )

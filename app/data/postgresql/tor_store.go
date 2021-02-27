@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 	"github.com/jmoiron/sqlx"
 )
 

@@ -7,13 +7,13 @@ import (
 	"path"
 
 	"github.com/common-nighthawk/go-figure"
-	services "github.com/domgolonka/threatdefender/lib/grpc"
-	"github.com/domgolonka/threatdefender/lib/grpc/impl"
+	services "github.com/domgolonka/foretoken/lib/grpc"
+	"github.com/domgolonka/foretoken/lib/grpc/impl"
 
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/app/data"
-	"github.com/domgolonka/threatdefender/config"
-	"github.com/domgolonka/threatdefender/server"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/app/data"
+	"github.com/domgolonka/foretoken/config"
+	"github.com/domgolonka/foretoken/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
 )
@@ -32,7 +32,7 @@ func main() {
 	}
 	err := configor.Load(&cfg, configFilePath)
 	if err != nil {
-		logrus.Info("\nsee: https://threatdefender.domgolonka.com/docs/config/")
+		logrus.Info("\nsee: https://foretoken.domgolonka.com/docs/config/")
 		logrus.Fatal(err)
 	}
 	// Default logger
@@ -64,9 +64,9 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 	var (
 		ch = make(chan bool)
 	)
-	myFigure := figure.NewFigure("ThreatDefender", "nancyj", true)
+	myFigure := figure.NewFigure("Foretoken", "nancyj", true)
 	myFigure.Print()
-	//logger.Infof("~*~ ThreatDefender ~*~")
+	//logger.Infof("~*~ Foretoken ~*~")
 
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {

@@ -1,4 +1,4 @@
-module github.com/domgolonka/threatdefender
+module github.com/domgolonka/foretoken
 
 go 1.15
 

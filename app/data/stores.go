@@ -3,10 +3,10 @@ package data
 import (
 	"fmt"
 
-	"github.com/domgolonka/threatdefender/app/data/postgresql"
+	"github.com/domgolonka/foretoken/app/data/postgresql"
 
-	"github.com/domgolonka/threatdefender/app/data/sqlite3"
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/data/sqlite3"
+	"github.com/domgolonka/foretoken/app/models"
 	"github.com/jmoiron/sqlx"
 )
 

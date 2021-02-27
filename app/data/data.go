@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/domgolonka/threatdefender/app/data/postgresql"
-	"github.com/domgolonka/threatdefender/app/data/sqlite3"
-	"github.com/domgolonka/threatdefender/config"
+	"github.com/domgolonka/foretoken/app/data/postgresql"
+	"github.com/domgolonka/foretoken/app/data/sqlite3"
+	"github.com/domgolonka/foretoken/config"
 	"github.com/jmoiron/sqlx"
 )
 

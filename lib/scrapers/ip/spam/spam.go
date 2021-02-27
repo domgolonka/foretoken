@@ -1,8 +1,8 @@
 package spam
 
 import (
-	"github.com/domgolonka/threatdefender/app/data"
-	"github.com/domgolonka/threatdefender/lib/scrapers/ip/spam/providers"
+	"github.com/domgolonka/foretoken/app/data"
+	"github.com/domgolonka/foretoken/lib/scrapers/ip/spam/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"

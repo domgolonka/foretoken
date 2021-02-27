@@ -3,8 +3,8 @@ package handlers
 import (
 	"strings"
 
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/app/services"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/app/services"
 	"github.com/gofiber/fiber/v2"
 )
 

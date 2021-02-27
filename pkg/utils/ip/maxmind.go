@@ -12,7 +12,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/domgolonka/threatdefender/config"
+	"github.com/domgolonka/foretoken/config"
 	"github.com/oschwald/geoip2-golang"
 )
 

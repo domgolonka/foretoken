@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/domgolonka/threatdefender/app/entity"
+	"github.com/domgolonka/foretoken/app/entity"
 
 	"github.com/sirupsen/logrus"
 )

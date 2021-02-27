@@ -1,8 +1,8 @@
 package vpn
 
 import (
-	"github.com/domgolonka/threatdefender/app/data"
-	"github.com/domgolonka/threatdefender/lib/scrapers/ip/vpn/providers"
+	"github.com/domgolonka/foretoken/app/data"
+	"github.com/domgolonka/foretoken/lib/scrapers/ip/vpn/providers"
 	"github.com/sirupsen/logrus"
 
 	"reflect"

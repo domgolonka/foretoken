@@ -10,10 +10,10 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/domgolonka/threatdefender/app/entity"
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/entity"
+	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/domgolonka/threatdefender/pkg/utils/ip"
+	"github.com/domgolonka/foretoken/pkg/utils/ip"
 )
 
 type TxtDomains struct {

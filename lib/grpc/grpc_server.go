@@ -3,9 +3,9 @@ package services
 import (
 	"net"
 
-	"github.com/domgolonka/threatdefender/app"
-	"github.com/domgolonka/threatdefender/lib/grpc/impl"
-	"github.com/domgolonka/threatdefender/lib/grpc/proto"
+	"github.com/domgolonka/foretoken/app"
+	"github.com/domgolonka/foretoken/lib/grpc/impl"
+	"github.com/domgolonka/foretoken/lib/grpc/proto"
 	"google.golang.org/grpc"
 )
 

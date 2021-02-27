@@ -2,7 +2,7 @@ package email
 
 import (
 	"github.com/domainr/whois"
-	"github.com/domgolonka/threatdefender/app/entity"
+	"github.com/domgolonka/foretoken/app/entity"
 	whoisparser "github.com/likexian/whois-parser-go"
 )
 

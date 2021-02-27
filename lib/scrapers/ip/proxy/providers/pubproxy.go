@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/domgolonka/threatdefender/app/models"
+	"github.com/domgolonka/foretoken/app/models"
 )
 
 type PubProxy struct {

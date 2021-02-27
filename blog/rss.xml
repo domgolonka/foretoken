@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>Threat Defender Blog</title>
-        <link>https://threatdefender.domgolonka.com/blog</link>
-        <description>Threat Defender Blog</description>
+        <title>Foretoken Blog</title>
+        <link>https://foretoken.domgolonka.com/blog</link>
+        <description>Foretoken Blog</description>
         <lastBuildDate>Sun, 25 Oct 2015 23:29:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>

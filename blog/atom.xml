@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://threatdefender.domgolonka.com/blog</id>
-    <title>Threat Defender Blog</title>
+    <id>https://foretoken.domgolonka.com/blog</id>
+    <title>Foretoken Blog</title>
     <updated>2015-10-25T23:29:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://threatdefender.domgolonka.com/blog"/>
-    <subtitle>Threat Defender Blog</subtitle>
-    <icon>https://threatdefender.domgolonka.com/img/favicon.ico</icon>
+    <link rel="alternate" href="https://foretoken.domgolonka.com/blog"/>
+    <subtitle>Foretoken Blog</subtitle>
+    <icon>https://foretoken.domgolonka.com/img/favicon.ico</icon>
 </feed>

@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"path"
+
 	"github.com/common-nighthawk/go-figure"
 	services "github.com/domgolonka/threatdefender/lib/grpc"
 	"github.com/domgolonka/threatdefender/lib/grpc/impl"
-	"os"
-	"path"
 
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/data"

@@ -1,7 +1,7 @@
 <p align="center"> 
   <img src="assets/img.png" width="300" height="300" alt="Threat Defender" /></p>
   <h2 align="center">Threat Defender</h2>
-  <p align="center">A highly customizable modern-day defence tool using REST/gRPC protocols.</p>
+  <p align="center">A blazing fast, highly customizable, modern-day defence tool using (in memory) SQL & REST/gRPC protocols.</p>
 
 <p align="center">
     <a href="https://github.com/domgolonka/threatdefender/issues/new/choose">Report Bug</a>

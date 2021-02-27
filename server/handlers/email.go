@@ -10,6 +10,7 @@ func GetEmail(app *app.App) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		emailSrv := services.Email{}
 		emailSrv.Calculate(app, c.Params("email"))
+
 		response, err := emailSrv.EmailService()
 		if err != nil {
 			return err

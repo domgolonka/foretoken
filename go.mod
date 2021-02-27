@@ -6,6 +6,7 @@ require (
 	github.com/Boostport/address v0.6.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
 	github.com/ansrivas/fiberprometheus/v2 v2.1.1
+	github.com/araddon/dateparse v0.0.0-20210207001429-0eec95c9db7e
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
 	github.com/getsentry/sentry-go v0.9.0
@@ -23,7 +24,6 @@ require (
 	github.com/lib/pq v1.9.0
 	github.com/likexian/whois-parser-go v1.15.2
 	github.com/mattn/go-sqlite3 v1.14.6
-	github.com/micro/go-micro/v2 v2.9.1
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/oschwald/geoip2-golang v1.5.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible

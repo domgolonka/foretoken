@@ -2,6 +2,8 @@ package services
 
 import (
 	"time"
+
+	"github.com/araddon/dateparse"
 )
 
 func (e *Email) ScoreEmail() (int8, error) {
@@ -11,7 +13,8 @@ func (e *Email) ScoreEmail() (int8, error) {
 
 	if e.Domain != nil {
 		// only display if domain age is accurate
-		t1, err := time.Parse("1996-03-27T05:00:00Z", e.Domain.CreatedDate)
+		// have to use dateparse because time.Parse doesn't play nice
+		t1, err := dateparse.ParseLocal(e.Domain.CreatedDate)
 		if err != nil {
 			e.app.Logger.Error(err)
 		}
@@ -19,11 +22,11 @@ func (e *Email) ScoreEmail() (int8, error) {
 		days := t2.Sub(t1).Hours() / 24
 		if days < 7 { // less than a week
 			score += scoreCfg.Domain.Week
-		} else if days < 30 {
+		} else if days < 30 { // less than a month
 			score += scoreCfg.Domain.Month
-		} else if days < 365 {
+		} else if days < 365 { // less than a year
 			score += scoreCfg.Domain.Year
-		} else if days >= 365 {
+		} else if days >= 365 { // more than a year
 			score += scoreCfg.Domain.YearPlus
 		}
 	}

@@ -16,11 +16,11 @@ func DomainAge(domain string) (*entity.Domain, error) {
 		return nil, err
 	}
 	result, err := whoisparser.Parse(string(response.Body))
-
 	if err != nil {
 		return nil, err
 	}
 	return &entity.Domain{
+
 		CreatedDate:    result.Domain.CreatedDate,
 		ExpirationDate: result.Domain.ExpirationDate,
 	}, nil

@@ -7,8 +7,8 @@ import (
 )
 
 type Email struct {
-	email      string         `json:"-"`
-	app        *app.App       `json:"-"`
+	email      string
+	app        *app.App
 	Disposable bool           `json:"disposable"`
 	Free       bool           `json:"free"`
 	Spam       bool           `json:"spam"`
@@ -19,83 +19,83 @@ type Email struct {
 	Domain     *entity.Domain `json:"domain"`
 }
 
-func (e Email) EmailService() (*entity.EmailResponse, error) {
-	emailsrv := &entity.EmailResponse{
+func (e *Email) EmailService() (*entity.EmailResponse, error) {
+	emailSrv := &entity.EmailResponse{
 		Disposable: false,
 		Free:       false,
 		RecentSpam: false,
 		Valid:      true,
 	}
 
-	emailsrv.Leaked = e.Leaked
-	emailsrv.Valid = e.Valid
-	emailsrv.Disposable = e.Disposable
-	emailsrv.RecentSpam = e.Spam
-	emailsrv.CatchAll = e.CatchAll
-	emailsrv.Free = e.Free
-	emailsrv.Domain = e.Domain
-	emailsrv.Generic = e.Generic
+	emailSrv.Leaked = e.Leaked
+	emailSrv.Valid = e.Valid
+	emailSrv.Disposable = e.Disposable
+	emailSrv.RecentSpam = e.Spam
+	emailSrv.CatchAll = e.CatchAll
+	emailSrv.Free = e.Free
+	emailSrv.Domain = e.Domain
+	emailSrv.Generic = e.Generic
 
 	score, err := e.ScoreEmail()
 	if err != nil {
 		e.app.Logger.Error(err)
 	} else {
-		emailsrv.Score = score
+		emailSrv.Score = score
 	}
 
-	emailsrv.Success = true
-	return emailsrv, nil
+	emailSrv.Success = true
+	return emailSrv, nil
 }
 
-func (e Email) Calculate(app *app.App, email string) {
+func (e *Email) Calculate(app *app.App, email string) {
 	e.app = app
 	e.email = email
-	disposable, err := app.DisableStore.FindByDomain(email)
+	disposable, err := e.app.DisableStore.FindByDomain(email)
 	if err != nil {
-		app.Logger.Error(err)
+		e.app.Logger.Error(err)
 	}
 	if disposable != nil {
 		e.Disposable = true
 	}
-	freeEmail, err := app.FreeEmailStore.FindByDomain(email)
+	freeEmail, err := e.app.FreeEmailStore.FindByDomain(email)
 	if err != nil {
-		app.Logger.Error(err)
+		e.app.Logger.Error(err)
 	}
 	if freeEmail != nil {
 		e.Free = true
 	}
-	spamEmail, err := app.SpamEmailStore.FindByDomain(email)
+	spamEmail, err := e.app.SpamEmailStore.FindByDomain(email)
 	if err != nil {
-		app.Logger.Error(err)
+		e.app.Logger.Error(err)
 	}
 	if spamEmail != nil {
 		e.Spam = true
 	}
-	genericEmail, err := GenericGetEmail(app, email)
+	genericEmail, err := GenericGetEmail(e.app, email)
 	if err != nil {
-		app.Logger.Error(err)
+		e.app.Logger.Error(err)
 	}
 	e.Generic = *genericEmail
-	err = utils.ValidateEmail(app, email)
+	err = utils.ValidateEmail(e.app, email)
 	if err != nil {
 		e.Valid = false
 	}
 	// only use catch all if smtp is enabled
-	used, err := utils.CatchAll(app, email)
+	used, err := utils.CatchAll(e.app, email)
 	if err != nil && used {
 		e.CatchAll = false
 	}
 	_, domain := utils.Split(email)
 	dom, err := utils.DomainAge(domain)
 	if err != nil {
-		app.Logger.Error(err)
+		e.app.Logger.Error(err)
 	} else {
 		e.Domain = dom
 	}
-	if app.PwnedKey != "" {
-		leaked, err := utils.Leaked(app, email, "")
+	if e.app.PwnedKey != "" {
+		leaked, err := utils.Leaked(e.app, email, "")
 		if err != nil {
-			app.Logger.Error(err)
+			e.app.Logger.Error(err)
 		}
 		e.Leaked = *leaked
 	}

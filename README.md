@@ -54,7 +54,7 @@ highly customizable tools for companies and individuals to use to counter threat
 
 To run it on your local computer:
 
-    git clone https://github.com/domgolonka/threatdefender`
+    git clone https://github.com/domgolonka/threatdefender
     cd ./threatdefender
     make build && ./bin/threatdefender
 

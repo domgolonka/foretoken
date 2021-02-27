@@ -4,11 +4,40 @@ import "google/protobuf/empty.proto";
 import "message/proxy_dto.proto";
 
 service IPService {
+  rpc GetScore(IPRequest) returns (GetIPScoreResponse) {}
+  rpc GetIP(IPRequest) returns (GetIPResponse) {}
   rpc GetProxyList(google.protobuf.Empty) returns (GetProxyListResponse) {}
   rpc GetSpamList(google.protobuf.Empty) returns (GetSpamListResponse) {}
   rpc GetTorList(google.protobuf.Empty) returns (GetTorListResponse) {}
   rpc GetVPNList(google.protobuf.Empty) returns (GetVPNListResponse) {}
 
+}
+
+message GetIPScoreResponse {
+  uint32 score = 1;
+}
+
+message IPRequest {
+  string ip = 1;
+}
+
+message GetIPResponse {
+  bool success = 1;
+  bool proxy = 2;
+  string ISP = 3;
+  string organization = 4;
+  uint32 ASN = 5;
+  string hostname = 6;
+  string country_code = 7;
+  string city = 8;
+  string postal_code = 9;
+  float latitude = 10;
+  float longitude = 11;
+  string timezone = 12;
+  bool vpn = 13;
+  bool tor = 14;
+  bool recent_abuse = 15;
+  uint32 score = 16;
 }
 
 message GetProxyListResponse {

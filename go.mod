@@ -8,6 +8,7 @@ require (
 	github.com/ansrivas/fiberprometheus/v2 v2.1.1
 	github.com/araddon/dateparse v0.0.0-20210207001429-0eec95c9db7e
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
+	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1

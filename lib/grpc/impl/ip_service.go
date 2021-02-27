@@ -22,6 +22,52 @@ func NewIPService(app *app.App) *ipService { //nolint
 	return &ipService{app}
 }
 
+func (i ipService) GetScore(ctx context.Context, request *proto.IPRequest) (*proto.GetIPScoreResponse, error) {
+	ipSrv := services.IP{}
+	ipSrv.Calculate(i.app, request.GetIp())
+
+	response, err := ipSrv.ScoreIP()
+	if err != nil {
+		return nil, err
+	}
+	score := &proto.GetIPScoreResponse{
+		Score: uint32(response),
+	}
+
+	return score, nil
+
+}
+
+func (i ipService) GetIP(ctx context.Context, request *proto.IPRequest) (*proto.GetIPResponse, error) {
+	ipSrv := services.IP{}
+	ipSrv.Calculate(i.app, request.GetIp())
+
+	response, err := ipSrv.IPService()
+	if err != nil {
+		return nil, err
+	}
+	score := &proto.GetIPResponse{
+		Success:      response.Success,
+		Proxy:        response.Proxy,
+		ISP:          response.ISP,
+		Organization: response.Organization,
+		ASN:          uint32(response.ASN),
+		Hostname:     response.Hostname,
+		CountryCode:  response.CountryCode,
+		City:         response.City,
+		PostalCode:   response.PostalCode,
+		Latitude:     float32(response.Latitude),
+		Longitude:    float32(response.Longitude),
+		Timezone:     response.Timezone,
+		Vpn:          response.Vpn,
+		Tor:          response.Tor,
+		RecentAbuse:  response.RecentAbuse,
+		Score:        uint32(response.Score),
+	}
+
+	return score, nil
+}
+
 func (i ipService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto.GetProxyListResponse, error) {
 	proxies, err := services.ProxyGetDBAll(i.app)
 	if err != nil {

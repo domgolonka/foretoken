@@ -31,6 +31,267 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
+type GetIPScoreResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Score uint32 `protobuf:"varint,1,opt,name=score,proto3" json:"score,omitempty"`
+}
+
+func (x *GetIPScoreResponse) Reset() {
+	*x = GetIPScoreResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ip_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetIPScoreResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIPScoreResponse) ProtoMessage() {}
+
+func (x *GetIPScoreResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ip_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIPScoreResponse.ProtoReflect.Descriptor instead.
+func (*GetIPScoreResponse) Descriptor() ([]byte, []int) {
+	return file_ip_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *GetIPScoreResponse) GetScore() uint32 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+type IPRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ip string `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
+}
+
+func (x *IPRequest) Reset() {
+	*x = IPRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ip_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IPRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IPRequest) ProtoMessage() {}
+
+func (x *IPRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ip_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IPRequest.ProtoReflect.Descriptor instead.
+func (*IPRequest) Descriptor() ([]byte, []int) {
+	return file_ip_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *IPRequest) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+type GetIPResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Success      bool    `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Proxy        bool    `protobuf:"varint,2,opt,name=proxy,proto3" json:"proxy,omitempty"`
+	ISP          string  `protobuf:"bytes,3,opt,name=ISP,proto3" json:"ISP,omitempty"`
+	Organization string  `protobuf:"bytes,4,opt,name=organization,proto3" json:"organization,omitempty"`
+	ASN          uint32  `protobuf:"varint,5,opt,name=ASN,proto3" json:"ASN,omitempty"`
+	Hostname     string  `protobuf:"bytes,6,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	CountryCode  string  `protobuf:"bytes,7,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`
+	City         string  `protobuf:"bytes,8,opt,name=city,proto3" json:"city,omitempty"`
+	PostalCode   string  `protobuf:"bytes,9,opt,name=postal_code,json=postalCode,proto3" json:"postal_code,omitempty"`
+	Latitude     float32 `protobuf:"fixed32,10,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude    float32 `protobuf:"fixed32,11,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	Timezone     string  `protobuf:"bytes,12,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	Vpn          bool    `protobuf:"varint,13,opt,name=vpn,proto3" json:"vpn,omitempty"`
+	Tor          bool    `protobuf:"varint,14,opt,name=tor,proto3" json:"tor,omitempty"`
+	RecentAbuse  bool    `protobuf:"varint,15,opt,name=recent_abuse,json=recentAbuse,proto3" json:"recent_abuse,omitempty"`
+	Score        uint32  `protobuf:"varint,16,opt,name=score,proto3" json:"score,omitempty"`
+}
+
+func (x *GetIPResponse) Reset() {
+	*x = GetIPResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ip_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetIPResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIPResponse) ProtoMessage() {}
+
+func (x *GetIPResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ip_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIPResponse.ProtoReflect.Descriptor instead.
+func (*GetIPResponse) Descriptor() ([]byte, []int) {
+	return file_ip_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetIPResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetIPResponse) GetProxy() bool {
+	if x != nil {
+		return x.Proxy
+	}
+	return false
+}
+
+func (x *GetIPResponse) GetISP() string {
+	if x != nil {
+		return x.ISP
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetOrganization() string {
+	if x != nil {
+		return x.Organization
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetASN() uint32 {
+	if x != nil {
+		return x.ASN
+	}
+	return 0
+}
+
+func (x *GetIPResponse) GetHostname() string {
+	if x != nil {
+		return x.Hostname
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetPostalCode() string {
+	if x != nil {
+		return x.PostalCode
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetLatitude() float32 {
+	if x != nil {
+		return x.Latitude
+	}
+	return 0
+}
+
+func (x *GetIPResponse) GetLongitude() float32 {
+	if x != nil {
+		return x.Longitude
+	}
+	return 0
+}
+
+func (x *GetIPResponse) GetTimezone() string {
+	if x != nil {
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *GetIPResponse) GetVpn() bool {
+	if x != nil {
+		return x.Vpn
+	}
+	return false
+}
+
+func (x *GetIPResponse) GetTor() bool {
+	if x != nil {
+		return x.Tor
+	}
+	return false
+}
+
+func (x *GetIPResponse) GetRecentAbuse() bool {
+	if x != nil {
+		return x.RecentAbuse
+	}
+	return false
+}
+
+func (x *GetIPResponse) GetScore() uint32 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
 type GetProxyListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -42,7 +303,7 @@ type GetProxyListResponse struct {
 func (x *GetProxyListResponse) Reset() {
 	*x = GetProxyListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ip_proto_msgTypes[0]
+		mi := &file_ip_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -55,7 +316,7 @@ func (x *GetProxyListResponse) String() string {
 func (*GetProxyListResponse) ProtoMessage() {}
 
 func (x *GetProxyListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_ip_proto_msgTypes[0]
+	mi := &file_ip_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -68,7 +329,7 @@ func (x *GetProxyListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProxyListResponse.ProtoReflect.Descriptor instead.
 func (*GetProxyListResponse) Descriptor() ([]byte, []int) {
-	return file_ip_proto_rawDescGZIP(), []int{0}
+	return file_ip_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetProxyListResponse) GetProxies() []*Proxy {
@@ -89,7 +350,7 @@ type GetSpamListResponse struct {
 func (x *GetSpamListResponse) Reset() {
 	*x = GetSpamListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ip_proto_msgTypes[1]
+		mi := &file_ip_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -102,7 +363,7 @@ func (x *GetSpamListResponse) String() string {
 func (*GetSpamListResponse) ProtoMessage() {}
 
 func (x *GetSpamListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_ip_proto_msgTypes[1]
+	mi := &file_ip_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -115,7 +376,7 @@ func (x *GetSpamListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSpamListResponse.ProtoReflect.Descriptor instead.
 func (*GetSpamListResponse) Descriptor() ([]byte, []int) {
-	return file_ip_proto_rawDescGZIP(), []int{1}
+	return file_ip_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetSpamListResponse) GetSpam() []string {
@@ -136,7 +397,7 @@ type GetTorListResponse struct {
 func (x *GetTorListResponse) Reset() {
 	*x = GetTorListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ip_proto_msgTypes[2]
+		mi := &file_ip_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -149,7 +410,7 @@ func (x *GetTorListResponse) String() string {
 func (*GetTorListResponse) ProtoMessage() {}
 
 func (x *GetTorListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_ip_proto_msgTypes[2]
+	mi := &file_ip_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +423,7 @@ func (x *GetTorListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTorListResponse.ProtoReflect.Descriptor instead.
 func (*GetTorListResponse) Descriptor() ([]byte, []int) {
-	return file_ip_proto_rawDescGZIP(), []int{2}
+	return file_ip_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetTorListResponse) GetTor() []string {
@@ -183,7 +444,7 @@ type GetVPNListResponse struct {
 func (x *GetVPNListResponse) Reset() {
 	*x = GetVPNListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ip_proto_msgTypes[3]
+		mi := &file_ip_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -196,7 +457,7 @@ func (x *GetVPNListResponse) String() string {
 func (*GetVPNListResponse) ProtoMessage() {}
 
 func (x *GetVPNListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_ip_proto_msgTypes[3]
+	mi := &file_ip_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -209,7 +470,7 @@ func (x *GetVPNListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetVPNListResponse.ProtoReflect.Descriptor instead.
 func (*GetVPNListResponse) Descriptor() ([]byte, []int) {
-	return file_ip_proto_rawDescGZIP(), []int{3}
+	return file_ip_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetVPNListResponse) GetVpn() []string {
@@ -226,19 +487,56 @@ var file_ip_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74,
 	0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x17, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
 	0x2f, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x5f, 0x64, 0x74, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x22, 0x38, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x4c, 0x69, 0x73, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x78,
-	0x69, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x06, 0x2e, 0x50, 0x72, 0x6f, 0x78,
-	0x79, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x78, 0x69, 0x65, 0x73, 0x22, 0x29, 0x0a, 0x13, 0x47, 0x65,
-	0x74, 0x53, 0x70, 0x61, 0x6d, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x70, 0x61, 0x6d, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52,
-	0x04, 0x73, 0x70, 0x61, 0x6d, 0x22, 0x26, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x4c,
-	0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x74,
-	0x6f, 0x72, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x74, 0x6f, 0x72, 0x22, 0x26, 0x0a,
-	0x12, 0x47, 0x65, 0x74, 0x56, 0x50, 0x4e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x76, 0x70, 0x6e, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09,
-	0x52, 0x03, 0x76, 0x70, 0x6e, 0x32, 0x85, 0x02, 0x0a, 0x09, 0x49, 0x50, 0x53, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x4c,
+	0x22, 0x2a, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x49, 0x50, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x22, 0x1b, 0x0a, 0x09,
+	0x49, 0x50, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x22, 0xae, 0x03, 0x0a, 0x0d, 0x47, 0x65,
+	0x74, 0x49, 0x50, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73,
+	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x05, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x49,
+	0x53, 0x50, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x49, 0x53, 0x50, 0x12, 0x22, 0x0a,
+	0x0c, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x10, 0x0a, 0x03, 0x41, 0x53, 0x4e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03,
+	0x41, 0x53, 0x4e, 0x12, 0x1a, 0x0a, 0x08, 0x68, 0x6f, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x68, 0x6f, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x12,
+	0x21, 0x0a, 0x0c, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x43, 0x6f,
+	0x64, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x6f, 0x73, 0x74, 0x61, 0x6c,
+	0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x70, 0x6f, 0x73,
+	0x74, 0x61, 0x6c, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61, 0x74, 0x69, 0x74,
+	0x75, 0x64, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x02, 0x52, 0x08, 0x6c, 0x61, 0x74, 0x69, 0x74,
+	0x75, 0x64, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x6f, 0x6e, 0x67, 0x69, 0x74, 0x75, 0x64, 0x65,
+	0x18, 0x0b, 0x20, 0x01, 0x28, 0x02, 0x52, 0x09, 0x6c, 0x6f, 0x6e, 0x67, 0x69, 0x74, 0x75, 0x64,
+	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x6d, 0x65, 0x7a, 0x6f, 0x6e, 0x65, 0x18, 0x0c, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x69, 0x6d, 0x65, 0x7a, 0x6f, 0x6e, 0x65, 0x12, 0x10, 0x0a,
+	0x03, 0x76, 0x70, 0x6e, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x76, 0x70, 0x6e, 0x12,
+	0x10, 0x0a, 0x03, 0x74, 0x6f, 0x72, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x74, 0x6f,
+	0x72, 0x12, 0x21, 0x0a, 0x0c, 0x72, 0x65, 0x63, 0x65, 0x6e, 0x74, 0x5f, 0x61, 0x62, 0x75, 0x73,
+	0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x72, 0x65, 0x63, 0x65, 0x6e, 0x74, 0x41,
+	0x62, 0x75, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x10, 0x20,
+	0x01, 0x28, 0x0d, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x22, 0x38, 0x0a, 0x14, 0x47, 0x65,
+	0x74, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x20, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x78, 0x69, 0x65, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x06, 0x2e, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x52, 0x07, 0x70, 0x72, 0x6f,
+	0x78, 0x69, 0x65, 0x73, 0x22, 0x29, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x53, 0x70, 0x61, 0x6d, 0x4c,
+	0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73,
+	0x70, 0x61, 0x6d, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x73, 0x70, 0x61, 0x6d, 0x22,
+	0x26, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x03, 0x74, 0x6f, 0x72, 0x22, 0x26, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x56, 0x50,
+	0x4e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a,
+	0x03, 0x76, 0x70, 0x6e, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x76, 0x70, 0x6e, 0x32,
+	0xdb, 0x02, 0x0a, 0x09, 0x49, 0x50, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x2d, 0x0a,
+	0x08, 0x47, 0x65, 0x74, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x0a, 0x2e, 0x49, 0x50, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x13, 0x2e, 0x47, 0x65, 0x74, 0x49, 0x50, 0x53, 0x63, 0x6f,
+	0x72, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x25, 0x0a, 0x05,
+	0x47, 0x65, 0x74, 0x49, 0x50, 0x12, 0x0a, 0x2e, 0x49, 0x50, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x0e, 0x2e, 0x47, 0x65, 0x74, 0x49, 0x50, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x3f, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x4c,
 	0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x15, 0x2e, 0x47, 0x65,
 	0x74, 0x50, 0x72, 0x6f, 0x78, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
@@ -269,27 +567,34 @@ func file_ip_proto_rawDescGZIP() []byte {
 	return file_ip_proto_rawDescData
 }
 
-var file_ip_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_ip_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_ip_proto_goTypes = []interface{}{
-	(*GetProxyListResponse)(nil), // 0: GetProxyListResponse
-	(*GetSpamListResponse)(nil),  // 1: GetSpamListResponse
-	(*GetTorListResponse)(nil),   // 2: GetTorListResponse
-	(*GetVPNListResponse)(nil),   // 3: GetVPNListResponse
-	(*Proxy)(nil),                // 4: Proxy
-	(*empty.Empty)(nil),          // 5: google.protobuf.Empty
+	(*GetIPScoreResponse)(nil),   // 0: GetIPScoreResponse
+	(*IPRequest)(nil),            // 1: IPRequest
+	(*GetIPResponse)(nil),        // 2: GetIPResponse
+	(*GetProxyListResponse)(nil), // 3: GetProxyListResponse
+	(*GetSpamListResponse)(nil),  // 4: GetSpamListResponse
+	(*GetTorListResponse)(nil),   // 5: GetTorListResponse
+	(*GetVPNListResponse)(nil),   // 6: GetVPNListResponse
+	(*Proxy)(nil),                // 7: Proxy
+	(*empty.Empty)(nil),          // 8: google.protobuf.Empty
 }
 var file_ip_proto_depIdxs = []int32{
-	4, // 0: GetProxyListResponse.proxies:type_name -> Proxy
-	5, // 1: IPService.GetProxyList:input_type -> google.protobuf.Empty
-	5, // 2: IPService.GetSpamList:input_type -> google.protobuf.Empty
-	5, // 3: IPService.GetTorList:input_type -> google.protobuf.Empty
-	5, // 4: IPService.GetVPNList:input_type -> google.protobuf.Empty
-	0, // 5: IPService.GetProxyList:output_type -> GetProxyListResponse
-	1, // 6: IPService.GetSpamList:output_type -> GetSpamListResponse
-	2, // 7: IPService.GetTorList:output_type -> GetTorListResponse
-	3, // 8: IPService.GetVPNList:output_type -> GetVPNListResponse
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
+	7, // 0: GetProxyListResponse.proxies:type_name -> Proxy
+	1, // 1: IPService.GetScore:input_type -> IPRequest
+	1, // 2: IPService.GetIP:input_type -> IPRequest
+	8, // 3: IPService.GetProxyList:input_type -> google.protobuf.Empty
+	8, // 4: IPService.GetSpamList:input_type -> google.protobuf.Empty
+	8, // 5: IPService.GetTorList:input_type -> google.protobuf.Empty
+	8, // 6: IPService.GetVPNList:input_type -> google.protobuf.Empty
+	0, // 7: IPService.GetScore:output_type -> GetIPScoreResponse
+	2, // 8: IPService.GetIP:output_type -> GetIPResponse
+	3, // 9: IPService.GetProxyList:output_type -> GetProxyListResponse
+	4, // 10: IPService.GetSpamList:output_type -> GetSpamListResponse
+	5, // 11: IPService.GetTorList:output_type -> GetTorListResponse
+	6, // 12: IPService.GetVPNList:output_type -> GetVPNListResponse
+	7, // [7:13] is the sub-list for method output_type
+	1, // [1:7] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -303,7 +608,7 @@ func file_ip_proto_init() {
 	file_message_proxy_dto_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_ip_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetProxyListResponse); i {
+			switch v := v.(*GetIPScoreResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -315,7 +620,7 @@ func file_ip_proto_init() {
 			}
 		}
 		file_ip_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSpamListResponse); i {
+			switch v := v.(*IPRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -327,7 +632,7 @@ func file_ip_proto_init() {
 			}
 		}
 		file_ip_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTorListResponse); i {
+			switch v := v.(*GetIPResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -339,6 +644,42 @@ func file_ip_proto_init() {
 			}
 		}
 		file_ip_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetProxyListResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ip_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetSpamListResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ip_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetTorListResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ip_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetVPNListResponse); i {
 			case 0:
 				return &v.state
@@ -357,7 +698,7 @@ func file_ip_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_ip_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -383,6 +724,8 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type IPServiceClient interface {
+	GetScore(ctx context.Context, in *IPRequest, opts ...grpc.CallOption) (*GetIPScoreResponse, error)
+	GetIP(ctx context.Context, in *IPRequest, opts ...grpc.CallOption) (*GetIPResponse, error)
 	GetProxyList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetProxyListResponse, error)
 	GetSpamList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetSpamListResponse, error)
 	GetTorList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetTorListResponse, error)
@@ -395,6 +738,24 @@ type iPServiceClient struct {
 
 func NewIPServiceClient(cc grpc.ClientConnInterface) IPServiceClient {
 	return &iPServiceClient{cc}
+}
+
+func (c *iPServiceClient) GetScore(ctx context.Context, in *IPRequest, opts ...grpc.CallOption) (*GetIPScoreResponse, error) {
+	out := new(GetIPScoreResponse)
+	err := c.cc.Invoke(ctx, "/IPService/GetScore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iPServiceClient) GetIP(ctx context.Context, in *IPRequest, opts ...grpc.CallOption) (*GetIPResponse, error) {
+	out := new(GetIPResponse)
+	err := c.cc.Invoke(ctx, "/IPService/GetIP", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *iPServiceClient) GetProxyList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetProxyListResponse, error) {
@@ -435,6 +796,8 @@ func (c *iPServiceClient) GetVPNList(ctx context.Context, in *empty.Empty, opts 
 
 // IPServiceServer is the server API for IPService service.
 type IPServiceServer interface {
+	GetScore(context.Context, *IPRequest) (*GetIPScoreResponse, error)
+	GetIP(context.Context, *IPRequest) (*GetIPResponse, error)
 	GetProxyList(context.Context, *empty.Empty) (*GetProxyListResponse, error)
 	GetSpamList(context.Context, *empty.Empty) (*GetSpamListResponse, error)
 	GetTorList(context.Context, *empty.Empty) (*GetTorListResponse, error)
@@ -445,6 +808,12 @@ type IPServiceServer interface {
 type UnimplementedIPServiceServer struct {
 }
 
+func (*UnimplementedIPServiceServer) GetScore(context.Context, *IPRequest) (*GetIPScoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetScore not implemented")
+}
+func (*UnimplementedIPServiceServer) GetIP(context.Context, *IPRequest) (*GetIPResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIP not implemented")
+}
 func (*UnimplementedIPServiceServer) GetProxyList(context.Context, *empty.Empty) (*GetProxyListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProxyList not implemented")
 }
@@ -460,6 +829,42 @@ func (*UnimplementedIPServiceServer) GetVPNList(context.Context, *empty.Empty) (
 
 func RegisterIPServiceServer(s *grpc.Server, srv IPServiceServer) {
 	s.RegisterService(&_IPService_serviceDesc, srv)
+}
+
+func _IPService_GetScore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IPRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IPServiceServer).GetScore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/IPService/GetScore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IPServiceServer).GetScore(ctx, req.(*IPRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IPService_GetIP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IPRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IPServiceServer).GetIP(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/IPService/GetIP",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IPServiceServer).GetIP(ctx, req.(*IPRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _IPService_GetProxyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -538,6 +943,14 @@ var _IPService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "IPService",
 	HandlerType: (*IPServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetScore",
+			Handler:    _IPService_GetScore_Handler,
+		},
+		{
+			MethodName: "GetIP",
+			Handler:    _IPService_GetIP_Handler,
+		},
 		{
 			MethodName: "GetProxyList",
 			Handler:    _IPService_GetProxyList_Handler,

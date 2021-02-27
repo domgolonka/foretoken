@@ -3,6 +3,8 @@ option go_package = ".;proto";
 import "google/protobuf/empty.proto";
 
 service EmailService {
+  rpc GetScore(EmailRequest) returns (GetEmailScoreResponse) {}
+  rpc GetEmail(EmailRequest) returns (GetEmailResponse) {}
   rpc GetDisposableList(google.protobuf.Empty) returns (GetEmailListResponse) {}
   rpc GetGenericList(google.protobuf.Empty) returns (GetEmailListResponse) {}
   rpc GetSpamList(google.protobuf.Empty) returns (GetEmailListResponse) {}
@@ -11,5 +13,30 @@ service EmailService {
 
 message GetEmailListResponse {
   repeated string emails = 1;
+}
+
+
+message GetEmailScoreResponse {
+  uint32 score = 1;
+}
+
+message EmailRequest {
+  string email = 1;
+}
+
+message GetEmailResponse {
+  message Domain {
+    string created_at = 1;
+    string expiration_date = 2;
+  }
+
+  bool success = 1;
+  bool valid = 2;
+  bool disposable = 3;
+  bool recent_spam = 4;
+  bool free = 5;
+  bool generic = 6;
+  uint32 score = 7;
+  Domain domain = 8;
 }
 

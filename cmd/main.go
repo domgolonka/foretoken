@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
-	"path"
-
+	"github.com/common-nighthawk/go-figure"
 	services "github.com/domgolonka/threatdefender/lib/grpc"
 	"github.com/domgolonka/threatdefender/lib/grpc/impl"
+	"os"
+	"path"
 
 	"github.com/domgolonka/threatdefender/app"
 	"github.com/domgolonka/threatdefender/app/data"
@@ -63,8 +63,9 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 	var (
 		ch = make(chan bool)
 	)
-
-	logger.Infof("~*~ ThreatDefender ~*~")
+	myFigure := figure.NewFigure("ThreatDefender", "nancyj", true)
+	myFigure.Print()
+	//logger.Infof("~*~ ThreatDefender ~*~")
 
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {

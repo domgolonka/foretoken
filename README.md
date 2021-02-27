@@ -54,11 +54,15 @@ highly customizable tools for companies and individuals to use to counter threat
 
 To run it on your local computer:
 
-`make run`
+    git clone https://github.com/domgolonka/threatdefender`
+    cd ./threatdefender
+    make build && ./bin/threatdefender
 
-The default config file is `config/config.dev.yml`. If you want to run it with a different config file (or add your own)
-.
+The default config file is `config.yml`. 
+If you want to run it with a different config file (or add your own).
 
+
+`git clone https://github.com/domgolonka/threatdefender`
 `make build` (make sure to build it first)
 
 `./bin/threatdefender --config=/PATH/TO/CONFIG`

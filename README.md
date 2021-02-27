@@ -68,7 +68,7 @@ If you want to run it with a different config file (or add your own).
 `./bin/threatdefender --config=/PATH/TO/CONFIG`
 
 example:
-`./bin/threatdefender --config=config/config.prod.yml`
+`./bin/threatdefender --config=./config.prod.yml`
 
 # Configs
 

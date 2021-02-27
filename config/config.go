@@ -1,7 +1,6 @@
 package config
 
 type Config struct {
-	Rooturl       string
 	PublicPort    string
 	GRPCPort      string
 	Env           string

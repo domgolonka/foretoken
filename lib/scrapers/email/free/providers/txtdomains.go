@@ -3,6 +3,7 @@ package providers
 import (
 	"bytes"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/domgolonka/foretoken/app/models"
@@ -61,7 +62,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.FreeEmail, error) {
 				}
 
 				freeEmail := models.FreeEmail{
-					Domain: ips[k].Domain,
+					Domain: strings.ToLower(ips[k].Domain),
 				}
 				c.iplist = append(c.iplist, freeEmail)
 

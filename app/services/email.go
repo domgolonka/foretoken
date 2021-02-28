@@ -1,6 +1,8 @@
 package services
 
 import (
+	"strings"
+
 	"github.com/domgolonka/foretoken/app"
 	"github.com/domgolonka/foretoken/app/entity"
 	utils "github.com/domgolonka/foretoken/pkg/utils/email"
@@ -49,7 +51,7 @@ func (e *Email) EmailService() (*entity.EmailResponse, error) {
 
 func (e *Email) Calculate(app *app.App, email string) {
 	e.app = app
-	e.email = email
+	e.email = strings.ToLower(email)
 	disposable, err := e.app.DisableStore.FindByDomain(email)
 	if err != nil {
 		e.app.Logger.Error(err)

@@ -22,3 +22,23 @@ jobs:
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin # temporary fix. See https://github.com/actions/setup-go/issues/14
           make check
+  docker:
+    name: Publish to docker hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Version tag
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: domgolonka/foretoken
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Latest tag
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: domgolonka/foretoken
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          tag_names: true

@@ -18,7 +18,7 @@ RUN apk --no-cache add ca-certificates
 RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/foretoken .
-COPY --from=builder /app/infra/config/config.stag.yml .
+COPY --from=builder /app/infra/config/config.yml .
 
-ENTRYPOINT ["./foretoken", "--conf=config.stag.yml"]
+ENTRYPOINT ["./foretoken", "--conf=config.yml"]
 

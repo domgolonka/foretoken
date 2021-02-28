@@ -1,25 +1,32 @@
 package config
 
 type Config struct {
-	PublicPort    string
-	GRPCPort      string
-	Env           string
-	AutoTLS       bool
-	Proxy         Proxy
-	External      External
-	SMTP          SMTP
-	Debug         bool
-	Database      Database
-	ErrorReporter ErrorReporter
-	Email         Email
-	IP            IP
-	RateLimit     RateLimit
-	Crontab       Crontab
+	PublicAddress    string
+	GRPCAddress      string
+	Env              string
+	AutoTLS          bool
+	Proxy            Proxy
+	External         External
+	SMTP             SMTP
+	Debug            bool
+	Database         Database
+	ErrorReporter    ErrorReporter
+	Email            Email
+	IP               IP
+	RateLimit        RateLimit
+	Crontab          Crontab
+	ServiceDiscovery ServiceDiscovery
 }
 
 type External struct {
 	MaxmindDest string
 	IP2Location string
+}
+
+type ServiceDiscovery struct {
+	Service  string
+	NodeID   string
+	Endpoint string
 }
 
 type Crontab struct {

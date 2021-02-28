@@ -43,17 +43,17 @@ func New(config *Config, logger logrus.FieldLogger) (*Registrar, error) {
 
 }
 
-func (r *Registrar) Register(registry *registry.Info) error {
-	val, err := json.Marshal(registry)
+func (r *Registrar) Register(service *registry.Info) error {
+	val, err := json.Marshal(service)
 	if err != nil {
 		return err
 	}
 	value := string(val)
-	key := r.config.Directory + "/" + registry.Name + "/" + registry.Version + "/" + registry.ID
+	key := r.config.Directory + "/" + service.Name + "/" + service.Version + "/" + service.ID
 
 	ctx, cancel := context.WithCancel(context.Background())
 	r.Lock()
-	r.canceler[registry.ID] = cancel
+	r.canceler[service.ID] = cancel
 	r.Unlock()
 	insertFunc := func() error {
 		resp, err := r.etcd3.Grant(ctx, int64(r.config.TTL/time.Second))
@@ -104,9 +104,9 @@ func (r *Registrar) Register(registry *registry.Info) error {
 
 }
 
-func (r *Registrar) Unregister(registry *registry.Info) error {
+func (r *Registrar) Unregister(service *registry.Info) error {
 	r.RLock()
-	cancel, ok := r.canceler[registry.ID]
+	cancel, ok := r.canceler[service.ID]
 	r.RUnlock()
 
 	if ok {

@@ -17,6 +17,7 @@ require (
 	github.com/golang/protobuf v1.4.3
 	github.com/gorilla/schema v1.2.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
+	github.com/hashicorp/consul/api v1.3.0
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jbowtie/gokogiri v0.0.0-20190301021639-37f655d3078f
 	github.com/jinzhu/configor v1.2.1
@@ -32,6 +33,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/samuel/go-zookeeper v0.0.0-20190923202752-2cc03de413da
 	github.com/sirupsen/logrus v1.7.0
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614

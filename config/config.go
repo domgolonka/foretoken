@@ -16,6 +16,7 @@ type Config struct {
 	RateLimit        RateLimit
 	Crontab          Crontab
 	ServiceDiscovery ServiceDiscovery
+	Resource         Resource
 }
 
 type External struct {
@@ -103,4 +104,16 @@ type Database struct {
 	Name     string
 	TimeZone string
 	SSL      bool
+}
+
+type Resource struct {
+	EmailDisposalList []string
+	EmailFreeList     []string
+	EmailSpamList     []string
+	IPVPNList         []string
+	IPOpenVPNList     []string
+	IPTorList         []string
+	IPProxyList       []string
+	IPSpamList        []string
+	ExpressionList    []string
 }

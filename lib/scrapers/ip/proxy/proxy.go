@@ -155,7 +155,7 @@ func (p *ProxyGenerator) Run(workers int, hours int) {
 	}
 }
 
-func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours int, logger logrus.FieldLogger) *ProxyGenerator {
+func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours int, logger logrus.FieldLogger, feedList []string) *ProxyGenerator {
 	once.Do(func() {
 		instance = &ProxyGenerator{
 			cache:    cache.New(cacheminutes*time.Minute, 5*time.Minute),
@@ -169,7 +169,7 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours i
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
 		instance.AddProvider(providers.NewProxyList())
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		instance.AddProvider(providers.NewHidemyName())
 		instance.AddProvider(providers.NewCoolProxy())
 		instance.AddProvider(providers.NewPubProxy())

@@ -72,7 +72,7 @@ func (p *VPN) Get() (*[]string, error) {
 	return p.store.FindAllIPs()
 
 }
-func NewVPN(store data.VpnStore, hours int, logger logrus.FieldLogger) *VPN {
+func NewVPN(store data.VpnStore, hours int, logger logrus.FieldLogger, feedOpenVPNList []string, feedList []string) *VPN {
 	once.Do(func() {
 		instance = &VPN{
 			logger: logger,
@@ -80,8 +80,8 @@ func NewVPN(store data.VpnStore, hours int, logger logrus.FieldLogger) *VPN {
 		}
 
 		logger.Debug("starting VPN")
-		instance.AddProvider(providers.NewOpenVpn(logger))
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewOpenVpn(logger, feedOpenVPNList))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		//instance.AddProvider(providers.NewVPNBook(logger))
 		go instance.Run(hours)
 

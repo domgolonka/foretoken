@@ -75,7 +75,7 @@ func (p *Spam) Get() []string {
 	return p.hosts
 
 }
-func NewSpam(store data.SpamStore, hours int, logger logrus.FieldLogger) *Spam {
+func NewSpam(store data.SpamStore, hours int, logger logrus.FieldLogger, feedList []string) *Spam {
 	once.Do(func() {
 		instance = &Spam{
 			logger: logger,
@@ -83,7 +83,7 @@ func NewSpam(store data.SpamStore, hours int, logger logrus.FieldLogger) *Spam {
 		}
 
 		logger.Debug("starting IP Spam")
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		go instance.Run(hours)
 
 	})

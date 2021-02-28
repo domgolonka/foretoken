@@ -46,13 +46,15 @@ import (
 //}
 
 type OpenVpn struct {
-	logger logrus.FieldLogger
+	logger   logrus.FieldLogger
+	feedList []string
 }
 
-func NewOpenVpn(logger logrus.FieldLogger) *OpenVpn {
+func NewOpenVpn(logger logrus.FieldLogger, feedList []string) *OpenVpn {
 	logger.Debug("starting OpenVPN")
 	return &OpenVpn{
 		logger,
+		feedList,
 	}
 }
 func (*OpenVpn) Name() string {
@@ -120,7 +122,7 @@ func (c *OpenVpn) List() ([]models.Vpn, error) {
 	f := entity.Feed{
 		Logger: c.logger,
 	}
-	feed, err := f.ReadFile("ip_openvpn.json")
+	feed, err := f.ReadFile(c.feedList...)
 	if err != nil {
 		return nil, err
 	}

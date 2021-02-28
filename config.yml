@@ -99,3 +99,14 @@ servicediscovery:
   nodeid: ""
   endpoint: ""
 
+### Resource files
+resource:
+  emaildisposallist: [ "email_disposable" ]
+  emailfreelist: [ "email_free" ]
+  emailspamlist: [ "email_spam" ]
+  ipvpnlist: [ "ip_vpn" ]
+  ipopenvpnlist: [ "ip_openvpn" ]
+  iptorlist: [ "ip_tor" ]
+  ipproxylist: [ "ip_proxy" ]
+  ipspamlist: [ "ip_spam" ]
+  expressionlist: [ "expressions" ]

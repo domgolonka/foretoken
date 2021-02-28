@@ -21,6 +21,7 @@ type TxtDomains struct {
 	proxyList  []models.Proxy
 	lastUpdate time.Time
 	logger     logrus.FieldLogger
+	feedList   []string
 }
 
 type Feed struct {
@@ -29,8 +30,8 @@ type Feed struct {
 	Type string
 }
 
-func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
-	return &TxtDomains{logger: logger}
+func NewTxtDomains(logger logrus.FieldLogger, feedList []string) *TxtDomains {
+	return &TxtDomains{logger: logger, feedList: feedList}
 }
 func (*TxtDomains) Name() string {
 	return "txt_domain_proxy"
@@ -48,7 +49,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Proxy, error) {
 	f := entity.Feed{
 		Logger: c.logger,
 	}
-	feed, err := f.ReadFile("ip_proxy.json")
+	feed, err := f.ReadFile(c.feedList...)
 	if err != nil {
 		return nil, err
 	}

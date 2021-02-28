@@ -59,20 +59,25 @@ type Feed struct {
 	Logger        logrus.FieldLogger
 }
 
-func (feed Feed) ReadFile(filename string) ([]*Feed, error) {
+func (feed Feed) ReadFile(filename ...string) ([]*Feed, error) {
 	var f []*Feed
 	workingdir, err := os.Getwd()
 	if err != nil {
 		return nil, err
 	}
-	file, err := ioutil.ReadFile(workingdir + "/resource/" + filename)
-	if err != nil {
-		return nil, err
+	for _, s := range filename {
+		var fed []*Feed
+		file, err := ioutil.ReadFile(workingdir + "/resource/" + s + ".json")
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(file, &fed)
+		if err != nil {
+			return nil, err
+		}
+		f = append(f, fed...)
 	}
-	err = json.Unmarshal(file, &f)
-	if err != nil {
-		return nil, err
-	}
+
 	return f, nil
 }
 

@@ -60,14 +60,14 @@ func (p *SpamEmail) Get() (*[]string, error) {
 	return p.store.FindAll()
 }
 
-func NewSpamEmail(store data.SpamEmailStore, logger logrus.FieldLogger) *SpamEmail {
+func NewSpamEmail(store data.SpamEmailStore, logger logrus.FieldLogger, feedList []string) *SpamEmail {
 	once.Do(func() {
 		instance = &SpamEmail{
 			logger: logger,
 			store:  store,
 		}
 		logger.Debug("starting SpamEmail")
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		go instance.run()
 	})
 	return instance

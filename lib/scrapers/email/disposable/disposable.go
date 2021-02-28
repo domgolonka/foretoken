@@ -60,14 +60,14 @@ func (p *Disposable) Get() (*[]string, error) {
 	return p.store.FindAll()
 }
 
-func NewDisposable(store data.DisposableStore, logger logrus.FieldLogger) *Disposable {
+func NewDisposable(store data.DisposableStore, logger logrus.FieldLogger, feedList []string) *Disposable {
 	once.Do(func() {
 		instance = &Disposable{
 			logger: logger,
 			store:  store,
 		}
 		logger.Debug("starting Disposable")
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		go instance.run()
 	})
 	return instance

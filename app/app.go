@@ -118,13 +118,13 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 		}
 	}
 
-	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), cfg.Crontab.Proxy, logger)
-	vpngen := vpn.NewVPN(vpnStore, cfg.Crontab.VPN, logger)
-	torgen := tor.NewTor(torStore, cfg.Crontab.Tor, logger)
-	spamgen := spam.NewSpam(spamStore, cfg.Crontab.Spam, logger)
-	freeEmailGen := free.NewFreeEmail(freeEmailStore, logger)
-	disgen := disposable.NewDisposable(disposableStore, logger)
-	spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger)
+	proxygen := proxy.New(proxyStore, cfg.Proxy.Workers, time.Duration(cfg.Proxy.CacheDurationMinutes), cfg.Crontab.Proxy, logger, cfg.Resource.IPProxyList)
+	vpngen := vpn.NewVPN(vpnStore, cfg.Crontab.VPN, logger, cfg.Resource.IPVPNList, cfg.Resource.IPOpenVPNList)
+	torgen := tor.NewTor(torStore, cfg.Crontab.Tor, logger, cfg.Resource.IPTorList)
+	spamgen := spam.NewSpam(spamStore, cfg.Crontab.Spam, logger, cfg.Resource.IPSpamList)
+	freeEmailGen := free.NewFreeEmail(freeEmailStore, logger, cfg.Resource.EmailFreeList)
+	disgen := disposable.NewDisposable(disposableStore, logger, cfg.Resource.EmailDisposalList)
+	spamemailgen := spamemail.NewSpamEmail(spamEmailStore, logger, cfg.Resource.EmailSpamList)
 
 	app := &App{
 		// Provide access to root DB - useful when extending AccountStore functionality

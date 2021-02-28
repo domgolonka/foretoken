@@ -135,25 +135,23 @@ _**Expression**:_ The regex
 _**Type:**_ The type of expression. For IPs, it is
 usually is a ipv4 or ipv6. For IP proxy, its http, https, sock4, sock5.
 
-### IPs
 
-The ip files are stored in the `./resource` directory and start with `ip_` such as `ip_tor` for tor.
+The files are stored in the `./resource` directory and start with `ip_` such as `ip_tor` for tor.
 
-#### Spam
+You can add sources by adding a new file to `./resource` directory and updating the `config.yml` file:
 
-#### Proxy
+    ### Resource files
+    resource:
+      emaildisposallist: [ "email_disposable" ]
+      emailfreelist: [ "email_free" ]
+      emailspamlist: [ "email_spam" ]
+      ipvpnlist: [ "ip_vpn" ]
+      ipopenvpnlist: [ "ip_openvpn" ]
+      iptorlist: [ "ip_tor" ]
+      ipproxylist: [ "ip_proxy" ]
+      ipspamlist: [ "ip_spam" ]
+      expressionlist: [ "expressions" ]
 
-#### VPN
-
-#### Tor
-
-### Email
-
-#### Disposable
-
-#### Free
-
-#### Spam
 
 # APIs
 

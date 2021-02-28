@@ -60,14 +60,14 @@ func (p *Free) Get() (*[]string, error) {
 	return p.store.FindAll()
 }
 
-func NewFreeEmail(store data.FreeEmailStore, logger logrus.FieldLogger) *Free {
+func NewFreeEmail(store data.FreeEmailStore, logger logrus.FieldLogger, feedList []string) *Free {
 	once.Do(func() {
 		instance = &Free{
 			logger: logger,
 			store:  store,
 		}
 		logger.Debug("starting Free Email")
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		go instance.run()
 	})
 	return instance

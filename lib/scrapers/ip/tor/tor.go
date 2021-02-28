@@ -70,14 +70,14 @@ func (p *Tor) Get() (*[]string, error) {
 	return p.store.FindAllIPs()
 
 }
-func NewTor(store data.TorStore, hours int, logger logrus.FieldLogger) *Tor {
+func NewTor(store data.TorStore, hours int, logger logrus.FieldLogger, feedList []string) *Tor {
 	once.Do(func() {
 		instance = &Tor{
 			logger: logger,
 			store:  store,
 		}
 		logger.Debug("starting Tor")
-		instance.AddProvider(providers.NewTxtDomains(logger))
+		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
 		go instance.Run(hours)
 	})
 	return instance

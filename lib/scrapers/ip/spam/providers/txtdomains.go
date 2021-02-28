@@ -16,12 +16,14 @@ type TxtDomains struct {
 	iplist     []models.Spam
 	logger     logrus.FieldLogger
 	lastUpdate time.Time
+	feedList   []string
 }
 
-func NewTxtDomains(logger logrus.FieldLogger) *TxtDomains {
+func NewTxtDomains(logger logrus.FieldLogger, feedList []string) *TxtDomains {
 	logger.Debug("starting TxtDomains")
 	return &TxtDomains{
-		logger: logger,
+		logger:   logger,
+		feedList: feedList,
 	}
 }
 func (*TxtDomains) Name() string {
@@ -39,7 +41,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 	f := entity.Feed{
 		Logger: c.logger,
 	}
-	feed, err := f.ReadFile("ip_spam.json")
+	feed, err := f.ReadFile(c.feedList...)
 	if err != nil {
 		return nil, err
 	}

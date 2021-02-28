@@ -14,6 +14,12 @@ import (
 	"google.golang.org/grpc"
 )
 
+const (
+	CONSUL    = "consul"
+	ETCD3     = "etcd3"
+	ZOOKEEPER = "zookeeper"
+)
+
 func ServeRPC(app *app.App, ch chan bool) {
 	s := grpc.NewServer()
 
@@ -33,57 +39,67 @@ func ServeRPC(app *app.App, ch chan bool) {
 
 	regist := &Registrar{}
 	wg := sync.WaitGroup{}
-	if app.Config.ServiceDiscovery.Service == "etcd3" {
+
+	if app.Config.ServiceDiscovery.Service == ETCD3 {
 		regist = startEtcd(app)
 
 		wg.Add(1)
 		go func() {
 			err = regist.Etc3Registrar.Register(regist.Service)
 			if err != nil {
+				ch <- false
 				app.Logger.Error("cannot register etcd3: %s", err.Error())
 			}
 			wg.Done()
 		}()
-	} else if app.Config.ServiceDiscovery.Service == "consul" {
+	} else if app.Config.ServiceDiscovery.Service == CONSUL {
 		regist = startConsul(app)
 
 		wg.Add(1)
 		go func() {
 			err = regist.ConsulRegistrar.Register(regist.Service)
 			if err != nil {
+				ch <- false
 				app.Logger.Error("cannot register consul: %s", err.Error())
 			}
 			wg.Done()
 		}()
-	} else if app.Config.ServiceDiscovery.Service == "zookeeper" {
+	} else if app.Config.ServiceDiscovery.Service == ZOOKEEPER {
 		regist = startZookeeper(app)
 
 		wg.Add(1)
 		go func() {
 			err = regist.ZKRegistrar.Register(regist.Service)
 			if err != nil {
+				ch <- false
 				app.Logger.Error("cannot register zookeeper: %s", err.Error())
 			}
 			wg.Done()
 		}()
+	} else if app.Config.ServiceDiscovery.Service != "" {
+		ch <- false
+		app.Logger.Panic("service is unknown type")
 	}
 
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 	<-signalChan
-	if app.Config.ServiceDiscovery.Service == "etcd3" {
+	if app.Config.ServiceDiscovery.Service == ETCD3 {
 		err = regist.Etc3Registrar.Unregister(regist.Service)
 		if err != nil {
+			ch <- false
 			app.Logger.Error("cannot unregister etcd3: %s", err.Error())
 		}
-	} else if app.Config.ServiceDiscovery.Service == "consul" {
+	} else if app.Config.ServiceDiscovery.Service == CONSUL {
 		err = regist.ConsulRegistrar.Unregister(regist.Service)
 		if err != nil {
+			ch <- false
 			app.Logger.Error("cannot unregister consul: %s", err.Error())
 		}
-	} else if app.Config.ServiceDiscovery.Service == "zookeeper" {
+	} else if app.Config.ServiceDiscovery.Service == ZOOKEEPER {
 		err = regist.ZKRegistrar.Unregister(regist.Service)
 		if err != nil {
+			ch <- false
 			app.Logger.Error("cannot unregister zookeeper: %s", err.Error())
 		}
 	}

@@ -97,5 +97,27 @@
         "expression": "ipv4https"
       }
     ]
+  },
+  {
+    "name": "proxy-list.download",
+    "url": "https://www.proxy-list.download/api/v1/get?type=https",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 2,
+        "expression": "ipv4porthttps"
+      }
+    ]
+  },
+  {
+    "name": "proxy-list.download",
+    "url": "https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&country=all&ssl=all&anonymity=all",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 2,
+        "expression": "ipv4porthttp"
+      }
+    ]
   }
 ]

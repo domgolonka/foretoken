@@ -14,7 +14,7 @@
 <p align="center">Loved the project? Please consider donating to the bitcoin address below:</p>
 
 <p align="center"><img src="assets/bitcoinaddress.png" alt="3Gn3URoFijqx2keY1fAfSpf8kZge5MBDGM" height="300" width="300" border="0" /> </p>
-<p align="center">Note: This is still in alpha release, this might break over time. </p>
+
 
 ## About
 
@@ -442,6 +442,21 @@ You can enable the rate limiter for REST API in the `config.yml` file.
     "device_model": "",
     "device_brand": ""
     }
+
+# Service Discovery
+
+Foretoken supports etcd3, zookeeper, and consul as a registry.
+
+All service discovery configurations are stored in the `config.yml` file:
+
+    servicediscovery:
+      service: ""
+      nodeid: ""
+      endpoint: ""
+
+- Service: The viable options are `consul`, `etc3` and `zookeeper`
+- Nodeid: A name for the grpc nodeid
+- endpoint: An address for the service such as zookeeper: `10.0.101.68:2189`, etcd: `http://10.0.101.68:2379`  or consul: `http://10.0.101.68:8500`
 
 # Metrics
 

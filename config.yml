@@ -1,6 +1,6 @@
 ---
-publicport: ":8080"
-grpcport: ":8082"
+publicaddress: ":8080"
+grpcaddress: ":8082"
 env: "dev"
 autotls: false
 debug: true
@@ -91,3 +91,11 @@ database:
   password: ""
   timezone: "America/Vancouver"
   ssl: false
+
+
+### Service Discovery
+servicediscovery:
+  service: ""
+  nodeid: ""
+  endpoint: ""
+

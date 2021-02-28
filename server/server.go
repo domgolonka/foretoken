@@ -55,13 +55,13 @@ func Server(app *app.App) {
 	srv := metrics.InitPrometheus(fapp)
 	routers(srv, app)
 	if app.Config.AutoTLS {
-		ln, err := tls.Listen("tcp", app.Config.PublicPort, cfg)
+		ln, err := tls.Listen("tcp", app.Config.PublicAddress, cfg)
 		if err != nil {
 			panic(err)
 		}
 		app.Logger.Fatal(fapp.Listener(ln))
 	} else {
-		app.Logger.Fatal(fapp.Listen(app.Config.PublicPort))
+		app.Logger.Fatal(fapp.Listen(app.Config.PublicAddress))
 	}
 
 }

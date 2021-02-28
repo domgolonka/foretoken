@@ -76,7 +76,7 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 
 	impl.InitRPCService(newApp)
 	go server.Server(newApp)
-	services.ServeRPC(newApp, ch, cfg.GRPCPort)
+	services.ServeRPC(newApp, ch)
 
 	<-ch
 }

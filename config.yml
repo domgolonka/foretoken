@@ -84,7 +84,7 @@ proxy:
 ### Database: sqlite3 or postgresql. For Non-Memory SQLite, change host: "db.sqlite3"
 database:
   type: "sqlite3"
-  Name: ""
+  name: ""
   host: "db"
   port: 0
   username: ""

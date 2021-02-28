@@ -32,13 +32,13 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: domgolonka/foretoken
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Latest tag
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: domgolonka/foretoken
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
           tag_names: true

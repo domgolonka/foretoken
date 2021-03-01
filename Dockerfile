@@ -14,11 +14,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o foretoken cmd/mai
 
 # Run container
 FROM alpine:latest
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates libxml2-dev
 RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/foretoken .
-COPY --from=builder /app/infra/config/config.yml .
+COPY --from=builder /app/config.yml .
 
 ENTRYPOINT ["./foretoken", "--conf=config.yml"]
 

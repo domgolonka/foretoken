@@ -12,7 +12,7 @@ import (
 
 	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/jbowtie/gokogiri"
+	"github.com/antchfx/htmlquery"
 )
 
 var (
@@ -130,16 +130,25 @@ func (x *XseoIn) Load(body []byte) ([]models.Proxy, error) {
 		return nil, errors.New("decodeParams can not be <nil>")
 	}
 
-	doc, err := gokogiri.ParseHtml(body)
+	node, err := htmlquery.Parse(bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	defer doc.Free()
+	ips, err := htmlquery.QueryAll(node, `//tr[contains(@class, 'cls8') or contains(@class ,'cls81')]`)
+	if err != nil {
+		return nil, err
+	}
 
-	ips, err := doc.Search(`//tr[contains(@class, 'cls8') or contains(@class ,'cls81')]`)
-	if err != nil {
-		return nil, err
-	}
+	//doc, err := gokogiri.ParseHtml(body)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//defer doc.Free()
+	//
+	//ips, err := doc.Search(`//tr[contains(@class, 'cls8') or contains(@class ,'cls81')]`)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")
@@ -148,7 +157,7 @@ func (x *XseoIn) Load(body []byte) ([]models.Proxy, error) {
 	x.proxyList = make([]models.Proxy, 0, len(ips))
 
 	for _, ip := range ips {
-		data := strings.Split(ip.Content(), ":")
+		data := strings.Split(ip.Data, ":")
 		if len(data) > 1 {
 			if ipRegexp.MatchString(data[0]) {
 				if port := x.DecodePort(decodeParams, portRegexp.FindString(data[1])); port != nil {

@@ -9,9 +9,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/antchfx/htmlquery"
 	"github.com/domgolonka/foretoken/app/models"
-
-	"github.com/jbowtie/gokogiri"
 )
 
 const coolProxyURL = `https://www.cool-proxy.net/proxies/http_proxy_list/sort:score/direction:desc`
@@ -42,29 +41,40 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 	if len(c.proxyList) != 0 {
 		return c.proxyList, nil
 	}
-
+	var err error
 	if body == nil {
-		var err error
+
 		if body, err = c.MakeRequest(); err != nil {
 			return nil, err
 		}
 	}
-
-	doc, err := gokogiri.ParseHtml(body)
+	node, err := htmlquery.Parse(bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-
-	defer doc.Free()
-	ips, err := doc.Search(`//*[@id="main"]/table/tbody/tr/td[1]`)
+	ips, err := htmlquery.QueryAll(node, `//*[@id="main"]/table/tbody/tr/td[1]`)
 	if err != nil {
 		return nil, err
 	}
-
-	ports, err := doc.Search(`//*[@id="main"]/table/tr/td[2]`)
+	ports, err := htmlquery.QueryAll(node, `//*[@id="main"]/table/tr/td[2]`)
 	if err != nil {
 		return nil, err
 	}
+	//doc, err := gokogiri.ParseHtml(body)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//
+	//defer doc.Free()
+	//ips, err := doc.Search(`//*[@id="main"]/table/tbody/tr/td[1]`)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//
+	//ports, err := doc.Search(`//*[@id="main"]/table/tr/td[2]`)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")
@@ -77,7 +87,7 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 	r := regexp.MustCompile(`"(.*?[^\\])"`)
 
 	for i, ip := range ips {
-		raw := r.FindStringSubmatch(ip.Content())
+		raw := r.FindStringSubmatch(ip.Data)
 		if len(raw) != 2 {
 			continue
 		}
@@ -88,7 +98,7 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 		}
 		prox := models.Proxy{
 			IP:   string(decoded),
-			Port: ports[i].Content(),
+			Port: ports[i].Data,
 			Type: "http", // todo
 		}
 		c.proxyList = append(c.proxyList, prox)

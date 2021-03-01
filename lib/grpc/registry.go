@@ -5,11 +5,11 @@ import (
 
 	"github.com/domgolonka/foretoken/lib/registry/zookeeper"
 
-	"github.com/coreos/etcd/clientv3"
 	"github.com/domgolonka/foretoken/app"
 	"github.com/domgolonka/foretoken/lib/registry"
 	"github.com/domgolonka/foretoken/lib/registry/consul"
 	"github.com/domgolonka/foretoken/lib/registry/etcd3"
+	"github.com/etcd-io/etcd/clientv3"
 	consulapi "github.com/hashicorp/consul/api"
 )
 

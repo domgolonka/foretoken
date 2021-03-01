@@ -11,7 +11,7 @@ import (
 
 	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/jbowtie/gokogiri"
+	"github.com/antchfx/htmlquery"
 	scraper "github.com/soluchok/go-cloudflare-scraper"
 )
 
@@ -82,18 +82,25 @@ func (x *HidemyName) Load(body []byte) ([]models.Proxy, error) {
 			return nil, err
 		}
 	}
-
-	doc, err := gokogiri.ParseHtml(body)
+	node, err := htmlquery.Parse(bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	defer doc.Free()
-
-	//ips, err := doc.Search(`//td[contains(@class, 'tdl')]`)
-	ips, err := doc.Search(`/html/body/div[1]/div[4]/div/div[4]/table/tbody/tr/td[1]`)
+	ips, err := htmlquery.QueryAll(node, `/html/body/div[1]/div[4]/div/div[4]/table/tbody/tr/td[1]`)
 	if err != nil {
 		return nil, err
 	}
+	//doc, err := gokogiri.ParseHtml(body)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//defer doc.Free()
+	//
+	////ips, err := doc.Search(`//td[contains(@class, 'tdl')]`)
+	//ips, err := doc.Search(`/html/body/div[1]/div[4]/div/div[4]/table/tbody/tr/td[1]`)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")
@@ -102,16 +109,15 @@ func (x *HidemyName) Load(body []byte) ([]models.Proxy, error) {
 	x.proxyList = make([]models.Proxy, 0, len(ips))
 
 	for _, ip := range ips {
-		port := ip.NextSibling()
-		types := ip.NextSibling().NextSibling().NextSibling()
-		if ipRegexp.MatchString(ip.Content()) {
+		port := ip.NextSibling
+		types := ip.NextSibling.NextSibling.NextSibling
+		if ipRegexp.MatchString(ip.Data) {
 			prox := models.Proxy{
-				IP:   ip.Content(),
-				Port: port.Content(),
-				Type: strings.ToLower(types.Content()),
+				IP:   ip.Data,
+				Port: port.Data,
+				Type: strings.ToLower(types.Data),
 			}
 			x.proxyList = append(x.proxyList, prox)
-			//x.proxyList = append(x.proxyList, ip.Content()+":"+port.Content())
 		}
 
 	}

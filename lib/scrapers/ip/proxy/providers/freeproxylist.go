@@ -10,7 +10,7 @@ import (
 
 	"github.com/domgolonka/foretoken/app/models"
 
-	"github.com/jbowtie/gokogiri"
+	"github.com/antchfx/htmlquery"
 )
 
 type FreeProxyList struct {
@@ -87,21 +87,33 @@ func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 		}
 	}
 
-	doc, err := gokogiri.ParseHtml(body)
+	node, err := htmlquery.Parse(bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	defer doc.Free()
-	//*[@id="proxylisttable"]/tbody/tr[1]/td[1]
-	ips, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[1]`)
+	ips, err := htmlquery.QueryAll(node, `//*[@id="proxylisttable"]/tbody/tr/td[1]`)
 	if err != nil {
 		return nil, err
 	}
-	//*[@id="proxylisttable"]/tbody/tr[1]/td[2]
-	ports, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[2]`)
+	ports, err := htmlquery.QueryAll(node, `//*[@id="proxylisttable"]/tbody/tr/td[2]`)
 	if err != nil {
 		return nil, err
 	}
+	//doc, err := gokogiri.ParseHtml(body)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//defer doc.Free()
+	////*[@id="proxylisttable"]/tbody/tr[1]/td[1]
+	//ips, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[1]`)
+	//if err != nil {
+	//	return nil, err
+	//}
+	////*[@id="proxylisttable"]/tbody/tr[1]/td[2]
+	//ports, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[2]`)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")
@@ -115,8 +127,8 @@ func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 
 	for i, ip := range ips {
 		prox := models.Proxy{
-			IP:   ip.Content(),
-			Port: ports[i].Content(),
+			IP:   ip.Data,
+			Port: ports[i].Data,
 			Type: "http", // todo
 		}
 		x.proxyList = append(x.proxyList, prox)

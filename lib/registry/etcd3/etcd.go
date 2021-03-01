@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/coreos/etcd/clientv3"
+	"github.com/etcd-io/etcd/clientv3"
+	"github.com/etcd-io/etcd/etcdserver/api/v3rpc/rpctypes"
 
 	"sync"
 	"time"
 
-	"github.com/coreos/etcd/etcdserver/api/v3rpc/rpctypes"
 	"github.com/domgolonka/foretoken/lib/registry"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/grpclog"

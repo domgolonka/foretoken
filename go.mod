@@ -2,15 +2,22 @@ module github.com/domgolonka/foretoken
 
 go 1.15
 
+replace github.com/coreos/etcd => github.com/ozonru/etcd v3.3.20-grpc1.27-origmodule+incompatible
+
+replace github.com/coreos/bbolt v1.3.5 => go.etcd.io/bbolt v1.3.5
+
 require (
 	github.com/Boostport/address v0.6.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
 	github.com/ansrivas/fiberprometheus/v2 v2.1.1
+	github.com/antchfx/htmlquery v1.2.3
 	github.com/araddon/dateparse v0.0.0-20210207001429-0eec95c9db7e
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
 	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
-	github.com/coreos/etcd v3.3.10+incompatible
+	github.com/coreos/bbolt v1.3.5 // indirect
+	github.com/coreos/etcd v3.3.25+incompatible // indirect
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
+	github.com/etcd-io/etcd v3.3.25+incompatible
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gofiber/fiber/v2 v2.5.0
@@ -19,7 +26,6 @@ require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/hashicorp/consul/api v1.3.0
 	github.com/hashicorp/go-multierror v1.1.0
-	github.com/jbowtie/gokogiri v0.0.0-20190301021639-37f655d3078f
 	github.com/jinzhu/configor v1.2.1
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/joho/godotenv v1.3.0
@@ -38,7 +44,6 @@ require (
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614
 	github.com/test-go/testify v1.1.4
-	go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738
 	golang.org/x/crypto v0.0.0-20200707235045-ab33eee955e0
 	golang.org/x/exp v0.0.0-20191129062945-2f5052295587 // indirect
 	golang.org/x/tools v0.1.0 // indirect

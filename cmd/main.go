@@ -26,6 +26,7 @@ func main() {
 	var cfg config.Config
 	configFlag := flag.String("config", configFilePath, "the config file.")
 	flag.Parse()
+
 	// set the config file
 	if configFlag != nil {
 		configFilePath = *configFlag

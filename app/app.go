@@ -54,7 +54,7 @@ func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	err := godotenv.Load()
 	if err != nil {
-		logger.Fatal("Error loading .env file")
+		logger.Error("Error loading .env file")
 
 	}
 	maxmindkey := os.Getenv("MAXMIND")

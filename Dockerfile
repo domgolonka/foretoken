@@ -20,5 +20,5 @@ WORKDIR /app
 COPY --from=builder /app/foretoken .
 COPY --from=builder /app/config.yml .
 
-ENTRYPOINT ["./foretoken", "--conf=config.yml"]
+ENTRYPOINT ["./foretoken"]
 

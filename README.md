@@ -70,6 +70,20 @@ If you want to run it with a different config file (or add your own).
 example:
 `./bin/foretoken --config=./config.prod.yml`
 
+## Docker
+
+You can run it in docker, locally:
+
+```docker build -t foretoken .```
+
+Once the image is built, Foretoken can be invoked by running the following:
+
+```docker run --rm -t -p 8080:8080 foretoken ```
+
+Or run Docker from our repo:
+
+    docker run -d -p 8080:8080 domgolonka/foretoken
+
 # Configs
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.

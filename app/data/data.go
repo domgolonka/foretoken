@@ -10,7 +10,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func NewDB(cfg config.Config) (*sqlx.DB, error) {
+func NewDB(cfg *config.Config) (*sqlx.DB, error) {
 	switch cfg.Database.Type {
 	case "sqlite3":
 		db, err := sqlite3.NewDB(cfg)
@@ -33,7 +33,7 @@ func NewDB(cfg config.Config) (*sqlx.DB, error) {
 	}
 }
 
-func MigrateDB(cfg config.Config, db *sqlx.DB) (err error) {
+func MigrateDB(cfg *config.Config, db *sqlx.DB) (err error) {
 	switch cfg.Database.Type {
 	case "sqlite3":
 		if db == nil {

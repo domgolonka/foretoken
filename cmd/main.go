@@ -69,7 +69,7 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 	myFigure.Print()
 	//logger.Infof("~*~ Foretoken ~*~")
 
-	newApp, err := app.NewApp(cfg, logger)
+	newApp, err := app.NewApp(&cfg, logger)
 	if err != nil {
 		logger.Fatal(err)
 		return
@@ -84,7 +84,7 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 
 func migrate(cfg config.Config, logger logrus.FieldLogger) {
 	logger.Info("Running migrations.")
-	err := data.MigrateDB(cfg, nil)
+	err := data.MigrateDB(&cfg, nil)
 	if err != nil {
 		logger.Error(err)
 	} else {

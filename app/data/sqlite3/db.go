@@ -13,7 +13,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func NewDB(cfg config.Config) (*sqlx.DB, error) {
+func NewDB(cfg *config.Config) (*sqlx.DB, error) {
 	// https://github.com/mattn/go-sqlite3/issues/274#issuecomment-232942571
 	// enable a busy timeout for concurrent load. keep it short. the busy timeout can be harmful
 	// under sustained load, but helpful during short bursts.

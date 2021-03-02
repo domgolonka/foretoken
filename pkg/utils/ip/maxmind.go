@@ -19,7 +19,7 @@ import (
 type Maxmind struct {
 	license string
 	logger  logrus.FieldLogger
-	cfg     config.Config
+	cfg     *config.Config
 	asn     *geoip2.Reader
 	city    *geoip2.Reader
 	country *geoip2.Reader
@@ -56,7 +56,7 @@ var maxmindDownloadInfo = []struct {
 	},
 }
 
-func NewMaxmind(cfg config.Config, license string, logger logrus.FieldLogger) *Maxmind {
+func NewMaxmind(cfg *config.Config, license string, logger logrus.FieldLogger) *Maxmind {
 	return &Maxmind{
 		logger:  logger,
 		license: license,

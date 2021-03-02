@@ -31,7 +31,7 @@ type App struct {
 	EmailFreeList       []string
 	Logger              logrus.FieldLogger
 	Reporter            ops.ErrorReporter
-	Config              config.Config
+	Config              *config.Config
 	ProxyStore          data.ProxyStore
 	VpnStore            data.VpnStore
 	DisableStore        data.DisposableStore
@@ -50,7 +50,7 @@ type App struct {
 	PwnedKey            string
 }
 
-func NewApp(cfg config.Config, logger logrus.FieldLogger) (*App, error) {
+func NewApp(cfg *config.Config, logger logrus.FieldLogger) (*App, error) {
 
 	err := godotenv.Load()
 	if err != nil {

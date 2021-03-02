@@ -67,7 +67,7 @@ func (r *Registrar) register(path string, nodeInfo string) error {
 	znodes := strings.Split(path, "/")
 	var onepath string
 	for i, znode := range znodes {
-		if len(znode) == 0 {
+		if znode == "" {
 			continue
 		}
 		onepath = onepath + "/" + znode

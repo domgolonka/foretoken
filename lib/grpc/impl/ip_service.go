@@ -12,17 +12,17 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
-var _ proto.IPServiceServer = new(ipService)
+var _ proto.IPServiceServer = new(IPService)
 
-type ipService struct {
+type IPService struct {
 	app *app.App
 }
 
-func NewIPService(app *app.App) *ipService { //nolint
-	return &ipService{app}
+func NewIPService(app *app.App) *IPService {
+	return &IPService{app}
 }
 
-func (i ipService) GetScore(ctx context.Context, request *proto.IPRequest) (*proto.GetIPScoreResponse, error) {
+func (i IPService) GetScore(ctx context.Context, request *proto.IPRequest) (*proto.GetIPScoreResponse, error) {
 	ipSrv := services.IP{}
 	ipSrv.Calculate(i.app, request.GetIp())
 
@@ -38,7 +38,7 @@ func (i ipService) GetScore(ctx context.Context, request *proto.IPRequest) (*pro
 
 }
 
-func (i ipService) GetIP(ctx context.Context, request *proto.IPRequest) (*proto.GetIPResponse, error) {
+func (i IPService) GetIP(ctx context.Context, request *proto.IPRequest) (*proto.GetIPResponse, error) {
 	ipSrv := services.IP{}
 	ipSrv.Calculate(i.app, request.GetIp())
 
@@ -68,7 +68,7 @@ func (i ipService) GetIP(ctx context.Context, request *proto.IPRequest) (*proto.
 	return score, nil
 }
 
-func (i ipService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto.GetProxyListResponse, error) {
+func (i IPService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto.GetProxyListResponse, error) {
 	proxies, err := services.ProxyGetDBAll(i.app)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (i ipService) GetProxyList(ctx context.Context, empty *empty.Empty) (*proto
 	return result, nil
 }
 
-func (i ipService) GetSpamList(ctx context.Context, empty *empty.Empty) (*proto.GetSpamListResponse, error) {
+func (i IPService) GetSpamList(ctx context.Context, empty *empty.Empty) (*proto.GetSpamListResponse, error) {
 	spam, err := services.SpamGetDBAll(i.app)
 	if err != nil {
 		return nil, err
@@ -105,7 +105,7 @@ func (i ipService) GetSpamList(ctx context.Context, empty *empty.Empty) (*proto.
 	return result, nil
 }
 
-func (i ipService) GetTorList(ctx context.Context, empty *empty.Empty) (*proto.GetTorListResponse, error) {
+func (i IPService) GetTorList(ctx context.Context, empty *empty.Empty) (*proto.GetTorListResponse, error) {
 	tor, err := services.TorGetDBAll(i.app)
 	if err != nil {
 		return nil, err
@@ -118,7 +118,7 @@ func (i ipService) GetTorList(ctx context.Context, empty *empty.Empty) (*proto.G
 	return result, nil
 }
 
-func (i ipService) GetVPNList(ctx context.Context, empty *empty.Empty) (*proto.GetVPNListResponse, error) {
+func (i IPService) GetVPNList(ctx context.Context, empty *empty.Empty) (*proto.GetVPNListResponse, error) {
 	vpn, err := services.VpnGetDBAll(i.app)
 	if err != nil {
 		return nil, err

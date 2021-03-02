@@ -84,6 +84,10 @@ Or run Docker from our repo:
 
     docker run -d -p 8080:8080 domgolonka/foretoken
 
+or with a custom config file:
+
+```docker run -d -p 8080:8080 domgolonka/foretoken --config=config.yml```
+
 # Configs
 
 All configurations are in the config files in the directory "config". You can add your own environment variables here.

@@ -2,7 +2,7 @@ GOBIN=$(shell pwd)/bin
 GOFILES=cmd/main.go
 GONAME=$(shell basename "$(PWD)")
 PID=/tmp/go-$(GONAME).pid
-# git tag --list '0.4.*' | xargs -I % echo "git tag -d %; git push --delete origin %" | sh
+# git tag --list '0.5.2' | xargs -I % echo "git tag -d %; git push --delete origin %" | sh
 ## Display this help text
 help:
 	$(info Available Targets)

@@ -27,8 +27,8 @@ func ServeRPC(app *app.App, ch chan bool) {
 	if err != nil {
 		app.Logger.Panic(err)
 	}
-	proto.RegisterEmailServiceServer(s, impl.EmailService)
-	proto.RegisterIPServiceServer(s, impl.IPService)
+	proto.RegisterEmailServiceServer(s, impl.EmailSrv)
+	proto.RegisterIPServiceServer(s, impl.IPSrv)
 
 	grpc_prometheus.Register(s)
 

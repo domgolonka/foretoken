@@ -3,11 +3,11 @@ package impl
 import "github.com/domgolonka/foretoken/app"
 
 var (
-	EmailService *emailService
-	IPService    *ipService
+	EmailSrv *EmailService
+	IPSrv    *IPService
 )
 
 func InitRPCService(app *app.App) {
-	EmailService = NewEmailService(app)
-	IPService = NewIPService(app)
+	EmailSrv = NewEmailService(app)
+	IPSrv = NewIPService(app)
 }

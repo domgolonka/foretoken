@@ -10,17 +10,17 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
-var _ proto.EmailServiceServer = new(emailService)
+var _ proto.EmailServiceServer = new(EmailService)
 
-type emailService struct {
+type EmailService struct {
 	app *app.App
 }
 
-func NewEmailService(app *app.App) *emailService { //nolint
-	return &emailService{app}
+func NewEmailService(app *app.App) *EmailService {
+	return &EmailService{app}
 }
 
-func (e emailService) GetScore(ctx context.Context, request *proto.EmailRequest) (*proto.GetEmailScoreResponse, error) {
+func (e EmailService) GetScore(ctx context.Context, request *proto.EmailRequest) (*proto.GetEmailScoreResponse, error) {
 	emailSrv := services.Email{}
 	emailSrv.Calculate(e.app, request.GetEmail())
 
@@ -34,7 +34,7 @@ func (e emailService) GetScore(ctx context.Context, request *proto.EmailRequest)
 	return score, nil
 }
 
-func (e emailService) GetEmail(ctx context.Context, request *proto.EmailRequest) (*proto.GetEmailResponse, error) {
+func (e EmailService) GetEmail(ctx context.Context, request *proto.EmailRequest) (*proto.GetEmailResponse, error) {
 	emailSrv := services.Email{}
 	emailSrv.Calculate(e.app, request.GetEmail())
 
@@ -58,7 +58,7 @@ func (e emailService) GetEmail(ctx context.Context, request *proto.EmailRequest)
 	return score, nil
 }
 
-func (e emailService) GetDisposableList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
+func (e EmailService) GetDisposableList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
 	emails, err := services.DisposableGetDBAll(e.app)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (e emailService) GetDisposableList(ctx context.Context, empty *empty.Empty)
 	return result, nil
 }
 
-func (e emailService) GetGenericList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
+func (e EmailService) GetGenericList(ctx context.Context, empty *empty.Empty) (*proto.GetEmailListResponse, error) {
 	genericList, err := services.GenericGetAll(e.app)
 	if err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (e emailService) GetGenericList(ctx context.Context, empty *empty.Empty) (*
 	return result, nil
 }
 
-func (e emailService) GetSpamList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
+func (e EmailService) GetSpamList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
 	spamList, err := services.SpamEmailGetDBAll(e.app)
 	if err != nil {
 		return nil, err
@@ -97,7 +97,7 @@ func (e emailService) GetSpamList(ctx context.Context, e2 *empty.Empty) (*proto.
 	return result, nil
 }
 
-func (e emailService) GetFreeEmailList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
+func (e EmailService) GetFreeEmailList(ctx context.Context, e2 *empty.Empty) (*proto.GetEmailListResponse, error) {
 	freeEmailList, err := services.FreeEmailGetDBAll(e.app)
 	if err != nil {
 		return nil, err

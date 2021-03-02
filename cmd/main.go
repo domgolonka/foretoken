@@ -50,9 +50,9 @@ func main() {
 	}
 
 	if cmd == "server" {
-		serve(cfg, logger)
+		serve(&cfg, logger)
 	} else if cmd == "migrate" {
-		migrate(cfg, logger)
+		migrate(&cfg, logger)
 	} else {
 		os.Stderr.WriteString("unexpected invocation\n")
 		usage(logger)
@@ -60,7 +60,7 @@ func main() {
 	}
 }
 
-func serve(cfg config.Config, logger logrus.FieldLogger) {
+func serve(cfg *config.Config, logger logrus.FieldLogger) {
 
 	var (
 		ch = make(chan bool)
@@ -69,7 +69,7 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 	myFigure.Print()
 	//logger.Infof("~*~ Foretoken ~*~")
 
-	newApp, err := app.NewApp(&cfg, logger)
+	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {
 		logger.Fatal(err)
 		return
@@ -82,9 +82,9 @@ func serve(cfg config.Config, logger logrus.FieldLogger) {
 	<-ch
 }
 
-func migrate(cfg config.Config, logger logrus.FieldLogger) {
+func migrate(cfg *config.Config, logger logrus.FieldLogger) {
 	logger.Info("Running migrations.")
-	err := data.MigrateDB(&cfg, nil)
+	err := data.MigrateDB(cfg, nil)
 	if err != nil {
 		logger.Error(err)
 	} else {

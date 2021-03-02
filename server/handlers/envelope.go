@@ -33,11 +33,11 @@ func WriteData(w http.ResponseWriter, httpCode int, str *[]string) {
 }
 
 func WriteErrors(w http.ResponseWriter, err error) {
-	switch err.(type) { //nolint
+	switch x := err.(type) {
 	case services.FieldErrors:
-		WriteJSON(w, http.StatusUnprocessableEntity, ServiceErrors{Errors: err.(services.FieldErrors)})
+		WriteJSON(w, http.StatusUnprocessableEntity, ServiceErrors{Errors: x})
 	case parse.Error:
-		writeParseErrors(w, err.(parse.Error))
+		writeParseErrors(w, x)
 	default:
 		WriteJSON(w, http.StatusInternalServerError, RequestError{Error: err.Error()})
 	}

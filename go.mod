@@ -8,6 +8,7 @@ replace github.com/coreos/bbolt v1.3.5 => go.etcd.io/bbolt v1.3.5
 
 require (
 	github.com/Boostport/address v0.6.0
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
 	github.com/ansrivas/fiberprometheus/v2 v2.1.1
 	github.com/antchfx/htmlquery v1.2.3

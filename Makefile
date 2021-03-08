@@ -3,8 +3,8 @@ GOFILES=cmd/main.go
 GONAME=$(shell basename "$(PWD)")
 PID=/tmp/go-$(GONAME).pid
 # git tag --list '0.5.2' | xargs -I % echo "git tag -d %; git push --delete origin %" | sh
-## Display this help text
-help:
+
+help: ## Display this help text
 	$(info Available Targets)
 	@awk '/^[a-zA-Z\-\_0-9]+:/ {                    \
 		nb = sub( /^## /, "", helpMsg );              \
@@ -18,30 +18,34 @@ help:
 	{ helpMsg = $$0 }'                              \
 	$(MAKEFILE_LIST) | column -ts:
 
-## build the repo
-build:
+
+build: ## builds the binary
 	@echo "Building $(GOFILES) to ./bin"
 	go build -o bin/$(GONAME) cmd/main.go
 
-## installs all the dependencies
-migrate:
+
+migrate: ## installs all the dependencies
 	go run cmd/main.go migrate
 
-## get all the dependencies
-get:
+
+get: ## get all the dependencies
 	@GOBIN=$(GOBIN) go get cmd/main.go
-## installs all the dependencies
-install:
+
+install: ## installs all the dependencies
 	go install $(GOFILES)
-## runs the build
-run:
+
+run: ## runs the build
 	go run $(GOFILES)
-## This is for development. Restarts after every save
-watch:
+
+watch: ## This is for development. Restarts after every save
 	@$(MAKE) restart &
 	@fswatch -o . -e 'bin/.*' -ignore='Path vendor' | xargs -n1 -I{}  make restart
 
 restart: clear stop clean build start
+
+test: ## Run tests
+	@go test -race  ./...
+
 
 format: ## Format go code with goimports
 	@go get golang.org/x/tools/cmd/goimports

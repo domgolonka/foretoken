@@ -9,5 +9,16 @@
         "expression": "domain"
       }
     ]
+  },
+  {
+    "name": "matomo-org",
+    "url": "https://github.com/matomo-org/referrer-spam-list/blob/master/spammers.txt",
+    "timeout": 10,
+    "feed": [
+      {
+        "score": 3,
+        "expression": "domain"
+      }
+    ]
   }
 ]

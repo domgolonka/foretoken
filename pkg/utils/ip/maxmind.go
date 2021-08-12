@@ -25,13 +25,15 @@ type Maxmind struct {
 	country *geoip2.Reader
 }
 
-var maxmindDownloadInfo = []struct {
+type maxmindDownload struct {
 	url      string
 	md5      string
 	filename string
 	file     string
 	filemd5  string
-}{
+}
+
+var maxmindDownloadInfo = []maxmindDownload{
 	{
 		url:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&suffix=tar.gz&license_key=",
 		md5:      "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&suffix=tar.gz.md5&license_key=",
@@ -134,21 +136,19 @@ func (m *Maxmind) DownloadAndUpdate() error {
 		m.logger.Errorf("cannot make directory %s", m.cfg.External.MaxmindDest)
 		return err
 	}
-	for _, d := range maxmindDownloadInfo {
-		dd := d
-		go func() {
-			defer wg.Done()
-			err := m.download(dd.url, dd.file, &wg)
+	for _, dd := range maxmindDownloadInfo {
+		go func(maxD maxmindDownload) {
+			err := m.download(maxD.url, maxD.file, &wg)
 			if err != nil {
 				m.logger.Error(err)
 				return
 			}
-			err = m.download(dd.md5, dd.filemd5, &wg)
+			err = m.download(maxD.md5, maxD.filemd5, &wg)
 			if err != nil {
 				m.logger.Error(err)
 				return
 			}
-		}()
+		}(dd)
 	}
 	wg.Wait()
 

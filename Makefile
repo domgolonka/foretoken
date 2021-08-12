@@ -64,7 +64,7 @@ check: format-check ## Linting and static analysis
 	@if test ! -e ./bin/golangci-lint; then \
 		curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh; \
 	fi
-	@./bin/golangci-lint run --timeout 180s -E gosec -E stylecheck -E golint -E goimports
+	@./bin/golangci-lint run --timeout 180s -E gosec -E stylecheck -E revive -E goimports
 
 start: ## start defending on localmachine
 	@echo "Starting bin/$(GONAME)"

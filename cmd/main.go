@@ -54,7 +54,10 @@ func main() {
 	} else if cmd == "migrate" {
 		migrate(&cfg, logger)
 	} else {
-		os.Stderr.WriteString("unexpected invocation\n")
+		_, err = os.Stderr.WriteString("unexpected invocation\n")
+		if err != nil {
+			return
+		}
 		usage(logger)
 		os.Exit(2)
 	}

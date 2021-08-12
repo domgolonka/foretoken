@@ -23,7 +23,7 @@ type Registrar struct {
 
 type Config struct {
 	ConsulCfg *consul.Config
-	TTL       int //ttl seconds
+	TTL       int // ttl seconds
 }
 
 func New(cfg *Config, logger logrus.FieldLogger) (*Registrar, error) {

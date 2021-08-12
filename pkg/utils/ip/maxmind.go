@@ -64,27 +64,30 @@ func NewMaxmind(cfg *config.Config, license string, logger logrus.FieldLogger) *
 	}
 }
 
-func (m *Maxmind) GetCountry(IP net.IP) (country string, err error) {
+func (m *Maxmind) GetCountry(ip net.IP) (country string, err error) {
 
-	count, err := m.country.Country(IP)
+	count, err := m.country.Country(ip)
 	if err != nil {
+		m.logger.Errorf("cannot download maxmind country file with err: %s", err.Error())
 		return "", err
 	}
 	return count.Country.IsoCode, err
 }
 
-func (m *Maxmind) GetCityData(IP net.IP) (postalcode string, timezone string, city string, latitude, longitude float64, err error) {
+func (m *Maxmind) GetCityData(ip net.IP) (postalcode string, timezone string, city string, latitude, longitude float64, err error) {
 	fmtStr := "en-US"
-	data, err := m.city.City(IP)
+	data, err := m.city.City(ip)
 	if err != nil {
+		m.logger.Errorf("cannot download maxmind city file with err: %s", err.Error())
 		return "", "", "", 0, 0, err
 	}
 	return data.Postal.Code, data.Location.TimeZone, data.City.Names[fmtStr], data.Location.Latitude, data.Location.Longitude, err
 }
 
-func (m *Maxmind) GetASN(IP net.IP) (company string, asn uint, err error) {
-	data, err := m.asn.ASN(IP)
+func (m *Maxmind) GetASN(ip net.IP) (company string, asn uint, err error) {
+	data, err := m.asn.ASN(ip)
 	if err != nil {
+		m.logger.Errorf("cannot download maxmind asn file with err: %s", err.Error())
 		return "", 0, err
 	}
 	return data.AutonomousSystemOrganization, data.AutonomousSystemNumber, err
@@ -122,15 +125,19 @@ func (m *Maxmind) download(url, dest string, wg *sync.WaitGroup) error {
 }
 
 func (m *Maxmind) DownloadAndUpdate() error {
+	// delete any prior files
+	_ = RemoveContents(m.cfg.External.MaxmindDest)
 	var wg sync.WaitGroup
 	wg.Add(6)
 	err := os.MkdirAll(m.cfg.External.MaxmindDest, os.ModePerm)
 	if err != nil {
+		m.logger.Errorf("cannot make directory %s", m.cfg.External.MaxmindDest)
 		return err
 	}
 	for _, d := range maxmindDownloadInfo {
 		dd := d
 		go func() {
+			defer wg.Done()
 			err := m.download(dd.url, dd.file, &wg)
 			if err != nil {
 				m.logger.Error(err)

@@ -47,14 +47,14 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 	ips := make(map[string]entity.IPAnalysis)
 	subnets := make(map[string]entity.SUBNETAnalysis)
 	for _, activeFeed := range feed {
-		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
+		c.logger.Infof("[INFO] Importing data feed %s", activeFeed.Name)
 		feedResultsIPs, feedResultsSubnets, err := activeFeed.FetchIP()
 		if err == nil {
 			for k, e := range feedResultsIPs { // k is the ip string,  e is the
 				if _, ok := ips[k]; ok {
 					ip := ips[k]
 					ip.Type = e.Type
-					ip.Score = ip.Score + e.Score
+					ip.Score += e.Score
 					ip.Lists = append(ip.Lists, e.Lists[0])
 					ips[k] = ip
 				} else {
@@ -73,7 +73,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 				if _, ok := subnets[k]; ok {
 					subnet := subnets[k]
 					subnet.Type = e.Type
-					subnet.Score = subnet.Score + e.Score
+					subnet.Score += e.Score
 					subnet.Lists = append(subnet.Lists, e.Lists[0])
 					subnets[k] = subnet
 				} else {
@@ -87,10 +87,10 @@ func (c *TxtDomains) Load(body []byte) ([]models.Vpn, error) {
 				}
 				c.iplist = append(c.iplist, vpn)
 			}
-			c.logger.Printf("[INFO] Imported %d ips and %d subnets from data feed %d", len(feedResultsIPs),
+			c.logger.Infof("[INFO] Imported %d ips and %d subnets from data feed %d", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)
 		} else {
-			c.logger.Printf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)
+			c.logger.Errorf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)
 		}
 	}
 

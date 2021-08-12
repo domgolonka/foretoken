@@ -73,7 +73,10 @@ func validateHostAndEmail(serverHostName, serverMailAddress, email string) error
 	if err != nil {
 		return NewSMTPError(err)
 	}
-	defer client.Close()
+	err = client.Close()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -90,7 +93,10 @@ func validateHost(email string) error {
 	if err != nil {
 		return NewSMTPError(err)
 	}
-	client.Close()
+	err = client.Close()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -100,7 +106,12 @@ func DialTimeout(addr string, timeout time.Duration) (*smtp.Client, error) {
 		return nil, err
 	}
 
-	t := time.AfterFunc(timeout, func() { conn.Close() })
+	t := time.AfterFunc(timeout, func() {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	})
 	defer t.Stop()
 
 	host, _, _ := net.SplitHostPort(addr)

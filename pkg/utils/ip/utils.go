@@ -20,12 +20,21 @@ func MoveFile(sourcePath, destPath string) error {
 	}
 	outputFile, err := os.Create(destPath)
 	if err != nil {
-		inputFile.Close()
+		err := inputFile.Close()
+		if err != nil {
+			return fmt.Errorf("couldn't close input file: %s", err)
+		}
 		return fmt.Errorf("couldn't open dest file: %s", err)
 	}
 	defer outputFile.Close()
 	_, err = io.Copy(outputFile, inputFile)
-	inputFile.Close()
+	if err != nil {
+		return err
+	}
+	err = inputFile.Close()
+	if err != nil {
+		return err
+	}
 	if err != nil {
 		return fmt.Errorf("writing to output file failed: %s", err)
 	}
@@ -121,6 +130,25 @@ func VerifyMD5HashFromFile(file, md5sumFile string) error {
 		return errors.New("checksum error")
 	}
 
+	return nil
+}
+
+func RemoveContents(dir string) error {
+	d, err := os.Open(dir)
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+	names, err := d.Readdirnames(-1)
+	if err != nil {
+		return err
+	}
+	for _, name := range names {
+		err = os.RemoveAll(filepath.Join(dir, name))
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

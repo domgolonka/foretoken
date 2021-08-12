@@ -47,14 +47,14 @@ func (c *TxtDomains) Load(body []byte) ([]models.FreeEmail, error) {
 	}
 	ips := make(map[string]entity.DomainAnalysis)
 	for _, activeFeed := range feed {
-		c.logger.Printf("[INFO] Importing data feed %s", activeFeed.Name)
+		c.logger.Infof("[INFO] Importing data feed %s", activeFeed.Name)
 		feedResultsDomains, err := activeFeed.FetchString()
 		if err == nil {
 			for k, e := range feedResultsDomains { // k is the ip string,  e is the
 				if _, ok := ips[k]; ok {
 					ip := ips[k]
 					ip.Type = e.Type
-					ip.Score = ip.Score + e.Score
+					ip.Score += e.Score
 					ip.Lists = append(ip.Lists, e.Lists[0])
 					ips[k] = ip
 				} else {
@@ -68,10 +68,10 @@ func (c *TxtDomains) Load(body []byte) ([]models.FreeEmail, error) {
 
 			}
 
-			c.logger.Printf("[INFO] Imported %d domains from data feed %d", len(feedResultsDomains),
+			c.logger.Infof("[INFO] Imported %d domains from data feed %d", len(feedResultsDomains),
 				len(feedResultsDomains), activeFeed.Name)
 		} else {
-			c.logger.Printf("[ERROR] Importing data feed %s\n failed : %v", activeFeed.Name, err)
+			c.logger.Errorf("[ERROR] Importing data feed %s\n failed : %v", activeFeed.Name, err)
 		}
 	}
 

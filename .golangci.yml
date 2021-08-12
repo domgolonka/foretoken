@@ -2,7 +2,24 @@
 linters:
   enable:
     - goimports
-    - golint
+    - revive
     - govet
     - gosec
     - stylecheck
+    - prealloc
+    - bodyclose
+    - durationcheck
+    - gocognit
+    - gocritic
+linters-settings:
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: atomic
+      - name: empty-block
+      - name: unreachable-code
+      - name: struct-tag
+      - name: defer
+      - name: indent-error-flow
+      - name: unhandled-error

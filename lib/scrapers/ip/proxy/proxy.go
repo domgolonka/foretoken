@@ -108,7 +108,7 @@ func (p *ProxyGenerator) Count() int {
 	return p.cache.ItemCount()
 }
 func (p *ProxyGenerator) Get() []string {
-	var items []string
+	items := make([]string, 0, len(p.cache.Items()))
 	for k := range p.cache.Items() {
 		items = append(items, k)
 	}

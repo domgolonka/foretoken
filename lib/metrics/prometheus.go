@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-//var (
+// var (
 //	httpRequests = prometheus.NewCounterVec(
 //		prometheus.CounterOpts{
 //			Name: "http_requests_total",
@@ -21,12 +21,12 @@ import (
 //		},
 //		[]string{"name"},
 //	)
-//)
+// )
 //
-//func init() {
+// func init() {
 //	prometheus.MustRegister(httpRequests)
 //	prometheus.MustRegister(httpTimings)
-//}
+// }
 
 func InitPrometheus(app *fiber.App) fiber.Router {
 	// middleware

@@ -102,7 +102,10 @@ func (c *OpenVpn) Download(src *entity.Feed) ([]models.Vpn, error) {
 					return nil, err
 				}
 
-				rc.Close()
+				err = rc.Close()
+				if err != nil {
+					return nil, err
+				}
 				domainTmp := reRemote.FindStringSubmatch(buf.String())
 				vpn := models.Vpn{
 					IP:   domainTmp[1],

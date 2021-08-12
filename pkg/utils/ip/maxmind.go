@@ -127,8 +127,6 @@ func (m *Maxmind) download(url, dest string, wg *sync.WaitGroup) error {
 }
 
 func (m *Maxmind) DownloadAndUpdate() error {
-	// delete any prior files
-	_ = RemoveContents(m.cfg.External.MaxmindDest)
 	var wg sync.WaitGroup
 	wg.Add(6)
 	err := os.MkdirAll(m.cfg.External.MaxmindDest, os.ModePerm)

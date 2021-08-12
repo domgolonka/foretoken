@@ -47,7 +47,7 @@ require (
 	github.com/test-go/testify v1.1.4
 	golang.org/x/crypto v0.0.0-20200707235045-ab33eee955e0
 	golang.org/x/exp v0.0.0-20191129062945-2f5052295587 // indirect
-	golang.org/x/tools v0.1.0 // indirect
+	golang.org/x/tools v0.1.5 // indirect
 	gonum.org/v1/gonum v0.8.2 // indirect
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.25.0

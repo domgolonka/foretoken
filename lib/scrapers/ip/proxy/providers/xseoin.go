@@ -139,17 +139,6 @@ func (x *XseoIn) Load(body []byte) ([]models.Proxy, error) {
 		return nil, err
 	}
 
-	//doc, err := gokogiri.ParseHtml(body)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//defer doc.Free()
-	//
-	//ips, err := doc.Search(`//tr[contains(@class, 'cls8') or contains(@class ,'cls81')]`)
-	//if err != nil {
-	//	return nil, err
-	//}
-
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")
 	}

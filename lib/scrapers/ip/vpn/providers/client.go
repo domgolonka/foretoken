@@ -16,16 +16,19 @@ const (
 	HTML
 )
 
-//type URLs struct {
-//	URL    string
-//	Typec  string
-//	Format Format
-//}
+/*
+type URLs struct {
+	URL    string
+	Typec  string
+	Format Format
+}
 
-//var HTMLURLs = []URLs{
-//
-//	{URL: "https://support.goldenfrog.com/hc/en-us/articles/360011055671-What-are-the-VyprVPN-server-addresses-", Typec: "PPTP-L2TP", Format: HTML},
-//}
+var HTMLURLs = []URLs{
+
+	{URL: "https://support.goldenfrog.com/hc/en-us/articles/360011055671-What-are-the-VyprVPN-server-addresses-", Typec: "PPTP-L2TP", Format: HTML},
+}
+
+*/
 
 func NewTransport() *http.Transport {
 	return &http.Transport{
@@ -47,16 +50,19 @@ func NewClient() *http.Client {
 	}
 }
 
-//type Proto string
+/*
+type Proto string
 
-//const (
-//	udp Proto = "udp"
-//	tcp Proto = "tcp"
-//)
 
-//type remote struct {
-//	ips      []string
-//	hostname string
-//	port     uint
-//	proto    Proto
-//}
+const (
+	udp Proto = "udp"
+	tcp Proto = "tcp"
+)
+
+type remote struct {
+	ips      []string
+	hostname string
+	port     uint
+	proto    Proto
+}
+*/

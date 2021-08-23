@@ -10,7 +10,7 @@ import (
 )
 
 // BIN: DB11LITEBIN
-//const ip2locationUrl = "https://www.ip2location.com/download/?token={DOWNLOAD_TOKEN}&file={DATABASE_CODE}"
+// const ip2locationUrl = "https://www.ip2location.com/download/?token={DOWNLOAD_TOKEN}&file={DATABASE_CODE}"
 
 type IP2Location struct {
 	license string

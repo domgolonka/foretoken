@@ -165,7 +165,7 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours i
 			logger:   logger,
 			job:      make(chan models.Proxy, 100),
 		}
-		//add providers to generator
+		// add providers to generator
 		instance.AddProvider(providers.NewFreeProxyList())
 		instance.AddProvider(providers.NewXseoIn())
 		instance.AddProvider(providers.NewProxyList())

@@ -140,70 +140,72 @@ func (c *OpenVpn) List() ([]models.Vpn, error) {
 	return hosts, nil
 }
 
-// Parses a 'remote' option into a struct
-//func getRemote(line string) (remote, error) {
-//	rmt := remote{}
-//
-//	fields := strings.Fields(line)
-//	if len(fields) < 2 {
-//		return rmt, errors.New("unknown remote option")
-//	}
-//	isIP, err := regexp.MatchString(IPRegex, fields[1])
-//	if err != nil {
-//		return rmt, err
-//	}
-//
-//	var ips []net.IP
-//	// Lookup ip address if remote is not an IP
-//	if !isIP {
-//		rmt.hostname = fields[1]
-//		ip4, err := net.LookupIP(fields[1])
-//		if err != nil {
-//			return rmt, err
-//		}
-//
-//		for _, ip := range ip4 {
-//			if ip.To4() != nil {
-//				ips = append(ips, ip)
-//			}
-//		}
-//	} else {
-//		ips = append(ips, net.ParseIP(fields[1]))
-//	}
-//	if len(ips) == 0 {
-//		return remote{}, errors.New("can't resolve domain name")
-//	}
-//
-//	for _, ip := range ips {
-//		rmt.ips = append(rmt.ips, ip.String())
-//	}
-//
-//	// port is provided in remote option
-//	if len(fields) >= 3 {
-//		port, err := strconv.ParseUint(fields[2], 10, 32)
-//		if err != nil {
-//			return remote{}, err
-//		}
-//		rmt.port = uint(port)
-//	}
-//
-//	// proto is provided in remote option
-//	if len(fields) >= 4 {
-//		rmt.proto = getProto(fields[3])
-//		if rmt.proto == "" {
-//			return remote{}, errors.New("unknown protocol")
-//		}
-//	}
-//	return rmt, nil
-//}
+/*
+//Parses a 'remote' option into a struct
+func getRemote(line string) (remote, error) {
+	rmt := remote{}
 
-//func getProto(p string) Proto {
-//	switch p {
-//	case "udp":
-//		return udp
-//	case "tcp":
-//		return tcp
-//	default:
-//		return ""
-//	}
-//}
+	fields := strings.Fields(line)
+	if len(fields) < 2 {
+		return rmt, errors.New("unknown remote option")
+	}
+	isIP, err := regexp.MatchString(IPRegex, fields[1])
+	if err != nil {
+		return rmt, err
+	}
+
+	var ips []net.IP
+	// Lookup ip address if remote is not an IP
+	if !isIP {
+		rmt.hostname = fields[1]
+		ip4, err := net.LookupIP(fields[1])
+		if err != nil {
+			return rmt, err
+		}
+
+		for _, ip := range ip4 {
+			if ip.To4() != nil {
+				ips = append(ips, ip)
+			}
+		}
+	} else {
+		ips = append(ips, net.ParseIP(fields[1]))
+	}
+	if len(ips) == 0 {
+		return remote{}, errors.New("can't resolve domain name")
+	}
+
+	for _, ip := range ips {
+		rmt.ips = append(rmt.ips, ip.String())
+	}
+
+	// port is provided in remote option
+	if len(fields) >= 3 {
+		port, err := strconv.ParseUint(fields[2], 10, 32)
+		if err != nil {
+			return remote{}, err
+		}
+		rmt.port = uint(port)
+	}
+
+	// proto is provided in remote option
+	if len(fields) >= 4 {
+		rmt.proto = getProto(fields[3])
+		if rmt.proto == "" {
+			return remote{}, errors.New("unknown protocol")
+		}
+	}
+	return rmt, nil
+}
+
+func getProto(p string) Proto {
+	switch p {
+	case "udp":
+		return udp
+	case "tcp":
+		return tcp
+	default:
+		return ""
+	}
+}
+*/

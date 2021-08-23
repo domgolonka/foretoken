@@ -44,7 +44,7 @@ func (p *Spam) load() {
 		}
 
 		p.logger.Println(provider.Name(), len(iplist))
-		//p.hosts <- hosts
+
 		for _, s := range iplist {
 			p.createOrIgnore(s.IP, s.Prefix, s.Score, s.Type)
 			p.hosts = append(p.hosts, s.ToString())

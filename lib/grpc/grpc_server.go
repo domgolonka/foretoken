@@ -40,7 +40,8 @@ func ServeRPC(app *app.App, ch chan bool) {
 	regist := &Registrar{}
 	wg := sync.WaitGroup{}
 
-	if app.Config.ServiceDiscovery.Service == ETCD3 {
+	switch srv := app.Config.ServiceDiscovery.Service; srv {
+	case ETCD3:
 		regist = startEtcd(app)
 
 		wg.Add(1)
@@ -52,7 +53,7 @@ func ServeRPC(app *app.App, ch chan bool) {
 			}
 			wg.Done()
 		}()
-	} else if app.Config.ServiceDiscovery.Service == CONSUL {
+	case CONSUL:
 		regist = startConsul(app)
 
 		wg.Add(1)
@@ -64,7 +65,7 @@ func ServeRPC(app *app.App, ch chan bool) {
 			}
 			wg.Done()
 		}()
-	} else if app.Config.ServiceDiscovery.Service == ZOOKEEPER {
+	case ZOOKEEPER:
 		regist = startZookeeper(app)
 
 		wg.Add(1)
@@ -76,7 +77,7 @@ func ServeRPC(app *app.App, ch chan bool) {
 			}
 			wg.Done()
 		}()
-	} else if app.Config.ServiceDiscovery.Service != "" {
+	default:
 		ch <- false
 		app.Logger.Panic("service is unknown type")
 	}

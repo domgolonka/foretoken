@@ -60,21 +60,6 @@ func (c *CoolProxy) Load(body []byte) ([]models.Proxy, error) {
 	if err != nil {
 		return nil, err
 	}
-	//doc, err := gokogiri.ParseHtml(body)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//
-	//defer doc.Free()
-	//ips, err := doc.Search(`//*[@id="main"]/table/tbody/tr/td[1]`)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//
-	//ports, err := doc.Search(`//*[@id="main"]/table/tr/td[2]`)
-	//if err != nil {
-	//	return nil, err
-	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")

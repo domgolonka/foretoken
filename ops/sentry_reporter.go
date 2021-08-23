@@ -32,7 +32,7 @@ func (r *SentryReporter) ReportError(err error) {
 // NOTE: POST data is never reported to Sentry, so passwords remain private.
 func (r *SentryReporter) ReportRequestError(err error, req *http.Request) {
 	sentry.WithScope(func(scope *sentry.Scope) {
-		//scope.SetRequest(sentry.Request{}.FromHTTPRequest(req))
+		// scope.SetRequest(sentry.Request{}.FromHTTPRequest(req))
 		sentry.CaptureException(err)
 	})
 }

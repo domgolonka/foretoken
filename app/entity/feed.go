@@ -140,7 +140,11 @@ func (feed Feed) FetchString() (map[string]DomainAnalysis, error) {
 	scanner.Split(bufio.ScanRunes)
 	var buf bytes.Buffer
 	for scanner.Scan() {
-		buf.WriteString(scanner.Text())
+		_, err = buf.WriteString(scanner.Text())
+		if err != nil {
+			feed.Logger.Error(err)
+			continue
+		}
 	}
 	var httpResult = buf.String()
 	resultString := make(map[string]DomainAnalysis)
@@ -204,7 +208,11 @@ func (feed Feed) FetchIP() (map[string]IPAnalysis, map[string]SUBNETAnalysis, er
 	scanner.Split(bufio.ScanRunes)
 	var buf bytes.Buffer
 	for scanner.Scan() {
-		buf.WriteString(scanner.Text())
+		_, err = buf.WriteString(scanner.Text())
+		if err != nil {
+			feed.Logger.Error(err)
+			continue
+		}
 	}
 	var httpResult = buf.String()
 

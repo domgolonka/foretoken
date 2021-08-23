@@ -99,21 +99,6 @@ func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 	if err != nil {
 		return nil, err
 	}
-	//doc, err := gokogiri.ParseHtml(body)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//defer doc.Free()
-	////*[@id="proxylisttable"]/tbody/tr[1]/td[1]
-	//ips, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[1]`)
-	//if err != nil {
-	//	return nil, err
-	//}
-	////*[@id="proxylisttable"]/tbody/tr[1]/td[2]
-	//ports, err := doc.Search(`//*[@id="proxylisttable"]/tbody/tr/td[2]`)
-	//if err != nil {
-	//	return nil, err
-	//}
 
 	if len(ips) == 0 {
 		return nil, errors.New("ip not found")

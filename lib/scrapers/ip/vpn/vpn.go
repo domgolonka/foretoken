@@ -42,7 +42,7 @@ func (p *VPN) load() {
 			p.logger.Errorln(err)
 		}
 		p.logger.Println(provider.Name(), len(hosts))
-		//p.hosts <- hosts
+
 		for i := 0; i < len(hosts); i++ {
 			p.createOrIgnore(hosts[i].IP, hosts[i].Prefix, hosts[i].Type, hosts[i].Score)
 		}

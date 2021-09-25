@@ -16,9 +16,8 @@ var (
 
 type VPN struct {
 	providers []Provider
-	//hosts     chan []string
-	store  data.VpnStore
-	logger logrus.FieldLogger
+	store     data.VpnStore
+	logger    logrus.FieldLogger
 }
 
 func (p *VPN) isProvider(provider Provider) bool {
@@ -82,7 +81,7 @@ func NewVPN(store data.VpnStore, hours int, logger logrus.FieldLogger, feedOpenV
 		logger.Debug("starting VPN")
 		instance.AddProvider(providers.NewOpenVpn(logger, feedOpenVPNList))
 		instance.AddProvider(providers.NewTxtDomains(logger, feedList))
-		//instance.AddProvider(providers.NewVPNBook(logger))
+		// instance.AddProvider(providers.NewVPNBook(logger))
 		go instance.Run(hours)
 
 	})

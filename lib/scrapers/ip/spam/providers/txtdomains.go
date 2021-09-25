@@ -88,7 +88,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 				}
 				c.iplist = append(c.iplist, spam)
 			}
-			c.logger.Infof("[INFO] Imported %d ips and %d subnets from data feed %d", len(feedResultsIPs),
+			c.logger.Infof("[INFO] Imported %d ips and %d subnets from data feed %s", len(feedResultsIPs),
 				len(feedResultsSubnets), activeFeed.Name)
 		} else {
 			c.logger.Errorf("[ERROR] Importing data feed %s\n failed : %s", activeFeed.Name, err)

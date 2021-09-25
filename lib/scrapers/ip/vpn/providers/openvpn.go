@@ -10,40 +10,39 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/domgolonka/foretoken/app/models"
-
 	"github.com/domgolonka/foretoken/app/entity"
+	"github.com/domgolonka/foretoken/app/models"
 	"github.com/sirupsen/logrus"
 )
 
-//var OpenVPNURLs = []URLs{
-//	{URL: "https://www.ipvanish.com/software/configs/configs.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://torguard.net/downloads/OpenVPN-UDP.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://torguard.net/downloads/OpenVPN-TCP.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://support.vyprvpn.com/hc/article_attachments/360052617332/Vypr_OpenVPN_20200320.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/windows/New+OVPN+Files.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	//{URL: "http://www.digibit.tv/certs/Certificates.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://www.limevpn.com/downloads/OpenVPN-Config-1194.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/Windscribe.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/VPNUnlimited.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartDNSProxy.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ProtonVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartyDNS.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ExpressVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ibVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/AirVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://monstervpn.tech/ovpn_configuration.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://freevpnme.b-cdn.net/FreeVPN.me-OpenVPN-Bundle-July-2020.zip", Typec: "OpenVPN", Format: OPENVPN},
-//	{URL: "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip", Typec: "OpenVPN", Format: OPENVPN},
-//}
+/* var OpenVPNURLs = []URLs{
+	{URL: "https://www.ipvanish.com/software/configs/configs.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/linux/linux-files.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-ip.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.privateinternetaccess.com/openvpn/openvpn-tcp.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://torguard.net/downloads/OpenVPN-UDP.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://torguard.net/downloads/OpenVPN-TCP.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://vpn.hidemyass.com/vpn-config/vpn-configs.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://support.vyprvpn.com/hc/article_attachments/360052617332/Vypr_OpenVPN_20200320.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://s3-us-west-1.amazonaws.com/heartbleed/windows/New+OVPN+Files.zip", Typec: "OpenVPN", Format: OPENVPN},
+	//{URL: "http://www.digibit.tv/certs/Certificates.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.limevpn.com/downloads/OpenVPN-Config-1194.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/Windscribe.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/VPNUnlimited.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartDNSProxy.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ProtonVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/SmartyDNS.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ExpressVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/ibVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/AirVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://raw.githubusercontent.com/en1gmascr1pts/vpnconfigs/master/MullvadVPN.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://monstervpn.tech/ovpn_configuration.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://www.goldenfrog.com/openvpn/VyprVPNOpenVPNFiles.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://freevpnme.b-cdn.net/FreeVPN.me-OpenVPN-Bundle-July-2020.zip", Typec: "OpenVPN", Format: OPENVPN},
+	{URL: "https://github.com/cryptostorm/cryptostorm_client_configuration_files/archive/master.zip", Typec: "OpenVPN", Format: OPENVPN},
+} */
 
 type OpenVpn struct {
 	logger   logrus.FieldLogger

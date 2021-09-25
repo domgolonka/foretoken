@@ -177,15 +177,17 @@ func (m *Maxmind) DownloadAndUpdate() error {
 		if err != nil {
 			return fmt.Errorf("cannot open maxmind file %s, error: %w", d.filename, err)
 		}
-		if strings.Contains(d.filename, "Country") {
+		switch {
+		case strings.Contains(d.filename, "Country"):
 			m.country = db
-		} else if strings.Contains(d.filename, "City") {
+		case strings.Contains(d.filename, "City"):
 			m.city = db
-		} else if strings.Contains(d.filename, "ASN") {
+		case strings.Contains(d.filename, "ASN"):
 			m.asn = db
-		} else {
+		default:
 			return fmt.Errorf("cannot match maxmind filename: %s with db", d.filename)
 		}
+
 	}
 
 	matches, err := filepath.Glob(m.cfg.External.MaxmindDest + "*")

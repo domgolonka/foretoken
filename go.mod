@@ -8,7 +8,6 @@ replace github.com/coreos/bbolt v1.3.5 => go.etcd.io/bbolt v1.3.5
 
 require (
 	github.com/Boostport/address v0.6.0
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/airbrake/gobrake v3.7.4+incompatible
 	github.com/ansrivas/fiberprometheus/v2 v2.1.1
 	github.com/antchfx/htmlquery v1.2.3
@@ -31,7 +30,6 @@ require (
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/joho/godotenv v1.3.0
 	github.com/kr/text v0.2.0 // indirect
-	github.com/leesper/go_rng v0.0.0-20190531154944-a612b043e353 // indirect
 	github.com/lib/pq v1.9.0
 	github.com/likexian/whois-parser-go v1.15.2
 	github.com/mattn/go-sqlite3 v1.14.6
@@ -47,8 +45,7 @@ require (
 	github.com/test-go/testify v1.1.4
 	golang.org/x/crypto v0.0.0-20200707235045-ab33eee955e0
 	golang.org/x/exp v0.0.0-20191129062945-2f5052295587 // indirect
-	golang.org/x/tools v0.1.5 // indirect
-	gonum.org/v1/gonum v0.8.2 // indirect
+	golang.org/x/tools v0.1.6 // indirect
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect

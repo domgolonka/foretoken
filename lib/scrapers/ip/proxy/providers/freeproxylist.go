@@ -91,11 +91,11 @@ func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 	if err != nil {
 		return nil, err
 	}
-	ips, err := htmlquery.QueryAll(node, `//*[@id="proxylisttable"]/tbody/tr/td[1]`)
+	ips, err := htmlquery.QueryAll(node, `//*[@id="list"]/div/div[2]/div/table/tbody/tr[1]/td[1]`)
 	if err != nil {
 		return nil, err
 	}
-	ports, err := htmlquery.QueryAll(node, `//*[@id="proxylisttable"]/tbody/tr/td[2]`)
+	ports, err := htmlquery.QueryAll(node, `//*[@id="list"]/div/div[2]/div/table/tbody/tr[1]/td[2]`)
 	if err != nil {
 		return nil, err
 	}

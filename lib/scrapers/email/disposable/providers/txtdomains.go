@@ -68,7 +68,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.DisposableEmail, error) {
 
 			}
 
-			c.logger.Infof("[INFO] Imported %d domains from data feed %d", len(feedResultsDomains),
+			c.logger.Infof("[INFO] Imported %d domains from data feed %s", len(feedResultsDomains),
 				len(feedResultsDomains), activeFeed.Name)
 		} else {
 			c.logger.Errorf("[ERROR] Importing data feed %s\n failed : %v", activeFeed.Name, err)

@@ -48,12 +48,12 @@ func main() {
 	} else {
 		cmd = os.Args[1]
 	}
-
-	if cmd == "server" {
+	switch {
+	case cmd == "server":
 		serve(&cfg, logger)
-	} else if cmd == "migrate" {
+	case cmd == "migrate":
 		migrate(&cfg, logger)
-	} else {
+	default:
 		_, err = os.Stderr.WriteString("unexpected invocation\n")
 		if err != nil {
 			return
@@ -70,7 +70,6 @@ func serve(cfg *config.Config, logger logrus.FieldLogger) {
 	)
 	myFigure := figure.NewFigure("Foretoken", "nancyj", true)
 	myFigure.Print()
-	//logger.Infof("~*~ Foretoken ~*~")
 
 	newApp, err := app.NewApp(cfg, logger)
 	if err != nil {

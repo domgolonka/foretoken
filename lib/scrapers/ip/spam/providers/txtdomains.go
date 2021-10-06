@@ -99,7 +99,7 @@ func (c *TxtDomains) Load(body []byte) ([]models.Spam, error) {
 	return c.iplist, nil
 
 }
-func (c *TxtDomains) MakeRequest(urlList string) ([]byte, error) {
+func (*TxtDomains) MakeRequest(urlList string) ([]byte, error) {
 	var body bytes.Buffer
 
 	req, err := http.NewRequest(http.MethodGet, urlList, nil)

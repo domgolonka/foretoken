@@ -117,7 +117,7 @@ func (x *FreeProxyList) Load(body []byte) ([]models.Proxy, error) {
 			Type: "http", // todo
 		}
 		x.proxyList = append(x.proxyList, prox)
-		//x.proxyList = append(x.proxyList, ip.Content()+":"+ports[i].Content())
+		// x.proxyList = append(x.proxyList, ip.Content()+":"+ports[i].Content())
 	}
 
 	x.lastUpdate = time.Now()

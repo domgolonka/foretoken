@@ -26,9 +26,9 @@ func Error(app *app.App) fiber.ErrorHandler {
 			return ctx.Status(fiber.StatusUnprocessableEntity).JSON(message{Message: "Data is invalid"})
 		}
 
-		//if err, ok := err.(validator.ValidationErrors); ok {
+		// if err, ok := err.(validator.ValidationErrors); ok {
 		//	return ctx.Status(fiber.StatusUnprocessableEntity).JSON(err.Translate(translator))
-		//}
+		// }
 
 		return ctx.Status(code).JSON(message{Message: "An error has occurred!"})
 	}

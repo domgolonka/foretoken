@@ -76,7 +76,7 @@ func (p *ProxyGenerator) load() {
 			continue
 		}
 
-		//p.logger.Println(provider.Name(), len(ips))
+		// p.logger.Println(provider.Name(), len(ips))
 
 		usedProxy.Range(func(key, value interface{}) bool {
 			if value.(int) != time.Now().Hour() {
@@ -85,10 +85,9 @@ func (p *ProxyGenerator) load() {
 			return true
 		})
 
-		//p.logger.Debugf("provider %s found ips %d", provider.Name(), len(ips))
+		// p.logger.Debugf("provider %s found ips %d", provider.Name(), len(ips))
 		shuffle(ips)
 		for _, proxy := range ips {
-			//p.job <- proxy
 			p.createOrIgnore(proxy.IP, proxy.Port, proxy.Type)
 		}
 	}
@@ -173,7 +172,7 @@ func New(store data.ProxyStore, workers int, cacheminutes time.Duration, hours i
 		instance.AddProvider(providers.NewHidemyName())
 		instance.AddProvider(providers.NewCoolProxy())
 		instance.AddProvider(providers.NewPubProxy())
-		//run workers
+		// run workers
 		go instance.Run(workers, hours)
 
 	})

@@ -93,7 +93,7 @@ func (x *ProxyList) Load() ([]models.Proxy, error) {
 				Type: "http", // todo
 			}
 			x.proxyList = append(x.proxyList, prox)
-			//x.proxyList = append(x.proxyList, string(data))
+			// x.proxyList = append(x.proxyList, string(data))
 		}
 	}
 

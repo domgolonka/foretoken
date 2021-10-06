@@ -156,7 +156,7 @@ func (x *XseoIn) Load(body []byte) ([]models.Proxy, error) {
 						Type: "http",
 					}
 					x.proxyList = append(x.proxyList, prox)
-					//x.proxyList = append(x.proxyList, data[0]+":"+string(port))
+					// x.proxyList = append(x.proxyList, data[0]+":"+string(port))
 				}
 			}
 		}

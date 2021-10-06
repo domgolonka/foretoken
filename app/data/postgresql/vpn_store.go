@@ -73,9 +73,10 @@ func (db *VpnStore) Create(ip string, prefix byte, iptype string, score int) (*m
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
-
+	const insertConst = `INSERT INTO vpn (ip, prefix, type, score, created_at, updated_at) VALUES (:ip, :prefix, :type, :score, :created_at, :updated_at)
+	ON CONFLICT(ip, prefix, type) DO NOTHING`
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO vpn (ip, prefix, type, score, created_at, updated_at) VALUES (:ip, :prefix, :type, :score, :created_at, :updated_at)",
+		insertConst,
 		vpn,
 	)
 	if err != nil {

@@ -79,9 +79,11 @@ func (db *SpamStore) Create(ip string, prefix byte, score int, iptype string) (*
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
+	const insertConst = `INSERT INTO spamip (ip, prefix,  score, type, created_at, updated_at) VALUES (:ip, :prefix, :score, :type, :created_at, :updated_at)
+	ON CONFLICT(ip, prefix, type) DO NOTHING`
 
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO spamip (ip, prefix,  score, type, created_at, updated_at) VALUES (:ip, :prefix, :score, :type, :created_at, :updated_at)",
+		insertConst,
 		spam,
 	)
 	if err != nil {

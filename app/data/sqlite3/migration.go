@@ -36,7 +36,7 @@ func createVpn(db *sqlx.DB) error {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS vpn_by_ip ON vpn (ip)
+        CREATE INDEX IF NOT EXISTS vpn_by_ip ON vpn (ip, prefix, type)
     `)
 	return err
 }
@@ -114,7 +114,7 @@ func createSpam(db *sqlx.DB) error {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS spamip_by_ip ON spamip (ip)
+        CREATE INDEX IF NOT EXISTS spamip_by_ip ON spamip (ip, prefix, type)
     `)
 	return err
 }
@@ -134,7 +134,7 @@ func createProxy(db *sqlx.DB) error {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS proxy_by_ip ON proxy (ip)
+        CREATE INDEX IF NOT EXISTS proxy_by_ip ON proxy (ip, port)
     `)
 	return err
 }
@@ -155,7 +155,7 @@ func createTor(db *sqlx.DB) error {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS tor_by_ip ON tor (ip)
+        CREATE INDEX IF NOT EXISTS tor_by_ip ON tor (ip, prefix, type)
     `)
 	return err
 }

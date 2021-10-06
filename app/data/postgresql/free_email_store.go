@@ -60,9 +60,10 @@ func (db *FreeEmailStore) Create(domain string, score int) (*models.FreeEmail, e
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
-
+	const insertConst = `INSERT INTO freeemail (domain, score, created_at, updated_at) VALUES (:domain, :score, :created_at, :updated_at)
+	ON CONFLICT(domain) DO NOTHING`
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO freeemail (domain, score, created_at, updated_at) VALUES (:domain, :score, :created_at, :updated_at)",
+		insertConst,
 		freeEmail,
 	)
 	if err != nil {

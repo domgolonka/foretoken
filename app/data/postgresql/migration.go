@@ -28,15 +28,15 @@ func createVpn(db *sqlx.DB) error {
             prefix TEXT,
               type TEXT,
             Score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS vpn_by_ip ON vpn (ip)
+        CREATE INDEX IF NOT EXISTS vpn_by_ip ON vpn (ip, prefix, type)
     `)
 	return err
 }
@@ -47,8 +47,8 @@ func createDisposable(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             domain TEXT NOT NULL UNIQUE,
             score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
@@ -66,8 +66,8 @@ func createSpamEmail(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             domain TEXT NOT NULL UNIQUE,
             score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
@@ -85,8 +85,8 @@ func createFreeEmail(db *sqlx.DB) error {
             id INTEGER PRIMARY KEY,
             domain TEXT NOT NULL UNIQUE,
             score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
@@ -106,8 +106,8 @@ func createSpam(db *sqlx.DB) error {
             prefix INTEGER,
             type TEXT NOT NULL,
             Score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
         )
     `)
@@ -115,7 +115,7 @@ func createSpam(db *sqlx.DB) error {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS spamip_by_ip ON spamip (ip)
+        CREATE INDEX IF NOT EXISTS spamip_by_ip ON spamip (ip, prefix, type)
     `)
 	return err
 }
@@ -127,15 +127,15 @@ func createProxy(db *sqlx.DB) error {
             ip TEXT NOT NULL UNIQUE,
             port TEXT NOT NULL,
               type TEXT NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS proxy_by_ip ON proxy (ip)
+        CREATE INDEX IF NOT EXISTS proxy_by_ip ON proxy (ip, port)
     `)
 	return err
 }
@@ -148,15 +148,15 @@ func createTor(db *sqlx.DB) error {
             prefix TEXT,
               type TEXT,
             Score INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL
+            created_at timestamp NOT NULL,
+            updated_at timestamp NOT NULL
         )
     `)
 	if err != nil {
 		return err
 	}
 	_, err = db.Exec(`
-        CREATE INDEX IF NOT EXISTS tor_by_ip ON tor (ip)
+        CREATE INDEX IF NOT EXISTS tor_by_ip ON tor (ip, prefix, type)
     `)
 	return err
 }

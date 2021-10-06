@@ -75,8 +75,11 @@ func (db *TorStore) Create(ip string, prefix byte, iptype string, score int) (*m
 		UpdatedAt: now,
 	}
 
+	const insertConst = `INSERT INTO tor (ip, prefix, type, score, created_at, updated_at) VALUES (:ip, :prefix, :type, :score, :created_at, :updated_at)
+	ON CONFLICT(ip, prefix, type) DO NOTHING`
+
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO tor (ip, prefix, type, score, created_at, updated_at) VALUES (:ip, :prefix, :type, :score, :created_at, :updated_at)",
+		insertConst,
 		tor,
 	)
 	if err != nil {

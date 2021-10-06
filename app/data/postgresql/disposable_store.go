@@ -60,9 +60,11 @@ func (db *DisposableStore) Create(domain string, score int) (*models.DisposableE
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
-
+	const insertConst = `INSERT INTO disposable (domain, score,  created_at, updated_at) 
+	VALUES (:domain, :score, :created_at, :updated_at)
+	ON CONFLICT(domain) DO NOTHING`
 	result, err := sqlx.NamedExec(db,
-		"INSERT OR IGNORE INTO disposable (domain, score,  created_at, updated_at) VALUES (:domain, :score, :created_at, :updated_at)",
+		insertConst,
 		disposable,
 	)
 	if err != nil {

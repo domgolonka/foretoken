@@ -58,9 +58,10 @@ func (db *ProxyStore) Create(ip, port, types string) (*models.Proxy, error) {
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
-
+	const insertConst = `INSERT INTO proxy (ip, port, type, created_at, updated_at) VALUES (:ip, :port, :type,:created_at, :updated_at)
+	ON CONFLICT(ip, port) DO NOTHING`
 	result, err := sqlx.NamedExec(db,
-		"INSERT INTO proxy (ip, port, type, created_at, updated_at) VALUES (:ip, :port, :type,:created_at, :updated_at)",
+		insertConst,
 		proxy,
 	)
 	if err != nil {

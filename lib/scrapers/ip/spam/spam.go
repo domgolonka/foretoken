@@ -39,7 +39,7 @@ func (p *Spam) load() {
 		iplist, err := provider.List()
 
 		if err != nil {
-			p.logger.Errorf("cannot load list of proxy %s err:%s", provider.Name(), err)
+			p.logger.Errorf("cannot load list of spam %s err:%s", provider.Name(), err)
 			continue
 		}
 

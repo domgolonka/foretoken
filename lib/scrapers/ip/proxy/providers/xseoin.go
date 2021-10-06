@@ -81,7 +81,7 @@ func (x *XseoIn) MakeRequest() ([]byte, error) {
 	return body.Bytes(), nil
 }
 
-func (x *XseoIn) DecodeParamsToMap(params string) map[byte]byte {
+func (*XseoIn) DecodeParamsToMap(params string) map[byte]byte {
 	if len(params) < 39 {
 		return nil
 	}
@@ -99,7 +99,7 @@ func (x *XseoIn) DecodeParamsToMap(params string) map[byte]byte {
 	}
 }
 
-func (x *XseoIn) DecodePort(decodeParams map[byte]byte, encryptedData string) []byte {
+func (*XseoIn) DecodePort(decodeParams map[byte]byte, encryptedData string) []byte {
 	if len(encryptedData) == 8 {
 		return []byte{decodeParams[encryptedData[1]], decodeParams[encryptedData[3]], decodeParams[encryptedData[5]], decodeParams[encryptedData[7]]}
 	}

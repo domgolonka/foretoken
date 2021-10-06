@@ -1,7 +1,8 @@
 package proxy
 
 import (
-	"math/rand"
+	"crypto/rand"
+	"math/big"
 	"reflect"
 	"sync"
 	"time"
@@ -50,10 +51,15 @@ func (p *ProxyGenerator) AddProvider(provider Provider) {
 }
 
 func shuffle(vals []models.Proxy) {
-	r := rand.New(rand.NewSource(time.Now().Unix())) //nolint
+
+	//r := rand.New(rand.NewSource(time.Now().Unix())) //nolint
 	for len(vals) > 0 {
 		n := len(vals)
-		randIndex := r.Intn(n)
+		nBig, err := rand.Int(rand.Reader, big.NewInt(int64(n)))
+		if err != nil {
+			panic(err)
+		}
+		randIndex := nBig.Int64()
 		vals[n-1], vals[randIndex] = vals[randIndex], vals[n-1]
 		vals = vals[:n-1]
 	}

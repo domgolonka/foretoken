@@ -2,17 +2,22 @@ package data
 
 import (
 	"fmt"
-
 	"github.com/domgolonka/foretoken/app/data/postgresql"
+	redisStore "github.com/domgolonka/foretoken/app/data/redis"
+	"github.com/go-redis/redis/v8"
 
 	"github.com/domgolonka/foretoken/app/data/sqlite3"
 	"github.com/domgolonka/foretoken/app/models"
 	"github.com/jmoiron/sqlx"
 )
 
-/**********************
- ipaddress
-**********************/
+/*
+*********************
+
+	ipaddress
+
+*********************
+*/
 type ProxyStore interface {
 	Find(id int) (*models.Proxy, error)
 	FindAll() (*[]models.Proxy, error)
@@ -22,15 +27,23 @@ type ProxyStore interface {
 	DeleteOld(hours int) (bool, error)
 }
 
-func NewProxyStore(db sqlx.Ext) (ProxyStore, error) {
-	switch db.DriverName() {
-	case "sqlite3":
-		return &sqlite3.ProxyStore{Ext: db}, nil
-	case "postgresql":
-		return &postgresql.ProxyStore{Ext: db}, nil
-	default:
-		return nil, fmt.Errorf("unsupported driver: %v", db.DriverName())
+func NewProxyStore(db interface{}) (ProxyStore, error) {
+	sql, ok := db.(sqlx.Ext)
+	if ok {
+		switch sql.DriverName() {
+		case "sqlite3":
+			return &sqlite3.ProxyStore{Ext: sql}, nil
+		case "postgresql":
+			return &postgresql.ProxyStore{Ext: sql}, nil
+		default:
+			return nil, fmt.Errorf("unsupported driver: %v", sql.DriverName())
+		}
 	}
+	red, rok := db.(*redis.Client)
+	if rok {
+		return &redisStore.ProxyStore{Client: red}, nil
+	}
+	return nil, fmt.Errorf("unsupported driver: %v", db)
 }
 
 type VpnStore interface {
@@ -96,9 +109,13 @@ func NewTorStore(db sqlx.Ext) (TorStore, error) {
 	}
 }
 
-/**********************
-		email
-**********************/
+/*
+*********************
+
+	email
+
+*********************
+*/
 type DisposableStore interface {
 	FindByDomain(domain string) (*models.DisposableEmail, error)
 	Find(id int) (*models.DisposableEmail, error)

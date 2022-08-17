@@ -3,19 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
-	"path"
-
-	"github.com/common-nighthawk/go-figure"
-	services "github.com/domgolonka/foretoken/lib/grpc"
-	"github.com/domgolonka/foretoken/lib/grpc/impl"
-
+	figure "github.com/common-nighthawk/go-figure"
 	"github.com/domgolonka/foretoken/app"
 	"github.com/domgolonka/foretoken/app/data"
 	"github.com/domgolonka/foretoken/config"
+	"github.com/domgolonka/foretoken/lib/grpc/impl"
 	"github.com/domgolonka/foretoken/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
+	"os"
+	"path"
 )
 
 func main() {
@@ -79,7 +76,7 @@ func serve(cfg *config.Config, logger logrus.FieldLogger) {
 
 	impl.InitRPCService(newApp)
 	go server.Server(newApp)
-	services.ServeRPC(newApp, ch)
+	//services.ServeRPC(newApp, ch)
 
 	<-ch
 }

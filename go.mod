@@ -2,9 +2,9 @@ module github.com/domgolonka/foretoken
 
 go 1.17
 
-replace github.com/coreos/etcd => github.com/ozonru/etcd v3.3.20-grpc1.27-origmodule+incompatible
+// replace github.com/coreos/etcd => github.com/ozonru/etcd v3.3.20-grpc1.27-origmodule+incompatible
 
-replace github.com/coreos/bbolt v1.3.5 => go.etcd.io/bbolt v1.3.5
+// replace github.com/coreos/bbolt v1.3.5 => go.etcd.io/bbolt v1.3.5
 
 require (
 	github.com/Boostport/address v0.6.0
@@ -13,17 +13,12 @@ require (
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/araddon/dateparse v0.0.0-20210207001429-0eec95c9db7e
 	github.com/caio/go-tdigest v3.1.0+incompatible // indirect
-	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
-	github.com/coreos/bbolt v1.3.5 // indirect
-	github.com/coreos/etcd v3.3.25+incompatible // indirect
 	github.com/domainr/whois v0.0.0-20210215110205-c05ecdd18962
-	github.com/etcd-io/etcd v3.3.25+incompatible
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gofiber/fiber/v2 v2.29.0
 	github.com/golang/protobuf v1.4.3
 	github.com/gorilla/schema v1.2.0
-	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/hashicorp/consul/api v1.3.0
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jinzhu/configor v1.2.1
@@ -48,6 +43,8 @@ require (
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 )
 
+require github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
+
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/PuerkitoBio/goquery v1.6.1 // indirect
@@ -57,9 +54,6 @@ require (
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
-	github.com/coreos/go-semver v0.2.0 // indirect
-	github.com/coreos/go-systemd v0.0.0-20180511133405-39ca1b05acc7 // indirect
-	github.com/coreos/pkg v0.0.0-20160727233714-3ac0863d7acf // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/creack/pty v1.1.11 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -68,9 +62,7 @@ require (
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gofiber/adaptor/v2 v2.1.1 // indirect
 	github.com/gofiber/utils v0.1.2 // indirect
-	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/google/uuid v1.0.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/hashicorp/go-immutable-radix v1.0.0 // indirect
@@ -104,11 +96,6 @@ require (
 	github.com/valyala/fasthttp v1.34.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/zonedb/zonedb v1.0.3021 // indirect
-	go.uber.org/atomic v1.5.0 // indirect
-	go.uber.org/multierr v1.3.0 // indirect
-	go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee // indirect
-	go.uber.org/zap v1.13.0 // indirect
-	golang.org/x/lint v0.0.0-20190930215403-16217165b5de // indirect
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
@@ -118,5 +105,4 @@ require (
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
 	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
-	honnef.co/go/tools v0.0.1-2019.2.3 // indirect
 )

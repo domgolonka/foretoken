@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"path"
+
 	figure "github.com/common-nighthawk/go-figure"
 	"github.com/domgolonka/foretoken/app"
 	"github.com/domgolonka/foretoken/app/data"
@@ -11,8 +14,6 @@ import (
 	"github.com/domgolonka/foretoken/server"
 	"github.com/jinzhu/configor"
 	"github.com/sirupsen/logrus"
-	"os"
-	"path"
 )
 
 func main() {

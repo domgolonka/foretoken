@@ -10,9 +10,13 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-/**********************
- ipaddress
-**********************/
+/*
+*********************
+
+	ipaddress
+
+*********************
+*/
 type ProxyStore interface {
 	Find(id int) (*models.Proxy, error)
 	FindAll() (*[]models.Proxy, error)
@@ -96,9 +100,13 @@ func NewTorStore(db sqlx.Ext) (TorStore, error) {
 	}
 }
 
-/**********************
-		email
-**********************/
+/*
+*********************
+
+	email
+
+*********************
+*/
 type DisposableStore interface {
 	FindByDomain(domain string) (*models.DisposableEmail, error)
 	Find(id int) (*models.DisposableEmail, error)

@@ -135,9 +135,10 @@ func VerifyMD5HashFromFile(file, md5sumFile string) error {
 
 // FindFile returns a path to a file matching regex under root
 // Returns
-//  string: Full path
-//  string: File name
-//  error : Error
+//
+//	string: Full path
+//	string: File name
+//	error : Error
 func FindFile(root, r string) (string, string, error) {
 	regex, err := regexp.Compile(r)
 	if err != nil {

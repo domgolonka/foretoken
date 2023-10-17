@@ -12,7 +12,7 @@ require (
 	github.com/domainr/whois v0.1.0
 	github.com/getsentry/sentry-go v0.20.0
 	github.com/go-playground/validator/v10 v10.13.0
-	github.com/gofiber/fiber/v2 v2.49.2
+	github.com/gofiber/fiber/v2 v2.50.0
 	github.com/golang/protobuf v1.5.3
 	github.com/gorilla/schema v1.2.0
 	github.com/hashicorp/consul/api v1.20.0
@@ -89,11 +89,11 @@ require (
 	github.com/soluchok/gokogiri v0.0.0-20190903214353-0718098bc8db // indirect
 	github.com/tinylib/msgp v1.1.8 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.49.0 // indirect
+	github.com/valyala/fasthttp v1.50.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/zonedb/zonedb v1.0.4113 // indirect
 	golang.org/x/net v0.9.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	gonum.org/v1/gonum v0.9.3 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect

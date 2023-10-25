@@ -34,7 +34,7 @@ require (
 	github.com/test-go/testify v1.1.4
 	golang.org/x/crypto v0.8.0
 	golang.org/x/tools v0.8.0 // indirect
-	google.golang.org/grpc v1.54.0
+	google.golang.org/grpc v1.56.3
 	google.golang.org/protobuf v1.30.0
 )
 

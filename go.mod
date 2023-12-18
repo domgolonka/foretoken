@@ -32,7 +32,7 @@ require (
 	github.com/soluchok/freeproxy v0.0.0-20200112224202-ccb33291a087
 	github.com/soluchok/go-cloudflare-scraper v0.0.0-20190117212330-ecf651d4e614
 	github.com/test-go/testify v1.1.4
-	golang.org/x/crypto v0.14.0
+	golang.org/x/crypto v0.17.0
 	golang.org/x/tools v0.8.0 // indirect
 	google.golang.org/grpc v1.56.3
 	google.golang.org/protobuf v1.30.0
@@ -93,8 +93,8 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/zonedb/zonedb v1.0.4113 // indirect
 	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.9.3 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 	gopkg.in/sourcemap.v1 v1.0.5 // indirect

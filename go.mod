@@ -35,7 +35,7 @@ require (
 	golang.org/x/crypto v0.14.0
 	golang.org/x/tools v0.8.0 // indirect
 	google.golang.org/grpc v1.56.3
-	google.golang.org/protobuf v1.30.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
